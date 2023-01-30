@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ITask } from "../Interfaces";
+import { TodoListContext } from "../Routing/Main";
 import TodoTask from "./TodoTask";
 
 const ShowTasks = () =>{
 
-    const [todo, setTodo] = useState<ITask[]>([]);
+    let todo = useContext(TodoListContext);
 
     const completeTask = (taskNameToDelete: string) => {
-        setTodo(todo.filter((task) =>{
-          return task.taskName !== taskNameToDelete
-        }))
+        // setTodo(todo.filter((task) =>{
+        //   return task.taskName !== taskNameToDelete
+        // }))
+        console.log(taskNameToDelete);
+        todo = todo.filter(task => task.taskName !== taskNameToDelete);
+        console.log(todo);
       }
+
+    
 
     return(
         <div className="todoList">
