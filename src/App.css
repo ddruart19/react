@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+table, th, td {
+  border: 1px solid;
+  width: 100%;
+}
+
+.completeCol{
+  width: 2%;
+}
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+
