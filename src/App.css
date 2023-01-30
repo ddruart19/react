@@ -42,6 +42,13 @@ table, th, td {
   width: 100%;
 }
 
-th.completeCol{
+.completeCol{
   width: 2%;
 }
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+
