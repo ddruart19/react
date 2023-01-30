@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import App from "../App";
+import { Link } from "react-router-dom";
 import './Header.css';
+import Main from "../Routing/Main";
 const Header = () => {
     return(   
             <nav>
@@ -12,7 +12,7 @@ const Header = () => {
                         <Link to="/create">Create task</Link>
                     </li>
                     <li>
-                        <Link to="/show">Show tasks</Link>
+                        <Link to="/list">Show tasks</Link>
                     </li>
                 </ul>
             </nav>
