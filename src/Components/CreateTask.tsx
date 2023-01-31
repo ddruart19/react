@@ -1,20 +1,21 @@
-import { ChangeEvent, useState } from "react";
-import { ITask } from "../Interfaces";
+import { ChangeEvent, useContext, useState } from "react";
+import { TodoListContext } from "../Routing/Main"
 
 const CreateTask = () => {
 
     const [task, setTask] = useState<string>("");
     const [deadline, setDeadLine] = useState<number>(0);
-    const [todo, setTodo] = useState<ITask[]>([]);
+    const todo = useContext(TodoListContext);
 
     const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
         if(event.target.name === 'task'){
-          setTask(event.target.value);
+            setTask(event.target.value);
         }
         else{
-          setDeadLine(Number(event.target.value));
+            setDeadLine(Number(event.target.value));
         }
-      }
+    }
+
 
     const addTask = () => {
         const newTask = {
@@ -22,7 +23,7 @@ const CreateTask = () => {
           deadline: deadline,
           completed: false
         }
-        setTodo([...todo, newTask]);
+        todo.todoList.push(newTask);
         setTask("");
         setDeadLine(0);
       }

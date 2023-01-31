@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ITask } from "../Interfaces";
+import { TodoListContext } from "../Routing/Main";
 import TodoTask from "./TodoTask";
 
 const ShowTasks = () =>{
 
-    const [todo, setTodo] = useState<ITask[]>([]);
+    let todo = useContext(TodoListContext);
 
     const completeTask = (taskNameToDelete: string) => {
-        setTodo(todo.filter((task) =>{
-          return task.taskName !== taskNameToDelete
-        }))
+        todo.setTodoList(todo.todoList.filter(task => task.taskName !== taskNameToDelete));
       }
+
+    
 
     return(
         <div className="todoList">
@@ -24,7 +25,7 @@ const ShowTasks = () =>{
             </tr>
           </thead>
           <tbody>
-            {todo.map((task:ITask, key: number)=>{
+            {todo.todoList.map((task:ITask, key: number)=>{
               return <TodoTask key={key} task={task} completeTask={completeTask}/>
             })}
           </tbody>
