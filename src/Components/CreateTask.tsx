@@ -19,6 +19,7 @@ const CreateTask = () => {
 
     const addTask = () => {
         const newTask = {
+          id: todo.todoList.length + 1,
           taskName: task,
           deadline: deadline,
           completed: false
