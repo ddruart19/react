@@ -1,0 +1,22 @@
+[{
+   "id": 1,
+   "taskName": "Give dog a bath",
+   "deadline": 15,
+   "completed": true
+ }, {
+  "id": 2,
+  "taskName": "Turn off the lights",
+  "deadline": 1,
+  "completed": false
+ }, {
+  "id": 3,
+  "taskName": "Eat chili",
+  "deadline": 42,
+  "completed": false
+ }, {
+  "id": 4,
+  "taskName": "Hug mom",
+  "deadline": 0,
+  "completed": true
+ }
+]

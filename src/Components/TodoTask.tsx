@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { ITask } from "../Interfaces";
 import Checkbox from "./Checkbox";
 
@@ -18,7 +19,11 @@ const TodoTask = ({task, completeTask}: Props) =>{
     return(
         <tr>
             <td className="completeCol"><Checkbox handleChange={handleChange} isChecked={isChecked} label={"completed"} /></td>
-            <td>{task.taskName}</td>
+            <td>
+                <Link to={"/edit/" + task.id}>
+                    {task.taskName}
+                </Link>
+            </td>
             <td>{task.deadline}</td>
             <td><button onClick={()=>{
                 completeTask(task.taskName)

@@ -5,7 +5,7 @@ import TodoTask from "./TodoTask";
 
 const ShowTasks = () =>{
 
-    let todo = useContext(TodoListContext);
+    const todo = useContext(TodoListContext);
 
     const completeTask = (taskNameToDelete: string) => {
         todo.setTodoList(todo.todoList.filter(task => task.taskName !== taskNameToDelete));
