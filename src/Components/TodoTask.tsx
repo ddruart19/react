@@ -9,11 +9,11 @@ interface Props{
 
 
 const TodoTask = ({task, completeTask}: Props) =>{
-    const[isChecked, setIsChecked] = useState(false);
+    const[isChecked, setIsChecked] = useState(task.completed);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setIsChecked(e.target.checked);
-        task.completed = false;
-        if(e.target.checked)task.completed = true;
+        task.completed = e.target.checked;
+        console.log(task.completed);
     }
     return(
         <tr>

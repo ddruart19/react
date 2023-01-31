@@ -14,7 +14,6 @@ const Header = () => {
                         <Link to="/list">Show tasks</Link>
                     </li>
                 </ul>
-                <button>Log list</button>
             </nav>
     )
 }
