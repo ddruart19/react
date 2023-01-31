@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import './Header.css';
-import Main from "../Routing/Main";
 const Header = () => {
     return(   
             <nav>
@@ -15,6 +14,7 @@ const Header = () => {
                         <Link to="/list">Show tasks</Link>
                     </li>
                 </ul>
+                <button>Log list</button>
             </nav>
     )
 }

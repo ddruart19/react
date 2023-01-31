@@ -8,12 +8,7 @@ const ShowTasks = () =>{
     let todo = useContext(TodoListContext);
 
     const completeTask = (taskNameToDelete: string) => {
-        // setTodo(todo.filter((task) =>{
-        //   return task.taskName !== taskNameToDelete
-        // }))
-        console.log(taskNameToDelete);
-        todo = todo.filter(task => task.taskName !== taskNameToDelete);
-        console.log(todo);
+        todo.setTodoList(todo.todoList.filter(task => task.taskName !== taskNameToDelete));
       }
 
     
@@ -30,7 +25,7 @@ const ShowTasks = () =>{
             </tr>
           </thead>
           <tbody>
-            {todo.map((task:ITask, key: number)=>{
+            {todo.todoList.map((task:ITask, key: number)=>{
               return <TodoTask key={key} task={task} completeTask={completeTask}/>
             })}
           </tbody>

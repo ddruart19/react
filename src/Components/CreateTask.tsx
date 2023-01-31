@@ -1,5 +1,4 @@
 import { ChangeEvent, useContext, useState } from "react";
-import { ITask } from "../Interfaces";
 import { TodoListContext } from "../Routing/Main"
 
 const CreateTask = () => {
@@ -17,7 +16,6 @@ const CreateTask = () => {
         }
     }
 
-    // setTodo(useContext(TodoListContext));
 
     const addTask = () => {
         const newTask = {
@@ -25,7 +23,7 @@ const CreateTask = () => {
           deadline: deadline,
           completed: false
         }
-        todo.push(newTask);
+        todo.todoList.push(newTask);
         setTask("");
         setDeadLine(0);
       }
