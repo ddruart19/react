@@ -1,7 +1,12 @@
-import { Button } from "flowbite-react";
 import { ChangeEvent, useContext, useState } from "react";
 import { TodoListContext } from "../Routing/Main"
 import 'flowbite';
+import { Formik, FormikHelpers } from 'formik';
+
+interface Values{
+  task : string;
+  value: number;
+}
 
 const CreateTask = () => {
 
@@ -17,6 +22,20 @@ const CreateTask = () => {
             setDeadLine(Number(event.target.value));
         }
     }
+
+    <Formik initialValues={{
+      task : '',
+      deadline : 0
+    }} 
+    onSubmit={(
+      values: Values,
+      { setSubmitting }: FormikHelpers<Values>
+    ) => {
+      setTimeout(() => {
+        alert(JSON.stringify(values, null, 2));
+        setSubmitting(false);
+      }, 500);
+    }}></Formik>
 
 
     const addTask = () => {
