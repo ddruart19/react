@@ -1,7 +1,9 @@
+import { Navbar } from "flowbite-react";
 import { Link } from "react-router-dom";
 import './Header.css';
 const Header = () => {
     return(   
+        <Navbar fluid={true} rounded={true}>
             <nav>
                 <ul className="navList">
                     <li>
@@ -15,6 +17,7 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
+        </Navbar>
     )
 }
 

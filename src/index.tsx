@@ -4,16 +4,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import { Flowbite } from 'flowbite-react';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const theme = {
+  sidebar: {
+    base: 'h-full bg-inherit',
+    inner: 'h-full overflow-y-auto overflow-x-hidden rounded bg-inherit py-4 px-3',
+  },
+};
+
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <Flowbite theme={{ theme }}>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+    </React.StrictMode>
+  </Flowbite>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
