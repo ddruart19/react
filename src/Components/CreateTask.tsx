@@ -1,70 +1,54 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { TodoListContext } from "../Routing/Main"
 import 'flowbite';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers, Form, Field} from 'formik';
 
-interface Values{
-  task : string;
-  value: number;
+interface FormValues{
+  taskName : string;
+  deadline: number;
 }
 
 const CreateTask = () => {
 
-    const [task, setTask] = useState<string>("");
-    const [deadline, setDeadLine] = useState<number>(0);
     const todo = useContext(TodoListContext);
 
-    const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
-        if(event.target.name === 'task'){
-            setTask(event.target.value);
-        }
-        else{
-            setDeadLine(Number(event.target.value));
-        }
-    }
+    const initialValues : FormValues = {taskName: "", deadline: 0};
 
-    <Formik initialValues={{
-      task : '',
-      deadline : 0
-    }} 
-    onSubmit={(
-      values: Values,
-      { setSubmitting }: FormikHelpers<Values>
-    ) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 500);
-    }}></Formik>
-
-
-    const addTask = () => {
+    const addTask = (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
-          taskName: task,
-          deadline: deadline,
+          taskName: values.taskName,
+          deadline: values.deadline,
           completed: false
         }
         todo.todoList.push(newTask);
-        setTask("");
-        setDeadLine(0);
+        todo.setTodoList(todo.todoList);
+        console.log(todo.todoList);
       }
 
     return (
-        <div className="creationForm">
-        <div className="inputContainer">
-          <label>
-            Task :
-            <input type="text" name="task" value={task} placeholder="Add a task" onChange={handleChange}/>
-          </label>
+        <Formik
+        initialValues={initialValues}
+        onSubmit={(values, actions) => {
+          console.log({ values, actions });
+          alert(JSON.stringify(values, null, 2));
+          addTask(values);
+          actions.setSubmitting(false);
+        }}
+        >
+          <Form>
+            <label>
+              Task :
+              <Field name="taskName" placeholder="Your task"/>
+            </label>
 
-          <label>
-            Deadline (days) : 
-            <input type="number" name="deadline" value={deadline} placeholder="Deadline (days)" onChange={handleChange}/>
-          </label>
-        </div>
-        <button onClick={addTask}>Add</button>
-      </div>
-    );
+            <label>
+              Deadline (days) : 
+              <Field name="deadline" placeholder="Deadline (days)"/>
+            </label>
+            <button type="submit">Add</button>
+          </Form>
+        </Formik>
+        )
 }
 export default CreateTask;

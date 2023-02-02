@@ -17,6 +17,7 @@ const ShowTasks = () =>{
 
     return(
         <div className="todoList">
+          <button onClick={() => console.log(todo.todoList)}>Show todoList</button>
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>
