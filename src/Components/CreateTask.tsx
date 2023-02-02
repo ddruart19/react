@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { TodoListContext } from "../Routing/Main"
 import 'flowbite';
 import { Formik, Form, Field, FieldProps} from 'formik';
-import { Button, FileInput, TextInput } from "flowbite-react";
+import { Button, TextInput } from "flowbite-react";
 
 interface FormValues{
   taskName : string;
-  deadline: number;
+  deadline: string;
 }
 
 const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
@@ -35,13 +35,13 @@ const CreateTask = () => {
 
     const todo = useContext(TodoListContext);
 
-    const initialValues : FormValues = {taskName: "", deadline: 0};
+    const initialValues : FormValues = {taskName: "", deadline: ""};
 
     const addTask = (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
           taskName: values.taskName,
-          deadline: values.deadline,
+          deadline: Number(values.deadline),
           completed: false
         }
         todo.todoList.push(newTask);
@@ -74,7 +74,7 @@ const CreateTask = () => {
 
             <label>
               Deadline (days) : 
-              <Field name="deadline" placeholder="Deadline (days)" component={InputNumber}/>
+              <Field name="deadline" type="number" min="0" placeholder="Deadline (days)" component={InputNumber}/>
             </label>
             <Button type="submit">Add</Button>
           </Form>
