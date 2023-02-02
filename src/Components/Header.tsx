@@ -38,6 +38,9 @@ const Header = () => {
                 <Link to="/list">
                     Show tasks
                 </Link>
+                <Link to="/timeline">
+                    Show timeline
+                </Link>
             </Navbar.Collapse>
         </Navbar>
     )

@@ -4,7 +4,6 @@ import Header from './Components/Header';
 import { ITask } from './Interfaces';
 import Main from './Routing/Main';
 import data from './data.json';
-import { Button } from 'flowbite-react';
 
 export const TodoListContext = createContext<{todoList: ITask[], setTodoList: (list: ITask[]) => void}>({
   todoList: [], 
