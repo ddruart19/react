@@ -1,11 +1,34 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { useContext } from "react";
 import { TodoListContext } from "../Routing/Main"
 import 'flowbite';
-import { Formik, FormikHelpers, Form, Field} from 'formik';
+import { Formik, Form, Field, FieldProps} from 'formik';
+import { Button, FileInput, TextInput } from "flowbite-react";
 
 interface FormValues{
   taskName : string;
   deadline: number;
+}
+
+const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
+  return (
+    <TextInput
+      {...field}
+      {...props}
+      onChange={form.handleChange}
+      onBlur={form.handleBlur}
+    />
+  );
+}
+
+const InputNumber: React.FC<Number & FieldProps> = ({ field, form, ...props }) => {
+  return (
+    <TextInput
+      {...field}
+      {...props}
+      onChange={form.handleChange}
+      onBlur={form.handleBlur}
+    />
+  );
 }
 
 const CreateTask = () => {
@@ -26,7 +49,11 @@ const CreateTask = () => {
         console.log(todo.todoList);
       }
 
+    
+
     return (
+      <>
+        <button onClick={() => console.log(todo.todoList)}>Show todoList</button>
         <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
@@ -36,19 +63,23 @@ const CreateTask = () => {
           actions.setSubmitting(false);
         }}
         >
-          <Form>
-            <label>
-              Task :
-              <Field name="taskName" placeholder="Your task"/>
-            </label>
+          <Form className="flex flex-col gap-4">
+            <div>
+              <label>
+                Task :
+                <Field name="taskName" placeholder="Your task" component={InputText}/>
+              </label>
+            </div>
+
 
             <label>
               Deadline (days) : 
-              <Field name="deadline" placeholder="Deadline (days)"/>
+              <Field name="deadline" placeholder="Deadline (days)" component={InputNumber}/>
             </label>
-            <button type="submit">Add</button>
+            <Button type="submit">Add</Button>
           </Form>
         </Formik>
+       </>
         )
 }
 export default CreateTask;

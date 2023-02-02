@@ -12,9 +12,7 @@ const ShowTasks = () =>{
      let todoToEdit = todo.todoList.find(t => t.id === taskId)!;
      todoToEdit.completed = isCompleted;
     }
-
     
-
     return(
         <div className="todoList">
           <button onClick={() => console.log(todo.todoList)}>Show todoList</button>
