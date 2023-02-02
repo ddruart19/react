@@ -4,6 +4,7 @@ import Header from './Components/Header';
 import { ITask } from './Interfaces';
 import Main from './Routing/Main';
 import data from './data.json';
+import { Button } from 'flowbite-react';
 
 export const TodoListContext = createContext<{todoList: ITask[], setTodoList: (list: ITask[]) => void}>({
   todoList: [], 
@@ -17,6 +18,7 @@ const App:React.FC = () => {
         <TodoListContext.Provider value={{todoList:todoList, setTodoList:setTodoList}}>
           <Header></Header>
           <Main></Main>
+          <Button onClick={() => console.log(todoList)}>Show List From AppContext</Button>
         </TodoListContext.Provider>
     </div>
   );
