@@ -57,7 +57,6 @@ const CreateTask = () => {
         initialValues={initialValues}
         onSubmit={(values, actions) => {
           console.log({ values, actions });
-          alert(JSON.stringify(values, null, 2));
           addTask(values);
           actions.setSubmitting(false);
         }}

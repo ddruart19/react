@@ -2,7 +2,7 @@
 import { Button, TextInput } from "flowbite-react";
 import { Field, FieldProps, Form, Formik } from "formik";
 import { ChangeEvent, useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
 
@@ -35,6 +35,7 @@ const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
   
 const EditTask = () => {
     const todo = useContext(TodoListContext);
+    const navigate = useNavigate();
 
     //URL ID
     const {id} = useParams<string>();
@@ -54,8 +55,10 @@ const EditTask = () => {
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
                 console.log({ values, actions });
-                alert(JSON.stringify(values, null, 2));
+                todoEdit.taskName = values.taskName;
+                todoEdit.deadline = values.deadline;
                 actions.setSubmitting(false);
+                navigate('/list');
                 }}
                 >
                 <Form className="flex flex-col gap-4">
