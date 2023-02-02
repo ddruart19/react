@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { TodoListContext } from "../Routing/Main"
 import 'flowbite';
 import { Formik, Form, Field, FieldProps} from 'formik';
 import { Button, TextInput } from "flowbite-react";
+import { TodoListContext } from "../App";
 
 interface FormValues{
   taskName : string;
@@ -53,7 +53,6 @@ const CreateTask = () => {
 
     return (
       <>
-        <button onClick={() => console.log(todo.todoList)}>Show todoList</button>
         <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {

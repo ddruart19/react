@@ -1,7 +1,7 @@
 import { Table } from "flowbite-react";
 import { useContext } from "react";
+import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
-import { TodoListContext } from "../Routing/Main";
 import TodoTask from "./TodoTask";
 
 const ShowTasks = () =>{
@@ -15,7 +15,6 @@ const ShowTasks = () =>{
     
     return(
         <div className="todoList">
-          <button onClick={() => console.log(todo.todoList)}>Show todoList</button>
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>
