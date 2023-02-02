@@ -18,7 +18,6 @@ const App:React.FC = () => {
         <TodoListContext.Provider value={{todoList:todoList, setTodoList:setTodoList}}>
           <Header></Header>
           <Main></Main>
-          <Button onClick={() => console.log(todoList)}>Show List From AppContext</Button>
         </TodoListContext.Provider>
     </div>
   );

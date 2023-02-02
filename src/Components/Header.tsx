@@ -32,12 +32,12 @@ const Header = () => {
             {/* Collapsable menu */}
 
             <Navbar.Collapse>
-                <Navbar.Link href="/" active={location.pathname === "/"}>
+                <Link to="/">
                     Home
-                </Navbar.Link>
-                <Navbar.Link href="/list" active={location.pathname === "/list"}>
+                </Link>
+                <Link to="/list">
                     Show tasks
-                </Navbar.Link>
+                </Link>
             </Navbar.Collapse>
         </Navbar>
     )
