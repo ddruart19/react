@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import 'flowbite';
-import { Formik, Form, Field, FieldProps} from 'formik';
+import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
 import { Button, TextInput } from "flowbite-react";
 import { TodoListContext } from "../App";
-
+import * as Yup from "yup";
 interface FormValues{
   taskName : string;
   deadline: string;
@@ -31,6 +31,16 @@ const InputNumber: React.FC<Number & FieldProps> = ({ field, form, ...props }) =
   );
 }
 
+const Validators = Yup.object().shape({
+  taskName: Yup.string()
+    .min(2, 'Too short !')
+    .required('Task name required'),
+    deadline: Yup.number()
+    .min(1, 'Deadline must be 1 day minimum')
+}
+
+);
+
 const CreateTask = () => {
 
     const todo = useContext(TodoListContext);
@@ -55,6 +65,7 @@ const CreateTask = () => {
       <>
         <Formik
         initialValues={initialValues}
+        validationSchema={Validators}
         onSubmit={(values, actions) => {
           console.log({ values, actions });
           addTask(values);
@@ -67,6 +78,9 @@ const CreateTask = () => {
                 Task :
                 <Field name="taskName" placeholder="Your task" component={InputText}/>
               </label>
+              <ErrorMessage name="taskName">
+                {msg => <span style={{color: 'red'}}>{msg}</span>}
+              </ErrorMessage>
             </div>
 
 
@@ -74,6 +88,10 @@ const CreateTask = () => {
               Deadline (days) : 
               <Field name="deadline" type="number" min="0" placeholder="Deadline (days)" component={InputNumber}/>
             </label>
+            <ErrorMessage name="deadline">
+              {msg => <span style={{color: 'red'}}>{msg}</span>}
+            </ErrorMessage>
+
             <Button type="submit">Add</Button>
           </Form>
         </Formik>
