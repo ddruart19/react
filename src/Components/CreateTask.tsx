@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import 'flowbite';
 import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
-import { Button, TextInput } from "flowbite-react";
+import { Button, Textarea, TextInput } from "flowbite-react";
 import { TodoListContext } from "../App";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
@@ -12,11 +12,12 @@ interface FormValues{
 
 const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
   return (
-    <TextInput
+    <Textarea
       {...field}
       {...props}
       onChange={form.handleChange}
       onBlur={form.handleBlur}
+      rows={6}
     />
   );
 }

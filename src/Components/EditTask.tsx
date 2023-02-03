@@ -1,5 +1,5 @@
 
-import { Button, TextInput } from "flowbite-react";
+import { Button, Textarea, TextInput } from "flowbite-react";
 import { Field, FieldProps, Form, Formik } from "formik";
 import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,11 +13,12 @@ interface FormValues{
   
 const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     return (
-      <TextInput
+      <Textarea
         {...field}
         {...props}
         onChange={form.handleChange}
         onBlur={form.handleBlur}
+        rows={6}
       />
     );
   }
@@ -56,7 +57,7 @@ const EditTask = () => {
                 onSubmit={(values, actions) => {
                 console.log({ values, actions });
                 todoEdit.taskName = values.taskName;
-                todoEdit.deadline = values.deadline;
+                todoEdit.deadline = Number(values.deadline);
                 actions.setSubmitting(false);
                 navigate('/list');
                 }}
