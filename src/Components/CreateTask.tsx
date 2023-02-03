@@ -4,6 +4,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
 import { Button, TextInput } from "flowbite-react";
 import { TodoListContext } from "../App";
 import * as Yup from "yup";
+import { useNavigate } from "react-router";
 interface FormValues{
   taskName : string;
   deadline: string;
@@ -44,7 +45,7 @@ const Validators = Yup.object().shape({
 const CreateTask = () => {
 
     const todo = useContext(TodoListContext);
-
+    const navigate = useNavigate();
     const initialValues : FormValues = {taskName: "", deadline: ""};
 
     const addTask = (values : FormValues) => {
@@ -70,6 +71,7 @@ const CreateTask = () => {
           console.log({ values, actions });
           addTask(values);
           actions.setSubmitting(false);
+          navigate('/list');
         }}
         >
           <Form className="flex flex-col gap-4">
