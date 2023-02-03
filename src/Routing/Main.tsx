@@ -10,7 +10,7 @@ import TimelineList from '../Components/TimelineList';
 const Main = () => {
     return (   
         <Routes>
-            <Route path='/' element={<Home/>} />
+            <Route path='/' element={<ShowTasks/>} />
             <Route path='/create' element={<CreateTask/>} />
             <Route path='/list' element={<ShowTasks/>} />
             <Route path='/edit/:id' element={<EditTask/>}/>
