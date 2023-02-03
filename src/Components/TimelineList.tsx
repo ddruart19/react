@@ -15,8 +15,8 @@ const TimelineList: React.FC = () =>{
     return (
         <>
         <Timeline>
-            {sortTask(todo.todoList).map((task:ITask) => {
-                return <TimelineItem task={task}/>
+            {sortTask(todo.todoList).map((task:ITask, key: number) => {
+                return <TimelineItem task={task} key={key}/>
             })}
         </Timeline>
         </>
