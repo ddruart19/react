@@ -6,7 +6,7 @@
  }, {
   "id": 2,
   "taskName": "Turn off the lights",
-  "deadline": 1,
+  "deadline": 4,
   "completed": false
  }, {
   "id": 3,
@@ -16,7 +16,7 @@
  }, {
   "id": 4,
   "taskName": "Hug mom",
-  "deadline": 0,
+  "deadline": 2,
   "completed": true
  }
 ]

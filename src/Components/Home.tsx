@@ -1,32 +1,61 @@
 import { Button, Card } from "flowbite-react";
+import { useContext } from "react";
+import { TodoListContext } from "../App";
+import { ITask } from "../Interfaces";
+import CSS from 'csstype';
+import { useNavigate } from "react-router-dom";
+
+const divMainHomeStyles: CSS.Properties = {
+    height: '40vh'
+}
+
+const divHomeStyles: CSS.Properties ={
+    float: 'left',
+    width:'50%',
+    height: '100%'
+};
+
+const buttonStyles: CSS.Properties = {
+    width: '80%',
+    margin: '1% auto'
+}
 
 const Home: React.FC = () => {
+    const todo = useContext(TodoListContext);
+    const navigate = useNavigate();
+    const nextTaskToDo: ITask = todo.todoList.sort((a, b) => a.deadline - b.deadline)[0];
+
+
+
     return (
-        <>
-            <Card>
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-                </p>
-                <Button>
-                    Read more
-                    <svg
-                    className="ml-2 -mr-1 h-4 w-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                    >
-                    <path
-                        fillRule="evenodd"
-                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                    />
-                    </svg>
-                </Button>
-            </Card>
-        </>
+        <div style={divMainHomeStyles}>
+            <div style={divHomeStyles}>
+                <Card style={{height: '100%'}}>
+                    <Button style={buttonStyles} color="gray" onClick={() => navigate('/list')}>
+                        Show tasks
+                    </Button>
+                    <Button style={buttonStyles} color="gray" onClick={() => navigate('/timeline')}>
+                        Show timeline
+                    </Button>
+                    <Button style={buttonStyles} color="gray" onClick={() => navigate('/calendar')}>
+                        Show calendar
+                    </Button>
+                    <Button style={buttonStyles} onClick={() => navigate('/create')}>
+                        Create task
+                    </Button>
+                </Card>
+            </div>
+            <div style={divHomeStyles}>
+                <Card style={{height: '100%'}}>
+                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Next task to do 
+                    </h5>
+                    <p className="font-normal text-gray-700 dark:text-gray-400">
+                        {nextTaskToDo.deadline} days remaining to {nextTaskToDo.taskName}
+                    </p>
+                </Card>
+            </div>
+        </div>
     );
 }
 export default Home;

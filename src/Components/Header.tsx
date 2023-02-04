@@ -41,6 +41,9 @@ const Header = () => {
                 <Link to="/timeline">
                     Show timeline
                 </Link>
+                <Link to="/calendar">
+                    Show Calendar
+                </Link>
             </Navbar.Collapse>
         </Navbar>
     )
