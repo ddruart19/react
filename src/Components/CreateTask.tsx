@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 interface FormValues{
   taskName : string;
   deadline: string;
+  date: string;
 }
 
 const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
@@ -47,14 +48,15 @@ const CreateTask = () => {
 
     const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-    const initialValues : FormValues = {taskName: "", deadline: ""};
+    const initialValues : FormValues = {taskName: "", deadline: "", date: ""};
 
     const addTask = (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
           taskName: values.taskName,
           deadline: Number(values.deadline),
-          completed: false
+          completed: false,
+          date: values.date
         }
         todo.todoList.push(newTask);
         todo.setTodoList(todo.todoList);
@@ -94,6 +96,11 @@ const CreateTask = () => {
             <ErrorMessage name="deadline">
               {msg => <span style={{color: 'red'}}>{msg}</span>}
             </ErrorMessage>
+
+            <label>
+              Date : 
+              <Field name="date" type="date" component={InputNumber}/>
+            </label>
 
             <Button type="submit">Add</Button>
           </Form>
