@@ -9,7 +9,7 @@ interface ITask {
     date: string;
 }
 
-const data: ITask[] = [{
+let data: ITask[] = [{
     "id": 1,
     "taskName": "Give dog a bath",
     "completed": true,
@@ -57,6 +57,9 @@ app.post('/api/task', (req: Request, res: Response) => {data.push(dataToCreate);
 
 //Update task
 app.put('/api/task/:id', (req: Request, res: Response) => {data[data.findIndex(t => t.id === Number(req.params.id))] = dataToUpdate; res.send("Task successfully updated")})
+
+//Delete task
+app.delete('/api/task/:id', (req: Request, res: Response) => {data = data.filter(t => t.id !== Number(req.params.id)); res.send("Task successfully deleted")})
 
 
 
