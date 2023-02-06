@@ -31,7 +31,7 @@ const CalendarTask:React.FC = () => {
 
     useEffect(() => {
         createEvents();
-    }, [createEvents, todo.todoList]);
+    }, []);
     
     return (
         <div style={divCalendarStyles}>

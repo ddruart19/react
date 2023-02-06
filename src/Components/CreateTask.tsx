@@ -106,8 +106,6 @@ const CreateTask = () => {
                   }
               </ErrorMessage>
             </div>
-
-
             <Button type="submit">Add</Button>
           </Form>
         </Formik>
