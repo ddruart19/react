@@ -43,9 +43,7 @@ const Validators = Yup.object().shape({
     .required('Task name required'),
   taskDate: Yup.date()
     .min(Date(), 'Can only set date for today or further')
-}
-
-);
+});
 
 const CreateTask = () => {
 
@@ -90,13 +88,16 @@ const CreateTask = () => {
               </ErrorMessage>
             </div>
 
-            <label>
-              Date : 
-              <Field name="taskDate" type="date" component={InputDate}/>
+            <div>
+              <label>
+                Date : 
+                <Field name="taskDate" type="date" component={InputDate}/>
+              </label>
               <ErrorMessage name="taskDate">
-                {msg => <span style={divErrorStyles}>{msg}</span>}
+                  {msg => <span style={divErrorStyles}>{msg}</span>}
               </ErrorMessage>
-            </label>
+            </div>
+
 
             <Button type="submit">Add</Button>
           </Form>
