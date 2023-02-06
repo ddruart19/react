@@ -44,7 +44,7 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
                 </Link>
             </Table.Cell>
             <Table.Cell>
-                <Link to=""
+                <Link to="" style={{color:'red'}}
                     className="font-medium text-blue-600 hover:underline dark:text-blue-500" onClick={() => confirmDelete(task)}>
                     Delete
                 </Link>
