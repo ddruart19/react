@@ -23,7 +23,7 @@ const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
   );
 }
 
-const InputNumber: React.FC<Number & FieldProps> = ({ field, form, ...props }) => {
+const InputDate: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
   return (
     <TextInput
       {...field}
@@ -37,9 +37,7 @@ const InputNumber: React.FC<Number & FieldProps> = ({ field, form, ...props }) =
 const Validators = Yup.object().shape({
   taskName: Yup.string()
     .min(2, 'Too short !')
-    .required('Task name required'),
-    deadline: Yup.number()
-    .min(1, 'Deadline must be 1 day minimum')
+    .required('Task name required')
 }
 
 );
@@ -88,18 +86,9 @@ const CreateTask = () => {
               </ErrorMessage>
             </div>
 
-
-            <label>
-              Deadline (days) : 
-              <Field name="deadline" type="number" min="0" placeholder="Deadline (days)" component={InputNumber}/>
-            </label>
-            <ErrorMessage name="deadline">
-              {msg => <span style={{color: 'red'}}>{msg}</span>}
-            </ErrorMessage>
-
             <label>
               Date : 
-              <Field name="date" type="date" component={InputNumber}/>
+              <Field name="date" type="date" component={InputDate}/>
             </label>
 
             <Button type="submit">Add</Button>

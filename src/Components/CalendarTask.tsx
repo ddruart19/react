@@ -1,5 +1,5 @@
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from '@fullcalendar/daygrid'
+import dayGridPlugin from "@fullcalendar/daygrid"
 import { useContext, useEffect, useState } from "react";
 import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";

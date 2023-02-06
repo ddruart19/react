@@ -8,7 +8,7 @@ import { ITask } from "../Interfaces";
 
 interface FormValues{
     taskName : string;
-    deadline: number;
+    taskDate: string;
   }
   
 const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
@@ -23,7 +23,7 @@ const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     );
   }
   
-  const InputNumber: React.FC<Number & FieldProps> = ({ field, form, ...props }) => {
+  const InputDate: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     return (
       <TextInput
         {...field}
@@ -44,10 +44,10 @@ const EditTask = () => {
     let todoEdit:ITask = todo.todoList.find(t => t.id == Number(id))!;
 
     const [task, setTask] = useState<string>(todoEdit ? todoEdit.taskName : "");
-    const [deadline, setDeadline] = useState<number>(todoEdit ? todoEdit.deadline : 0);
+    const [date, setDate] = useState<string>(todoEdit ? todoEdit.date : "");
 
 
-    const initialValues : FormValues = {taskName: todoEdit.taskName, deadline: todoEdit.deadline};
+    const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: todoEdit.date};
 
     if(id){
         return(
@@ -57,7 +57,7 @@ const EditTask = () => {
                 onSubmit={(values, actions) => {
                 console.log({ values, actions });
                 todoEdit.taskName = values.taskName;
-                todoEdit.deadline = Number(values.deadline);
+                todoEdit.date = values.taskDate;
                 actions.setSubmitting(false);
                 navigate('/list');
                 }}
@@ -68,13 +68,12 @@ const EditTask = () => {
                         Task :
                         <Field name="taskName" placeholder="Your task" component={InputText}/>
                     </label>
+                    <label>
+                        Task :
+                        <Field name="taskDate" type="date" component={InputDate}/>
+                    </label>
                     </div>
 
-
-                    <label>
-                    Deadline (days) : 
-                    <Field name="deadline" placeholder="Deadline (days)" component={InputNumber}/>
-                    </label>
                     <Button type="submit">Edit</Button>
                 </Form>
                 </Formik>

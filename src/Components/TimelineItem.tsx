@@ -12,7 +12,7 @@ const TimelineItem: React.FC<{task: ITask}> = ({task}: Props) => {
             <Timeline.Item>
                 <Timeline.Content>
                     <Timeline.Time>
-                        {task.deadline} days left
+                        {task.date}
                     </Timeline.Time>
                     <Timeline.Title>
                         {task.taskName}

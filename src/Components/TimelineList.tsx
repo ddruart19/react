@@ -7,7 +7,7 @@ import TimelineItem from './TimelineItem';
 
 
 const sortTask = (list: ITask[]) =>{
-    return list.sort((a, b) => a.deadline - b.deadline);
+    return list.sort((a, b) => Number(a.date) - Number(b.date));
 }
 
 const TimelineList: React.FC = () =>{

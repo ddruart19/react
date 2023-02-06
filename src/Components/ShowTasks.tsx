@@ -26,7 +26,7 @@ const ShowTasks = () =>{
                 Task
               </Table.HeadCell>
               <Table.HeadCell>
-                Deadline
+                Date
               </Table.HeadCell>
               <Table.HeadCell>
                 <span className="sr-only">

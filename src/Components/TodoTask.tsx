@@ -35,7 +35,7 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
                 {task.taskName}
             </Table.Cell>
             <Table.Cell>
-                {task.deadline}
+                {task.date}
             </Table.Cell>
             <Table.Cell>
                 <Link to={"/edit/" + task.id}
