@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { CSSProperties, useContext } from "react";
 import 'flowbite';
 import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
 import { Button, Textarea, TextInput } from "flowbite-react";
@@ -7,8 +7,11 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router";
 interface FormValues{
   taskName : string;
-  deadline: string;
-  date: string;
+  taskDate: string;
+}
+
+const divErrorStyles: CSSProperties = {
+  color: 'red',
 }
 
 const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
@@ -37,7 +40,9 @@ const InputDate: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
 const Validators = Yup.object().shape({
   taskName: Yup.string()
     .min(2, 'Too short !')
-    .required('Task name required')
+    .required('Task name required'),
+  taskDate: Yup.date()
+    .min(Date(), 'Can only set date for today or further')
 }
 
 );
@@ -46,15 +51,14 @@ const CreateTask = () => {
 
     const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-    const initialValues : FormValues = {taskName: "", deadline: "", date: ""};
+    const initialValues : FormValues = {taskName: "", taskDate: ""};
 
     const addTask = (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
           taskName: values.taskName,
-          deadline: Number(values.deadline),
           completed: false,
-          date: values.date
+          date: values.taskDate
         }
         todo.todoList.push(newTask);
         todo.setTodoList(todo.todoList);
@@ -82,13 +86,16 @@ const CreateTask = () => {
                 <Field name="taskName" placeholder="Your task" component={InputText}/>
               </label>
               <ErrorMessage name="taskName">
-                {msg => <span style={{color: 'red'}}>{msg}</span>}
+                {msg => <span style={divErrorStyles}>{msg}</span>}
               </ErrorMessage>
             </div>
 
             <label>
               Date : 
-              <Field name="date" type="date" component={InputDate}/>
+              <Field name="taskDate" type="date" component={InputDate}/>
+              <ErrorMessage name="taskDate">
+                {msg => <span style={divErrorStyles}>{msg}</span>}
+              </ErrorMessage>
             </label>
 
             <Button type="submit">Add</Button>
