@@ -1,7 +1,7 @@
 
 import { Button, Textarea, TextInput } from "flowbite-react";
 import { Field, FieldProps, Form, Formik } from "formik";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
@@ -41,10 +41,10 @@ const EditTask = () => {
     //URL ID
     const {id} = useParams<string>();
 
-    let todoEdit:ITask = todo.todoList.find(t => t.id == Number(id))!;
+    let todoEdit:ITask = todo.todoList.find(t => t.id === Number(id))!;
 
-    const [task, setTask] = useState<string>(todoEdit ? todoEdit.taskName : "");
-    const [date, setDate] = useState<string>(todoEdit ? todoEdit.date : "");
+    // const [task, setTask] = useState<string>(todoEdit ? todoEdit.taskName : "");
+    // const [date, setDate] = useState<string>(todoEdit ? todoEdit.date : "");
 
 
     const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: todoEdit.date};
