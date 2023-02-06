@@ -29,10 +29,12 @@ const data = [{
   }
  ]
 
-app.get('/', (req: Request, res: Response) => res.send('Hello World from app.ts!YYYY'))
 
-//FetchAll
+//Fetch all
 app.get('/tasks', (req: Request, res: Response) => res.send(data))
+
+//Fetch by id
+app.get('/task/:id', (req: Request, res: Response) => res.send(data.find(t => t.id === Number(req.params.id))))
 
 
 export default app;
