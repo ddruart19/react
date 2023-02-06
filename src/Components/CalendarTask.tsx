@@ -1,13 +1,17 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"
-import { useContext, useEffect, useState } from "react";
+import { CSSProperties, useContext, useEffect, useState } from "react";
 import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
-import { create } from "domain";
 
 interface TodoEvent {
     title: string;
     date: string;
+}
+
+const divCalendarStyles: CSSProperties = {
+    width: '80%',
+    margin: '0 auto'
 }
 
 const CalendarTask:React.FC = () => {
@@ -29,11 +33,12 @@ const CalendarTask:React.FC = () => {
     }, [createEvents, todo.todoList]);
     
     return (
-        <div>
+        <div style={divCalendarStyles}>
             <FullCalendar
                 plugins={[ dayGridPlugin ]}
                 initialView="dayGridMonth"
                 events={listEvent}
+                height='85vh'
             />
         </div>
     );
