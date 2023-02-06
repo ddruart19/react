@@ -39,14 +39,25 @@ const dataToCreate: ITask = {
     "date": "2023-02-25"
 }
 
+const dataToUpdate: ITask = {
+    "id": 5,
+    "taskName": "Do a good REST API",
+    "completed": false,
+    "date": "2023-02-20"
+}
+
 //Fetch all
-app.get('/tasks', (req: Request, res: Response) => res.send(data))
+app.get('/api/tasks', (req: Request, res: Response) => res.send(data))
 
 //Fetch by id
-app.get('/task/:id', (req: Request, res: Response) => res.send(data.find(t => t.id === Number(req.params.id))))
+app.get('/api/task/:id', (req: Request, res: Response) => res.send(data.find(t => t.id === Number(req.params.id))))
 
 //Create task
-app.post('/task', (req: Request, res: Response) => {data.push(dataToCreate); res.send("Task successfuly added")})
+app.post('/api/task', (req: Request, res: Response) => {data.push(dataToCreate); res.send("Task successfully added")})
+
+//Update task
+app.put('/api/task/:id', (req: Request, res: Response) => {data[data.findIndex(t => t.id === Number(req.params.id))] = dataToUpdate; res.send("Task successfully updated")})
+
 
 
 export default app;
