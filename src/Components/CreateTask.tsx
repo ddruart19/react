@@ -1,58 +1,65 @@
-import { useContext } from "react";
+import { CSSProperties, useContext, useState } from "react";
 import 'flowbite';
 import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
-import { Button, TextInput } from "flowbite-react";
+import { Button, Textarea, TextInput } from "flowbite-react";
 import { TodoListContext } from "../App";
 import * as Yup from "yup";
+import { useNavigate } from "react-router";
 interface FormValues{
   taskName : string;
-  deadline: string;
+  taskDate: string;
 }
 
-const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
-  return (
-    <TextInput
-      {...field}
-      {...props}
-      onChange={form.handleChange}
-      onBlur={form.handleBlur}
-    />
-  );
+const divErrorStyles: CSSProperties = {
+  color: 'red',
 }
-
-const InputNumber: React.FC<Number & FieldProps> = ({ field, form, ...props }) => {
-  return (
-    <TextInput
-      {...field}
-      {...props}
-      onChange={form.handleChange}
-      onBlur={form.handleBlur}
-    />
-  );
-}
-
-const Validators = Yup.object().shape({
-  taskName: Yup.string()
-    .min(2, 'Too short !')
-    .required('Task name required'),
-    deadline: Yup.number()
-    .min(1, 'Deadline must be 1 day minimum')
-}
-
-);
 
 const CreateTask = () => {
+  const [colorOfInputName, setColorOfInputName] = useState("gray");
+  const [colorOfInputDate, setColorOfInputDate] = useState("gray");
 
+  const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
+    return (
+      <Textarea
+        {...field}
+        {...props}
+        onChange={form.handleChange}
+        onBlur={form.handleBlur}
+        rows={6}
+        color={colorOfInputName}
+      />
+    );
+  }
+  
+  const InputDate: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
+    return (
+      <TextInput
+        {...field}
+        {...props}
+        onChange={form.handleChange}
+        onBlur={form.handleBlur}
+        color={colorOfInputDate}
+      />
+    );
+  }
+  
+  const Validators = Yup.object().shape({
+    taskName: Yup.string()
+      .min(2, 'Too short !')
+      .required('Task name required'),
+    taskDate: Yup.date()
+      .min(Date(), 'Can only set date for today or further')
+  });
     const todo = useContext(TodoListContext);
-
-    const initialValues : FormValues = {taskName: "", deadline: ""};
+    const navigate = useNavigate();
+    const initialValues : FormValues = {taskName: "", taskDate: ""};
 
     const addTask = (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
           taskName: values.taskName,
-          deadline: Number(values.deadline),
-          completed: false
+          completed: false,
+          date: values.taskDate
         }
         todo.todoList.push(newTask);
         todo.setTodoList(todo.todoList);
@@ -70,6 +77,7 @@ const CreateTask = () => {
           console.log({ values, actions });
           addTask(values);
           actions.setSubmitting(false);
+          navigate('/list');
         }}
         >
           <Form className="flex flex-col gap-4">
@@ -79,19 +87,25 @@ const CreateTask = () => {
                 <Field name="taskName" placeholder="Your task" component={InputText}/>
               </label>
               <ErrorMessage name="taskName">
-                {msg => <span style={{color: 'red'}}>{msg}</span>}
+                {msg =>{
+                  // setColorOfInputName("failure");
+                  return <span style={divErrorStyles}>{msg}</span>;
+                } }
               </ErrorMessage>
             </div>
 
-
-            <label>
-              Deadline (days) : 
-              <Field name="deadline" type="number" min="0" placeholder="Deadline (days)" component={InputNumber}/>
-            </label>
-            <ErrorMessage name="deadline">
-              {msg => <span style={{color: 'red'}}>{msg}</span>}
-            </ErrorMessage>
-
+            <div>
+              <label>
+                Date : 
+                <Field name="taskDate" type="date" component={InputDate}/>
+              </label>
+              <ErrorMessage name="taskDate">
+                  {msg => {
+                    // setColorOfInputDate("failure");
+                    return <span style={divErrorStyles}>{msg}</span>}
+                  }
+              </ErrorMessage>
+            </div>
             <Button type="submit">Add</Button>
           </Form>
         </Formik>

@@ -26,11 +26,16 @@ const ShowTasks = () =>{
                 Task
               </Table.HeadCell>
               <Table.HeadCell>
-                Deadline
+                Date
               </Table.HeadCell>
               <Table.HeadCell>
                 <span className="sr-only">
                   Edit
+                </span> 
+              </Table.HeadCell>
+              <Table.HeadCell>
+                <span className="sr-only">
+                  Delete
                 </span> 
               </Table.HeadCell>
             </Table.Head>

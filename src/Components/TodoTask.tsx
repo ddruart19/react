@@ -1,6 +1,7 @@
 import { Checkbox, Table } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
 
 interface Props{
@@ -8,13 +9,21 @@ interface Props{
     completeTask(taskId: number, isCompleted: boolean): void;
 }
 
-
 const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTask}: Props) =>{
     const[isChecked, setIsChecked] = useState(task.completed);
+
+    const todo = useContext(TodoListContext);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setIsChecked(e.target.checked);
         completeTask(task.id, e.target.checked);
         console.log(task.completed);
+    }
+
+    const confirmDelete = (task:ITask) => {
+        if(window.confirm('Are you sure you want to delete ' + task.taskName + '?')){
+            todo.setTodoList(todo.todoList.filter(t => t.id !== task.id));
+        }
     }
     return(
 
@@ -26,12 +35,18 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
                 {task.taskName}
             </Table.Cell>
             <Table.Cell>
-                {task.deadline}
+                {task.date}
             </Table.Cell>
             <Table.Cell>
                 <Link to={"/edit/" + task.id}
-                className="font-medium text-blue-600 hover:underline dark:text-blue-500">
-                Edit
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+                    Edit
+                </Link>
+            </Table.Cell>
+            <Table.Cell>
+                <Link to="" style={{color:'red'}}
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500" onClick={() => confirmDelete(task)}>
+                    Delete
                 </Link>
             </Table.Cell>
         </Table.Row>
