@@ -28,6 +28,8 @@ app.get('/api/tasks', db.getTasks)
 app.get('/api/task/:id', db.getTaskById)
 //Create task
 app.post('/api/task', db.createTask)
+//Update task
+app.put('/api/task/:id', db.updateTask)
 
 
 
