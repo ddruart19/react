@@ -44,7 +44,7 @@ const updateTask = (request: Request, response: Response) => {
 const deleteTask = (request: Request, response: Response) => {
     pool.query('DELETE from task where task.id = $1', [request.params.id], (error: Error, results: { rows: any; }) => {
         if(error) throw error
-        response.send("Task successfully deleted")
+        response.status(200).send("Task successfully deleted")
     })
 }
 
