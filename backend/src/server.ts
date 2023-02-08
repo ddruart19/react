@@ -1,18 +1,18 @@
 // import app from "./app";
-// import compression from "compression";
+import compression from "compression";
 
 const bodyParser = require('body-parser');
 import express from "express";
 
-// import helmet from "helmet";
+import helmet from "helmet";
 const db = require('./queries');
 const app = express()
 const port = 3000
 
-// app.use(helmet()); // set well-known security-related HTTP headers
-// app.use(compression());
+app.use(helmet()); // set well-known security-related HTTP headers
+app.use(compression());
 
-// app.disable("x-powered-by");
+app.disable("x-powered-by");
 
 app.use(bodyParser.json())
 
@@ -23,7 +23,12 @@ app.use(
   )
 
 //Fetch all tasks
-app.get('/tasks', db.getUsers)
+app.get('/tasks', db.getTasks)
+
+
+// (req: Request, res: Response) => res.send(db.getTaskById(req.params.id))
+//Fetch task by id
+app.get('/task/:id', db.getTaskById)
 
 const server = app.listen(port, () =>
     console.log(`Starting ExpressJS server on Port ${port}`));
