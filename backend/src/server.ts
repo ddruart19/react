@@ -30,6 +30,8 @@ app.get('/api/task/:id', db.getTaskById)
 app.post('/api/task', db.createTask)
 //Update task
 app.put('/api/task/:id', db.updateTask)
+//Delete task
+app.delete('/api/task/:id', db.deleteTask)
 
 
 
