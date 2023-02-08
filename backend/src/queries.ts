@@ -28,7 +28,7 @@ const getTaskById = (request : Request, response : Response) => {
 const createTask = (request : Request, response : Response) => {
     pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [request.body.taskName, request.body.completed, request.body.date], (error: Error, results: { rows: any; }) => {
         if(error) throw error
-        response.send("Task successfully added")
+        response.status(200).send("Task successfully added")
     })
 }
 
@@ -36,7 +36,7 @@ const createTask = (request : Request, response : Response) => {
 const updateTask = (request: Request, response: Response) => {
     pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.taskName, request.body.completed, request.body.date, request.params.id], (error: Error, results: { rows: any; }) => {
         if(error) throw error
-        response.send("Task successfully updated")
+        response.status(200).send("Task successfully updated")
     })
 }
 
