@@ -23,12 +23,14 @@ app.use(
   )
 
 //Fetch all tasks
-app.get('/tasks', db.getTasks)
-
-
-// (req: Request, res: Response) => res.send(db.getTaskById(req.params.id))
+app.get('/api/tasks', db.getTasks)
 //Fetch task by id
-app.get('/task/:id', db.getTaskById)
+app.get('/api/task/:id', db.getTaskById)
+//Create task
+app.post('/api/task', db.createTask)
+
+
+
 
 const server = app.listen(port, () =>
     console.log(`Starting ExpressJS server on Port ${port}`));
