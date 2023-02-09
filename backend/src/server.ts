@@ -7,6 +7,7 @@ import express from "express";
 import helmet from "helmet";
 const db = require('./queries');
 const app = express()
+const cors = require('cors');
 const port = 3000
 
 app.use(helmet()); // set well-known security-related HTTP headers
@@ -15,6 +16,7 @@ app.use(compression());
 app.disable("x-powered-by");
 
 app.use(bodyParser.json())
+app.use(cors())
 
 app.use(
     bodyParser.urlencoded({
