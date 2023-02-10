@@ -11,14 +11,11 @@ export const fetchTaskById = async (id: string) => {
 }
 
 // Create task
-export const createTask = async (task: OutputTask) => {
-    return await fetch('http://localhost:3000/api/task', {
+export const createTask = (task: OutputTask) => {
+    console.log(task)
+    return fetch('http://localhost:3000/api/task', {
         method: 'POST',
-        body: JSON.stringify({
-          name: task.name,
-          completed : task.completed,
-          date: task.date
-        }),
+        body: JSON.stringify(task),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         }

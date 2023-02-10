@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { createTask } from "../APICall";
 interface FormValues{
   taskName : string;
-  taskDate: Date;
+  taskDate: string;
 }
 
 const divErrorStyles: CSSProperties = {
@@ -53,24 +53,24 @@ const CreateTask = () => {
   });
     const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-    const initialValues : FormValues = {taskName: "", taskDate: new Date()};
+    const initialValues : FormValues = {taskName: "", taskDate: "2023-02-02"};
 
     const addTask = async (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
           taskName: values.taskName,
           completed: false,
-          date: values.taskDate
+          date: new Date(values.taskDate)
         }
         todo.todoList.push(newTask);
         todo.setTodoList(todo.todoList);
 
         //Add task in DB
         createTask({
-          name : newTask.taskName,
-          completed: newTask.completed,
-          date: newTask.date
-        }).then(res => res.json()).then(data => console.log(data));
+          name : values.taskName,
+          completed: false,
+          date: new Date(values.taskDate)
+        }).then(res => res.json()).then(data => console.log(data)).catch(error => console.log(error));
       }
 
     
