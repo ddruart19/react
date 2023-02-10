@@ -1,16 +1,15 @@
 
 import { Button, Textarea, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
-import { CSSProperties, useContext, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { TodoListContext } from "../App";
-import { ITask, ITaskDB } from "../Interfaces";
+import { ITask } from "../Interfaces";
 import * as Yup from "yup";
 import { fetchTaskById } from "../APICall";
 
 interface FormValues{
     taskName : string;
-    taskDate: string;
+    taskDate: Date;
 }
 
 const divErrorStyles: CSSProperties = {
@@ -49,7 +48,6 @@ taskDate: Yup.date()
 });
   
 const EditTask = () => {
-    const todo = useContext(TodoListContext);
     const navigate = useNavigate();
     const [todoEdit, setTodoEdit] = useState<ITask | null>(null);
 
@@ -60,7 +58,6 @@ const EditTask = () => {
 
     useEffect(() => {
         fetchTaskById(id!).then(res => res.json()).then(data => {
-            console.log(data);
             setTodoEdit({
                 id: data.id,
                 taskName: data.name,
@@ -69,7 +66,7 @@ const EditTask = () => {
 
             });
         });
-    }, []);
+    });
 
     
     if(id && todoEdit){

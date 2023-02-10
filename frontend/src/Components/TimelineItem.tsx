@@ -12,7 +12,7 @@ const TimelineItem: React.FC<{task: ITask}> = ({task}: Props) => {
             <Timeline.Item>
                 <Timeline.Content>
                     <Timeline.Time>
-                        {task.date}
+                        {task.date.toDateString()}
                     </Timeline.Time>
                     <Timeline.Title>
                         {task.taskName}

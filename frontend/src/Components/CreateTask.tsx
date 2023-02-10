@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router";
 interface FormValues{
   taskName : string;
-  taskDate: string;
+  taskDate: Date;
 }
 
 const divErrorStyles: CSSProperties = {
@@ -52,7 +52,7 @@ const CreateTask = () => {
   });
     const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-    const initialValues : FormValues = {taskName: "", taskDate: ""};
+    const initialValues : FormValues = {taskName: "", taskDate: new Date()};
 
     const addTask = (values : FormValues) => {
         const newTask = {

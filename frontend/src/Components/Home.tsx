@@ -4,6 +4,7 @@ import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
 import CSS from 'csstype';
 import { useNavigate } from "react-router-dom";
+import { showFullDate } from "../functions";
 
 const divMainHomeStyles: CSS.Properties = {
     height: '40vh'
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
                         Next task to do 
                     </h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">
-                    {nextTaskToDo.taskName} before {nextTaskToDo.date}
+                    {nextTaskToDo.taskName} before {showFullDate(nextTaskToDo.date)}
                     </p>
                 </Card>
             </div>

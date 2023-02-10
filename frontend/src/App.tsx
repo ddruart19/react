@@ -17,7 +17,7 @@ const App:React.FC = () => {
     "id": 1,
     "taskName": "Give dog a bath",
     "completed": true,
-    "date": "2023-02-05"
+    "date": new Date('2023-02-05')
   }]);
 
 

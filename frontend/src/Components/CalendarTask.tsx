@@ -6,7 +6,7 @@ import { ITask } from "../Interfaces";
 
 interface TodoEvent {
     title: string;
-    date: string;
+    date: Date;
     color: string;
 }
 
