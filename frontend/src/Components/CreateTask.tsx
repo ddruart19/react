@@ -63,7 +63,6 @@ const CreateTask = () => {
         }
         todo.todoList.push(newTask);
         todo.setTodoList(todo.todoList);
-        console.log(todo.todoList);
       }
 
     
@@ -74,7 +73,6 @@ const CreateTask = () => {
         initialValues={initialValues}
         validationSchema={Validators}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
           addTask(values);
           actions.setSubmitting(false);
           navigate('/list');

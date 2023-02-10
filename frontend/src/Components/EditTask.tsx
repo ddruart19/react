@@ -1,11 +1,12 @@
 
 import { Button, Textarea, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
-import { CSSProperties, useContext } from "react";
+import { CSSProperties, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TodoListContext } from "../App";
-import { ITask } from "../Interfaces";
+import { ITask, ITaskDB } from "../Interfaces";
 import * as Yup from "yup";
+import { fetchTaskById } from "../APICall";
 
 interface FormValues{
     taskName : string;
@@ -50,26 +51,36 @@ taskDate: Yup.date()
 const EditTask = () => {
     const todo = useContext(TodoListContext);
     const navigate = useNavigate();
+    const [todoEdit, setTodoEdit] = useState<ITask | null>(null);
 
     //URL ID
     const {id} = useParams<string>();
 
-    let todoEdit:ITask = todo.todoList.find(t => t.id === Number(id))!;
+    // let todoEdit:ITask = todo.todoList.find(t => t.id === Number(id))!;
 
-    // const [task, setTask] = useState<string>(todoEdit ? todoEdit.taskName : "");
-    // const [date, setDate] = useState<string>(todoEdit ? todoEdit.date : "");
+    useEffect(() => {
+        fetchTaskById(id!).then(res => res.json()).then(data => {
+            console.log(data);
+            setTodoEdit({
+                id: data.id,
+                taskName: data.name,
+                completed: data.completed,
+                date : data.date
 
+            });
+        });
+    }, []);
 
-    const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: todoEdit.date};
-
-    if(id){
+    
+    if(id && todoEdit){
+        
+        const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: todoEdit.date};
         return(
             <>
                 <Formik
                 initialValues={initialValues}
                 validationSchema={Validators}
                 onSubmit={(values, actions) => {
-                console.log({ values, actions });
                 todoEdit.taskName = values.taskName;
                 todoEdit.date = values.taskDate;
                 actions.setSubmitting(false);
@@ -103,7 +114,7 @@ const EditTask = () => {
         );
     }
     return(
-        <></>
+        <><h2>No task found</h2></>
     );
 }
 export default EditTask;

@@ -17,7 +17,6 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setIsChecked(e.target.checked);
         completeTask(task.id, e.target.checked);
-        console.log(task.completed);
     }
 
     const confirmDelete = (task:ITask) => {

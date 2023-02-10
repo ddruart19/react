@@ -22,7 +22,6 @@ const CalendarTask:React.FC = () => {
     
 
     const createEvents = () => {
-        
         const newEvents = todo.todoList.map((task:ITask) => {
             return { title: task.taskName, date: task.date, color: task.completed ? 'green' : 'blue'};
         });

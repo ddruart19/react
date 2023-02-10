@@ -13,9 +13,14 @@ export const TodoListContext = createContext<{todoList: ITask[], setTodoList: (l
 
 const App:React.FC = () => {
   //Liste des tâches
-  const [todoList, setTodoList] = useState<ITask[]>([]);
+  const [todoList, setTodoList] = useState<ITask[]>([{
+    "id": 1,
+    "taskName": "Give dog a bath",
+    "completed": true,
+    "date": "2023-02-05"
+  }]);
 
-  
+
   useEffect(() => {
       fetchTasks().then(res => res.json()).then(data => {
         setTodoList(data.map((taskDb: ITaskDB, key: number) => {

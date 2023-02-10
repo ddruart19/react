@@ -1,11 +1,11 @@
 
 // Fetch all tasks
 export const fetchTasks = async () => {
-    return fetch('http://localhost:3000/api/tasks');    
+    return await fetch('http://localhost:3000/api/tasks');    
 }
 
 // Fetch task by ID
-export const fetchTaskById = async (id: number) => {
+export const fetchTaskById = async (id: string) => {
     return fetch(`http://localhost:3000/api/task/${id}`);    
 }
 
