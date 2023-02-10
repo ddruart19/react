@@ -27,7 +27,7 @@ const getTasks = (request : Request, response : Response) => {
 const getTaskById = (request : Request, response : Response) => {
     pool.query('SELECT * FROM task where task.id = $1', [request.params.id], (error: Error, results: { rows: taskDB[]; }) => {
         if (error) throw error
-        response.status(200).json(results.rows)
+        response.status(200).json(results.rows[0])
     })
 }
 
