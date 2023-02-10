@@ -5,6 +5,7 @@ import { Button, Textarea, TextInput } from "flowbite-react";
 import { TodoListContext } from "../App";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
+import { createTask } from "../APICall";
 interface FormValues{
   taskName : string;
   taskDate: Date;
@@ -54,7 +55,7 @@ const CreateTask = () => {
     const navigate = useNavigate();
     const initialValues : FormValues = {taskName: "", taskDate: new Date()};
 
-    const addTask = (values : FormValues) => {
+    const addTask = async (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
           taskName: values.taskName,
@@ -63,6 +64,13 @@ const CreateTask = () => {
         }
         todo.todoList.push(newTask);
         todo.setTodoList(todo.todoList);
+
+        //Add task in DB
+        createTask({
+          name : newTask.taskName,
+          completed: newTask.completed,
+          date: newTask.date
+        }).then(res => res.json()).then(data => console.log(data));
       }
 
     

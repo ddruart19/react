@@ -11,3 +11,9 @@ export interface ITaskDB{
     completed : boolean;
     date: Date;
 }
+
+export interface OutputTask{
+    name: string;
+    completed : boolean;
+    date: Date;
+}

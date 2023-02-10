@@ -11,3 +11,7 @@ export const showDate = (date : Date) => {
 export const showTime = (date : Date) => {
     return (moment(date)).format('HH:mm');
 }
+
+export const formatDate = (date : Date) => {
+    return (moment(date)).format('yy-MM-dd');
+}

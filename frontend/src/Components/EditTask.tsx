@@ -1,4 +1,3 @@
-
 import { Button, Textarea, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
 import { CSSProperties, useEffect, useState } from "react";
@@ -9,7 +8,7 @@ import { fetchTaskById } from "../APICall";
 
 interface FormValues{
     taskName : string;
-    taskDate: Date;
+    taskDate: string;
 }
 
 const divErrorStyles: CSSProperties = {
@@ -49,37 +48,47 @@ taskDate: Yup.date()
   
 const EditTask = () => {
     const navigate = useNavigate();
-    const [todoEdit, setTodoEdit] = useState<ITask | null>(null);
+    // const [initialValues, setInitialValues] = useState<FormValues>({taskName: "", taskDate: ""})
+
+    const [todoEdit, setTodoEdit] = useState<ITask>({
+        id: 0,
+        taskName: "",
+        completed: false,
+        date : new Date()
+
+    });
 
     //URL ID
     const {id} = useParams<string>();
 
     // let todoEdit:ITask = todo.todoList.find(t => t.id === Number(id))!;
 
-    useEffect(() => {
-        fetchTaskById(id!).then(res => res.json()).then(data => {
-            setTodoEdit({
-                id: data.id,
-                taskName: data.name,
-                completed: data.completed,
-                date : data.date
+    // useEffect( () => {
+    //     fetchTaskById(id!).then(res => res.json()).then(data => {
+    //         setTodoEdit({
+    //             id: data.id,
+    //             taskName: data.name,
+    //             completed: data.completed,
+    //             date : data.date
 
-            });
-        });
-    });
+    //         }); 
+    //     });
+    //     console.log("Effect")
+    //     console.log(todoEdit)
+    // }, [todoEdit.id]);
 
     
     if(id && todoEdit){
         
-        const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: todoEdit.date};
+        // const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: "2022-02-01"};
         return(
             <>
                 <Formik
-                initialValues={initialValues}
+                initialValues={{taskName: todoEdit.taskName, taskDate: "2022-02-01"}}
                 validationSchema={Validators}
                 onSubmit={(values, actions) => {
                 todoEdit.taskName = values.taskName;
-                todoEdit.date = values.taskDate;
+                todoEdit.date = new Date();
                 actions.setSubmitting(false);
                 navigate('/list');
                 }}

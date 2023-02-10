@@ -1,4 +1,5 @@
 import { Timeline } from "flowbite-react";
+import { showFullDate } from "../functions";
 import { ITask } from "../Interfaces";
 
 interface Props{
@@ -12,7 +13,7 @@ const TimelineItem: React.FC<{task: ITask}> = ({task}: Props) => {
             <Timeline.Item>
                 <Timeline.Content>
                     <Timeline.Time>
-                        {task.date.toDateString()}
+                        {showFullDate(task.date)}
                     </Timeline.Time>
                     <Timeline.Title>
                         {task.taskName}

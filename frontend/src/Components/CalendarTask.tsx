@@ -30,7 +30,7 @@ const CalendarTask:React.FC = () => {
 
     useEffect(() => {
         createEvents();
-    }, );
+    }, []);
     
     return (
         <div style={divCalendarStyles}>

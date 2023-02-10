@@ -1,5 +1,5 @@
 import { Table } from "flowbite-react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
 import TodoTask from "./TodoTask";

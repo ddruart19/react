@@ -1,7 +1,9 @@
 import { Checkbox, Table } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { deleteTask } from "../APICall";
 import { TodoListContext } from "../App";
+import { showFullDate } from "../functions";
 import { ITask } from "../Interfaces";
 
 interface Props{
@@ -22,6 +24,7 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
     const confirmDelete = (task:ITask) => {
         if(window.confirm('Are you sure you want to delete ' + task.taskName + '?')){
             todo.setTodoList(todo.todoList.filter(t => t.id !== task.id));
+            deleteTask(String(task.id));
         }
     }
     return(
@@ -34,7 +37,7 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
                 {task.taskName}
             </Table.Cell>
             <Table.Cell>
-                {task.date.toDateString()}
+                {showFullDate(task.date)}
             </Table.Cell>
             <Table.Cell>
                 <Link to={"/edit/" + task.id}
