@@ -1,17 +1,34 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
+import { fetchTasks } from './APICall';
 import './App.css';
 import Header from './Components/Header';
-import { ITask } from './Interfaces';
+import { ITask, ITaskDB } from './Interfaces';
 import Main from './Routing/Main';
-import data from './data.json';
 
 export const TodoListContext = createContext<{todoList: ITask[], setTodoList: (list: ITask[]) => void}>({
   todoList: [], 
   setTodoList: (list: ITask[]) => {}
 });
 
+
 const App:React.FC = () => {
-  const [todoList, setTodoList] = useState<ITask[]>(data);
+  //Liste des tâches
+  const [todoList, setTodoList] = useState<ITask[]>([]);
+
+  
+  useEffect(() => {
+      fetchTasks().then(res => res.json()).then(data => {
+        setTodoList(data.map((taskDb: ITaskDB, key: number) => {
+          return {
+            id: taskDb.id,
+            taskName: taskDb.name,
+            completed: taskDb.completed,
+            date: taskDb.date
+          };
+        }))
+      })
+  }, []);
+
   return (
     <div className="App">
         <TodoListContext.Provider value={{todoList:todoList, setTodoList:setTodoList}}>

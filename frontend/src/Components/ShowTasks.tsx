@@ -1,5 +1,5 @@
 import { Table } from "flowbite-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
 import TodoTask from "./TodoTask";
@@ -7,14 +7,16 @@ import TodoTask from "./TodoTask";
 const ShowTasks = () =>{
 
     const todo = useContext(TodoListContext);
-
+    
     const completeTask = (taskId: number, isCompleted: boolean) => {
      let todoToEdit = todo.todoList.find(t => t.id === taskId)!;
      todoToEdit.completed = isCompleted;
     }
+
     
     return(
         <div className="todoList">
+
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>

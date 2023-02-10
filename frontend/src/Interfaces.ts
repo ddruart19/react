@@ -4,3 +4,10 @@ export interface ITask{
     completed: boolean;
     date: string;
 }
+
+export interface ITaskDB{
+    id: number;
+    name: string;
+    completed : boolean;
+    date: string;
+}
