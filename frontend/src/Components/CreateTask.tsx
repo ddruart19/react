@@ -2,7 +2,6 @@ import { CSSProperties, useContext, useState } from "react";
 import 'flowbite';
 import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
 import { Button, Textarea, TextInput } from "flowbite-react";
-import { TodoListContext } from "../App";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import { createTask } from "../APICall";
@@ -51,19 +50,19 @@ const CreateTask = () => {
     taskDate: Yup.date()
       .min(Date(), 'Can only set date for today or further')
   });
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(App.TodoListContext);
     const navigate = useNavigate();
     const initialValues : FormValues = {taskName: "", taskDate: "2023-02-02"};
 
     const addTask = async (values : FormValues) => {
-        const newTask = {
-          id: todo.todoList.length + 1,
-          name: values.taskName,
-          completed: false,
-          date: new Date(values.taskDate)
-        }
-        todo.todoList.push(newTask);
-        todo.setTodoList(todo.todoList);
+        // const newTask = {
+        //   id: todo.todoList.length + 1,
+        //   name: values.taskName,
+        //   completed: false,
+        //   date: new Date(values.taskDate)
+        // }
+        // todo.todoList.push(newTask);
+        // todo.setTodoList(todo.todoList);
 
         //Add task in DB
         createTask({

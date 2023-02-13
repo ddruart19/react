@@ -1,8 +1,8 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"
 import { CSSProperties, useContext, useEffect, useState } from "react";
-import { TodoListContext } from "../App";
 import { ITask } from "../Interfaces";
+import { useFetchAllTasks } from "../App";
 
 interface TodoEvent {
     title: string;
@@ -17,12 +17,12 @@ const divCalendarStyles: CSSProperties = {
 
 const CalendarTask:React.FC = () => {
 
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(TodoListContext);
     const [listEvent, setListEvent] = useState<TodoEvent[]>([]);
-    
+    const fetchTodoList = useFetchAllTasks();
 
     const createEvents = () => {
-        const newEvents = todo.todoList.map((task:ITask) => {
+        const newEvents = fetchTodoList.data!.map((task:ITask) => {
             return { title: task.name, date: task.date, color: task.completed ? 'green' : 'blue'};
         });
         setListEvent(newEvents);

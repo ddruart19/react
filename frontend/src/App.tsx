@@ -1,24 +1,26 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { fetchTasks } from './APICall';
+import React, {  } from 'react';
 import './App.css';
 import Header from './Components/Header';
-import { ITask, ITaskDB } from './Interfaces';
 import Main from './Routing/Main';
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
+  useQuery,
 } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { ITaskDB } from './Interfaces';
+import { fetchTasks } from './APICall';
 
-export const TodoListContext = createContext<{todoList: ITask[], setTodoList: (list: ITask[]) => void}>({
-  todoList: [], 
-  setTodoList: (list: ITask[]) => {}
-});
+// export const TodoListContext = createContext<{todoList: ITask[], setTodoList: (list: ITask[]) => void}>({
+//   todoList: [], 
+//   setTodoList: (list: ITask[]) => {}
+// });
 
 const queryClient = new QueryClient();
+
+export const useFetchAllTasks = () => {
+  return useQuery<ITaskDB[], Error>('todoList', fetchTasks);
+}
 
 const App:React.FC = () => {
   //Liste des tâches

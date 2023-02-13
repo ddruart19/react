@@ -1,10 +1,7 @@
 import { Table } from "flowbite-react";
-import { useContext } from "react";
-import { QueryClient, useMutation, useQuery } from "react-query";
-import { TodoListContext } from "../App";
-import { ITask, ITaskDB } from "../Interfaces";
+import { useFetchAllTasks } from "../App";
+import { ITaskDB } from "../Interfaces";
 import TodoTask from "./TodoTask";
-import { fetchTasks } from '../APICall';
 
 
 
@@ -17,7 +14,7 @@ const ShowTasks = () =>{
     //  todoToEdit.completed = isCompleted;
     }
 
-    const fetchTodoList = useQuery<ITaskDB[], Error>('todoList', fetchTasks);
+    const fetchTodoList = useFetchAllTasks();
 
     if (fetchTodoList.status === 'loading') {
       return <span>Loading...</span>

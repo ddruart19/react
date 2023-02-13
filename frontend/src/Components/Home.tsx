@@ -1,10 +1,6 @@
 import { Button, Card } from "flowbite-react";
-import { useContext } from "react";
-import { TodoListContext } from "../App";
-import { ITask } from "../Interfaces";
 import CSS from 'csstype';
 import { useNavigate } from "react-router-dom";
-import { showFullDate } from "../functions";
 
 const divMainHomeStyles: CSS.Properties = {
     height: '40vh'
