@@ -5,6 +5,7 @@ import { Button, Textarea, TextInput } from "flowbite-react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import { createTask } from "../APICall";
+import { useMutation, useQueryClient } from "react-query";
 interface FormValues{
   taskName : string;
   taskDate: string;
@@ -17,6 +18,14 @@ const divErrorStyles: CSSProperties = {
 const CreateTask = () => {
   const [colorOfInputName, setColorOfInputName] = useState("gray");
   const [colorOfInputDate, setColorOfInputDate] = useState("gray");
+
+
+  const queryClient = useQueryClient()
+  const createMutation = useMutation(createTask, {
+    onSuccess : () => {
+      queryClient.invalidateQueries('todoList');
+    }
+  })
 
   const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     return (
@@ -65,11 +74,17 @@ const CreateTask = () => {
         // todo.setTodoList(todo.todoList);
 
         //Add task in DB
-        createTask({
+        // createTask({
+        //   name : values.taskName,
+        //   completed: false,
+        //   date: new Date(values.taskDate)
+        // }).then(res => res.json()).then(data => console.log(data)).catch(error => console.log(error));
+
+        createMutation.mutate({
           name : values.taskName,
           completed: false,
           date: new Date(values.taskDate)
-        }).then(res => res.json()).then(data => console.log(data)).catch(error => console.log(error));
+        });
       }
 
     

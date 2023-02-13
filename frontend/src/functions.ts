@@ -1,7 +1,7 @@
 import moment from "moment"
 
 export const showFullDate = (date : Date) => {
-    return (moment(date)).format('HH:mm DD-MM-YY');
+    return (moment(date)).format('HH:mm DD MMMM YY');
 }
 
 export const showDate = (date : Date) => {
