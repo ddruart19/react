@@ -16,7 +16,7 @@ const TimelineItem: React.FC<{task: ITask}> = ({task}: Props) => {
                         {showFullDate(task.date)}
                     </Timeline.Time>
                     <Timeline.Title>
-                        {task.taskName}
+                        {task.name}
                     </Timeline.Title>
                 </Timeline.Content>
             </Timeline.Item>

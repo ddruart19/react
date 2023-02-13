@@ -58,7 +58,7 @@ const CreateTask = () => {
     const addTask = async (values : FormValues) => {
         const newTask = {
           id: todo.todoList.length + 1,
-          taskName: values.taskName,
+          name: values.taskName,
           completed: false,
           date: new Date(values.taskDate)
         }

@@ -2,7 +2,9 @@ import { OutputTask } from "./Interfaces";
 
 // Fetch all tasks
 export const fetchTasks = async () => {
-    return await fetch('http://localhost:3000/api/tasks');    
+    const response = await fetch('http://localhost:3000/api/tasks');
+    const data = await response.json();
+    return data;    
 }
 
 // Fetch task by ID

@@ -22,9 +22,9 @@ const buttonStyles: CSS.Properties = {
 }
 
 const Home: React.FC = () => {
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-    const nextTaskToDo: ITask = todo.todoList.sort((a, b) => Number(a.date) - Number(b.date))[0];
+    // const nextTaskToDo: ITask = todo.todoList.sort((a, b) => Number(a.date) - Number(b.date))[0];
 
 
 
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
                         Next task to do 
                     </h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">
-                    {nextTaskToDo.taskName} before {showFullDate(nextTaskToDo.date)}
+                    {/* {nextTaskToDo.taskName} before {showFullDate(nextTaskToDo.date)} */}
                     </p>
                 </Card>
             </div>

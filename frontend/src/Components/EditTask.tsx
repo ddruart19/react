@@ -52,7 +52,7 @@ const EditTask = () => {
 
     const [todoEdit, setTodoEdit] = useState<ITask>({
         id: 0,
-        taskName: "",
+        name: "",
         completed: false,
         date : new Date()
 
@@ -84,10 +84,10 @@ const EditTask = () => {
         return(
             <>
                 <Formik
-                initialValues={{taskName: todoEdit.taskName, taskDate: "2022-02-01"}}
+                initialValues={{taskName: todoEdit.name, taskDate: "2022-02-01"}}
                 validationSchema={Validators}
                 onSubmit={(values, actions) => {
-                todoEdit.taskName = values.taskName;
+                todoEdit.name = values.taskName;
                 todoEdit.date = new Date();
                 actions.setSubmitting(false);
                 navigate('/list');
