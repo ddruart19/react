@@ -12,7 +12,8 @@
     "serve": "node dist/server.js",
     "start": "npm run serve",
     "test": "jest",
-    "watch-ts": "tsc --watch"
+    "watch-ts": "tsc --watch",
+    "deploy": "vercel --prod"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,8 @@
     "db-migrate-pg": "^1.2.2",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
-    "pg": "^8.9.0"
+    "pg": "^8.9.0",
+    "vercel": "^28.15.4"
   },
   "devDependencies": {
     "@types/compression": "^1.7.0",
