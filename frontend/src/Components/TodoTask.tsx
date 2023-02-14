@@ -1,7 +1,9 @@
 import { Checkbox, Table } from "flowbite-react";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { TodoListContext } from "../App";
+import { deleteTask } from "../APICall";
+import { showFullDate } from "../functions";
 import { ITask } from "../Interfaces";
 
 interface Props{
@@ -9,20 +11,26 @@ interface Props{
     completeTask(taskId: number, isCompleted: boolean): void;
 }
 
-const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTask}: Props) =>{
+const TodoTask: React.FC<Props> = ({task, completeTask}: Props) =>{
     const[isChecked, setIsChecked] = useState(task.completed);
+    const queryClient = useQueryClient()
+    const deleteMutation = useMutation(deleteTask, {
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries('todoList')
+        },
+      })
 
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(TodoListContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setIsChecked(e.target.checked);
         completeTask(task.id, e.target.checked);
-        console.log(task.completed);
     }
 
     const confirmDelete = (task:ITask) => {
-        if(window.confirm('Are you sure you want to delete ' + task.taskName + '?')){
-            todo.setTodoList(todo.todoList.filter(t => t.id !== task.id));
+        if(window.confirm('Are you sure you want to delete ' + task.name + '?')){
+            deleteMutation.mutate(String(task.id))
         }
     }
     return(
@@ -32,10 +40,10 @@ const TodoTask: React.FC<{task: ITask, completeTask: any}> = ({task, completeTas
                 <Checkbox checked={isChecked} onChange={handleChange}/>
             </Table.Cell>
             <Table.Cell>
-                {task.taskName}
+                {task.name}
             </Table.Cell>
             <Table.Cell>
-                {task.date}
+                {showFullDate(task.date)}
             </Table.Cell>
             <Table.Cell>
                 <Link to={"/edit/" + task.id}

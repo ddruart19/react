@@ -1,9 +1,9 @@
 import { Button, Card } from "flowbite-react";
-import { useContext } from "react";
-import { TodoListContext } from "../App";
-import { ITask } from "../Interfaces";
 import CSS from 'csstype';
 import { useNavigate } from "react-router-dom";
+import { useFetchAllTasks } from "../App";
+import { ITask } from "../Interfaces";
+import { showFullDate } from "../functions";
 
 const divMainHomeStyles: CSS.Properties = {
     height: '40vh'
@@ -21,9 +21,15 @@ const buttonStyles: CSS.Properties = {
 }
 
 const Home: React.FC = () => {
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-    const nextTaskToDo: ITask = todo.todoList.sort((a, b) => Number(a.date) - Number(b.date))[0];
+    const fetchTodoList = useFetchAllTasks();
+
+    if (fetchTodoList.status === 'loading') return <span>Loading...</span>
+    
+    if (fetchTodoList.status === 'error') return <span>Error: {fetchTodoList.error.message}</span>
+    
+    const nextTaskToDo: ITask = fetchTodoList.data!.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
 
 
 
@@ -51,7 +57,7 @@ const Home: React.FC = () => {
                         Next task to do 
                     </h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">
-                        {nextTaskToDo.taskName} before {nextTaskToDo.date}
+                    {nextTaskToDo.name} before {showFullDate(nextTaskToDo.date)}
                     </p>
                 </Card>
             </div>

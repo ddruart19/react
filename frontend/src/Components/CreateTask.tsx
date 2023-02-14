@@ -2,9 +2,10 @@ import { CSSProperties, useContext, useState } from "react";
 import 'flowbite';
 import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
 import { Button, Textarea, TextInput } from "flowbite-react";
-import { TodoListContext } from "../App";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
+import { createTask } from "../APICall";
+import { useMutation, useQueryClient } from "react-query";
 interface FormValues{
   taskName : string;
   taskDate: string;
@@ -17,6 +18,14 @@ const divErrorStyles: CSSProperties = {
 const CreateTask = () => {
   const [colorOfInputName, setColorOfInputName] = useState("gray");
   const [colorOfInputDate, setColorOfInputDate] = useState("gray");
+
+
+  const queryClient = useQueryClient()
+  const createMutation = useMutation(createTask, {
+    onSuccess : () => {
+      queryClient.invalidateQueries('todoList');
+    }
+  })
 
   const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     return (
@@ -50,20 +59,32 @@ const CreateTask = () => {
     taskDate: Yup.date()
       .min(Date(), 'Can only set date for today or further')
   });
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(App.TodoListContext);
     const navigate = useNavigate();
-    const initialValues : FormValues = {taskName: "", taskDate: ""};
+    const initialValues : FormValues = {taskName: "", taskDate: "2023-02-02"};
 
-    const addTask = (values : FormValues) => {
-        const newTask = {
-          id: todo.todoList.length + 1,
-          taskName: values.taskName,
+    const addTask = async (values : FormValues) => {
+        // const newTask = {
+        //   id: todo.todoList.length + 1,
+        //   name: values.taskName,
+        //   completed: false,
+        //   date: new Date(values.taskDate)
+        // }
+        // todo.todoList.push(newTask);
+        // todo.setTodoList(todo.todoList);
+
+        //Add task in DB
+        // createTask({
+        //   name : values.taskName,
+        //   completed: false,
+        //   date: new Date(values.taskDate)
+        // }).then(res => res.json()).then(data => console.log(data)).catch(error => console.log(error));
+
+        createMutation.mutate({
+          name : values.taskName,
           completed: false,
-          date: values.taskDate
-        }
-        todo.todoList.push(newTask);
-        todo.setTodoList(todo.todoList);
-        console.log(todo.todoList);
+          date: new Date(values.taskDate)
+        });
       }
 
     
@@ -74,7 +95,6 @@ const CreateTask = () => {
         initialValues={initialValues}
         validationSchema={Validators}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
           addTask(values);
           actions.setSubmitting(false);
           navigate('/list');

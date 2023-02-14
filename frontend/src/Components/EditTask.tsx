@@ -1,11 +1,12 @@
-
 import { Button, Textarea, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
-import { CSSProperties, useContext } from "react";
+import { CSSProperties } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { TodoListContext } from "../App";
-import { ITask } from "../Interfaces";
+import { ITaskDB } from "../Interfaces";
 import * as Yup from "yup";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "react-query";
+import { fetchTaskById, UpdateTask } from "../APICall";
+import { formatDate } from "../functions";
 
 interface FormValues{
     taskName : string;
@@ -48,30 +49,46 @@ taskDate: Yup.date()
 });
   
 const EditTask = () => {
-    const todo = useContext(TodoListContext);
     const navigate = useNavigate();
-
+    const queryClient = useQueryClient()
     //URL ID
     const {id} = useParams<string>();
+    const fetchTaskByIdQuery = useQuery<ITaskDB, Error>(['fetchTaskById', id], () => fetchTaskById(id!))
+    const editMutation = useMutation(UpdateTask, {
+        onSuccess : () => {
+            queryClient.invalidateQueries('todoList');
+        }
+    })
 
-    let todoEdit:ITask = todo.todoList.find(t => t.id === Number(id))!;
+    const taskEdition = (values : FormValues) => {
+        editMutation.mutate({
+            name : values.taskName,
+            completed: fetchTaskByIdQuery.data!.completed,
+            date: new Date(values.taskDate),
+            id: fetchTaskByIdQuery.data!.id
+          })
+    }
 
-    // const [task, setTask] = useState<string>(todoEdit ? todoEdit.taskName : "");
-    // const [date, setDate] = useState<string>(todoEdit ? todoEdit.date : "");
+    if (fetchTaskByIdQuery.status === 'loading') {
+        return <span>Loading...</span>
+      }
+    
+      if (fetchTaskByIdQuery.status === 'error') {
+        return <span>Error: </span>
+      }
+  
 
-
-    const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: todoEdit.date};
-
-    if(id){
+    if(id && fetchTaskByIdQuery.data){
+        // console.log(fetchTaskByIdQuery.data.date.getTime().toString().slice());
+        // console.log(new Date(fetchTaskByIdQuery.data!.date))
+        // const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: "2022-02-01"};
         return(
             <>
                 <Formik
-                initialValues={initialValues}
+                initialValues={{taskName : fetchTaskByIdQuery.data.name, taskDate : formatDate(new Date(fetchTaskByIdQuery.data.date))}}
                 validationSchema={Validators}
                 onSubmit={(values, actions) => {
-                console.log({ values, actions });
-                todoEdit.taskName = values.taskName;
-                todoEdit.date = values.taskDate;
+                taskEdition(values);
                 actions.setSubmitting(false);
                 navigate('/list');
                 }}
@@ -103,7 +120,7 @@ const EditTask = () => {
         );
     }
     return(
-        <></>
+        <><h2>No task found</h2></>
     );
 }
 export default EditTask;
