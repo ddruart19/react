@@ -1,19 +1,29 @@
 import { Table } from "flowbite-react";
-import { useContext } from "react";
-import { TodoListContext } from "../App";
-import { ITask } from "../Interfaces";
+import { useFetchAllTasks } from "../App";
+import { ITaskDB } from "../Interfaces";
 import TodoTask from "./TodoTask";
+
+
 
 const ShowTasks = () =>{
 
-    const todo = useContext(TodoListContext);
+    // const todo = useContext(TodoListContext);
     
     const completeTask = (taskId: number, isCompleted: boolean) => {
-     let todoToEdit = todo.todoList.find(t => t.id === taskId)!;
-     todoToEdit.completed = isCompleted;
+    //  let todoToEdit = todo.todoList.find(t => t.id === taskId)!;
+    //  todoToEdit.completed = isCompleted;
     }
 
-    
+    const fetchTodoList = useFetchAllTasks();
+
+    if (fetchTodoList.status === 'loading') {
+      return <span>Loading...</span>
+    }
+  
+    if (fetchTodoList.status === 'error') {
+      return <span>Error: {fetchTodoList.error.message}</span>
+    }
+
     return(
         <div className="todoList">
 
@@ -43,7 +53,7 @@ const ShowTasks = () =>{
             </Table.Head>
 
             <Table.Body className="divide-y">
-              {todo.todoList.map((task:ITask, key: number)=>{
+              {fetchTodoList.data!.map((task:ITaskDB, key: number)=>{
                 return <TodoTask key={key} task={task} completeTask={completeTask}/>
               })}
             </Table.Body>

@@ -1,6 +1,6 @@
 export interface ITask{
     id: number;
-    taskName: string;
+    name: string;
     completed: boolean;
     date: Date;
 }
@@ -12,8 +12,15 @@ export interface ITaskDB{
     date: Date;
 }
 
-export interface OutputTask{
+export interface OutputTaskCreation{
     name: string;
     completed : boolean;
     date: Date;
+}
+
+export interface OutputTaskUpdate{
+    name: string;
+    completed : boolean;
+    date: Date;
+    id : number;
 }
