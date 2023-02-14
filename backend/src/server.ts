@@ -34,6 +34,8 @@ app.post('/api/task', db.createTask)
 app.put('/api/task/:id', db.updateTask)
 //Delete task
 app.delete('/api/task/:id', db.deleteTask)
+//Validate task
+app.put('/api/task/validate/:id', db.validateTask)
 
 
 

@@ -55,10 +55,19 @@ const deleteTask = (request: Request, response: Response) => {
     })
 }
 
+//Validate task
+const validateTask = (request: Request, response: Response) => {
+    pool.query('UPDATE task SET completed = $1 WHERE id = $2;', [request.body.completed, request.params.id], (error: Error, results: { rows: taskDB[]; }) => {
+        if(error) throw error
+        response.status(200).send("Task successfully validated")
+    })
+}
+
 module.exports ={
     getTasks,
     getTaskById,
     createTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    validateTask
 }
