@@ -1,4 +1,4 @@
-import { OutputTask } from "./Interfaces";
+import { OutputTaskCreation, OutputTaskUpdate } from "./Interfaces";
 
 // Fetch all tasks
 export const fetchTasks = async () => {
@@ -9,12 +9,11 @@ export const fetchTasks = async () => {
 
 // Fetch task by ID
 export const fetchTaskById = async (id: string) => {
-    return await fetch(`http://localhost:3000/api/task/${id}`);    
+    return await (await fetch(`http://localhost:3000/api/task/${id}`)).json();    
 }
 
 // Create task
-export const createTask = (task: OutputTask) => {
-    console.log(task)
+export const createTask = (task: OutputTaskCreation) => {
     return fetch('http://localhost:3000/api/task', {
         method: 'POST',
         body: JSON.stringify(task),
@@ -25,8 +24,14 @@ export const createTask = (task: OutputTask) => {
 }
 
 // Update task
-export const UpdateTask = async () => {
-    return fetch('http://localhost:3000/api/tasks');    
+export const UpdateTask = async (task : OutputTaskUpdate) => {
+    return fetch(`http://localhost:3000/api/task/${task.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(task),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+    });      
 }
 
 // Delete task

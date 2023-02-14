@@ -1,10 +1,12 @@
 import { Button, Textarea, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ITask } from "../Interfaces";
+import { ITaskDB } from "../Interfaces";
 import * as Yup from "yup";
-import { fetchTaskById } from "../APICall";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "react-query";
+import { fetchTaskById, UpdateTask } from "../APICall";
+import { formatDate } from "../functions";
 
 interface FormValues{
     taskName : string;
@@ -48,47 +50,45 @@ taskDate: Yup.date()
   
 const EditTask = () => {
     const navigate = useNavigate();
-    // const [initialValues, setInitialValues] = useState<FormValues>({taskName: "", taskDate: ""})
-
-    const [todoEdit, setTodoEdit] = useState<ITask>({
-        id: 0,
-        name: "",
-        completed: false,
-        date : new Date()
-
-    });
-
+    const queryClient = useQueryClient()
     //URL ID
     const {id} = useParams<string>();
+    const fetchTaskByIdQuery = useQuery<ITaskDB, Error>(['fetchTaskById', id], () => fetchTaskById(id!))
+    const editMutation = useMutation(UpdateTask, {
+        onSuccess : () => {
+            queryClient.invalidateQueries('todoList');
+        }
+    })
 
-    // let todoEdit:ITask = todo.todoList.find(t => t.id === Number(id))!;
+    const taskEdition = (values : FormValues) => {
+        editMutation.mutate({
+            name : values.taskName,
+            completed: fetchTaskByIdQuery.data!.completed,
+            date: new Date(values.taskDate),
+            id: fetchTaskByIdQuery.data!.id
+          })
+    }
 
-    // useEffect( () => {
-    //     fetchTaskById(id!).then(res => res.json()).then(data => {
-    //         setTodoEdit({
-    //             id: data.id,
-    //             taskName: data.name,
-    //             completed: data.completed,
-    //             date : data.date
-
-    //         }); 
-    //     });
-    //     console.log("Effect")
-    //     console.log(todoEdit)
-    // }, [todoEdit.id]);
-
+    if (fetchTaskByIdQuery.status === 'loading') {
+        return <span>Loading...</span>
+      }
     
-    if(id && todoEdit){
-        
+      if (fetchTaskByIdQuery.status === 'error') {
+        return <span>Error: </span>
+      }
+  
+
+    if(id && fetchTaskByIdQuery.data){
+        // console.log(fetchTaskByIdQuery.data.date.getTime().toString().slice());
+        // console.log(new Date(fetchTaskByIdQuery.data!.date))
         // const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: "2022-02-01"};
         return(
             <>
                 <Formik
-                initialValues={{taskName: todoEdit.name, taskDate: "2022-02-01"}}
+                initialValues={{taskName : fetchTaskByIdQuery.data.name, taskDate : formatDate(new Date(fetchTaskByIdQuery.data.date))}}
                 validationSchema={Validators}
                 onSubmit={(values, actions) => {
-                todoEdit.name = values.taskName;
-                todoEdit.date = new Date();
+                taskEdition(values);
                 actions.setSubmitting(false);
                 navigate('/list');
                 }}
