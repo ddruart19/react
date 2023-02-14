@@ -6,7 +6,7 @@ import TimelineItem from './TimelineItem';
 
 
 const sortTask = (list: ITaskDB[]) =>{
-    // return list.sort((a, b) => a.date.getTime() - b.date.getTime());
+    return list.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
 const TimelineList: React.FC = () =>{
@@ -21,7 +21,7 @@ const TimelineList: React.FC = () =>{
         return (
             <>
             <Timeline>
-                {fetchTodoList.data.map((task:ITask, key: number) => {
+                {sortTask(fetchTodoList.data).map((task:ITask, key: number) => {
                     return <TimelineItem task={task} key={key}/>
                 })}
             </Timeline>
