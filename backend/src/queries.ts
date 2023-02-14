@@ -25,8 +25,6 @@ const getTasks = (request : Request, response : Response) => {
 
 //Fetch task by id
 const getTaskById = (request : Request, response : Response) => {
-    console.log("La requete => ")
-    console.log(request);
     pool.query('SELECT * FROM task where task.id = $1', [request.params.id], (error: Error, results: { rows: taskDB[]; }) => {
         if (error) throw error
         response.status(200).json(results.rows[0])
@@ -43,7 +41,7 @@ const createTask = (request : Request, response : Response) => {
 
 //Update task
 const updateTask = (request: Request, response: Response) => {
-    pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.taskName, request.body.completed, request.body.date, request.params.id], (error: Error, results: { rows: taskDB[]; }) => {
+    pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.name, request.body.completed, request.body.date, request.params.id], (error: Error, results: { rows: taskDB[]; }) => {
         if(error) throw error
         response.status(200).send("Task successfully updated")
     })
