@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 const Pool = require('pg').Pool
 const pool  = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'todoapp',
-  password: 'admin',
-  port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PWD,
+    port: 5432,
+    ssl: { rejectUnauthorized: false }
 })
 
 interface taskDB {
