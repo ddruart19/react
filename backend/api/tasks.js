@@ -13,7 +13,7 @@ const pool = new Pool({
 router.get("/", async (req,res) => {
     try{
         pool.query('SELECT * FROM task', (error, results) => {
-            response.status(200).json(results.rows);
+            response.status(200).json({ message: "Task created successfully" });
         });
     }catch (error){
         return res.status(500).send("Server error");
