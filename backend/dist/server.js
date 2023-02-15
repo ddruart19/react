@@ -16,7 +16,13 @@ app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
-app.use(cors());
+const corsOptions = {
+    origin: 'https://ddruart19.github.io',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
@@ -27,7 +33,8 @@ app.use(function(req, res, next) {
   });
 
 //Autorisation de requête http autre que get et post pour cette route
-app.options('/api/task/:id', cors());
+app.options('/api/task/:id', cors(corsOptions));
+
 
 
 //Fetch all tasks
