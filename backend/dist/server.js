@@ -20,6 +20,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3002/"); // Mettez le domaine de votre frontend ici
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 //Fetch all tasks
 app.get('/api/tasks', db.getTasks);
 //Fetch task by id
