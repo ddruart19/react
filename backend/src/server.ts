@@ -2,13 +2,13 @@
 import compression from "compression";
 
 const bodyParser = require('body-parser');
-import express from "express";
+const express = require('express');
 
 import helmet from "helmet";
 const db = require('./queries');
 const app = express()
 const cors = require('cors');
-const port = 3000
+const port = 3001
 
 app.use(helmet()); // set well-known security-related HTTP headers
 app.use(compression());
@@ -38,9 +38,5 @@ app.delete('/api/task/:id', db.deleteTask)
 app.put('/api/task/validate/:id', db.validateTask)
 
 
+app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));
 
-
-const server = app.listen(port, () =>
-    console.log(`Starting ExpressJS server on Port ${port}`));
-
-export default server;
