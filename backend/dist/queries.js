@@ -10,7 +10,7 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-const frontendName = "https://ddruart19.github.io/react/";
+const frontendName = "https://ddruart19.github.io";
 
 //Fetch All tasks
 const getTasks = (request, response) => {
