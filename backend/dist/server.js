@@ -25,6 +25,11 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
+//Autorisation de requête http autre que get et post pour cette route
+app.options('/api/task/:id', cors());
+
+
 //Fetch all tasks
 app.get('/api/tasks', db.getTasks);
 //Fetch task by id
