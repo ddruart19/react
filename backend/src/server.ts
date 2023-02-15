@@ -43,6 +43,4 @@ app.put('/api/task/validate/:id', db.validateTask)
 const server = app.listen(port, () =>
     console.log(`Starting ExpressJS server on Port ${port}`));
 
-module.exports = app;
-
 export default server;
