@@ -33,7 +33,13 @@ app.use(function(req, res, next) {
   });
 
 //Autorisation de requête http autre que get et post pour cette route
-app.options('/api/task/:id', cors(corsOptions));
+// app.options('/api/task/:id', cors(corsOptions));
+app.options('/api/task/:id', cors(corsOptions), (request, response) => {
+    response.header('Access-Control-Allow-Methods', 'DELETE');
+    response.header('Access-Control-Allow-Headers', 'Content-Type');
+    response.header('Access-Control-Allow-Origin', frontendName);
+    response.status(204).send();
+  });
 
 
 
@@ -49,5 +55,6 @@ app.put('/api/task/:id', db.updateTask);
 app.delete('/api/task/:id', db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
+
 app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));
 
