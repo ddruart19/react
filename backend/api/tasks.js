@@ -10,11 +10,14 @@ const pool = new Pool({
 });
 
 router.get("/", async (req,res) => {
-    pool.query('SELECT * FROM task', (error, results) => {
-        if (error)
-            throw error;
-        response.status(200).json(results.rows);
-    });
+    try{
+        pool.query('SELECT * FROM task', (error, results) => {
+            response.status(200).json(results.rows);
+        });
+    }catch (error){
+        return res.status(500).send("Server error");
+    }
+
 });
 
 module.exports = router;
