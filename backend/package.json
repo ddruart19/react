@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    
+    "build": "npm run build-ts",
     "build-ts": "tsc",
     "clean": "rm -rf ./dist",
     "serve": "node dist/server.js",
