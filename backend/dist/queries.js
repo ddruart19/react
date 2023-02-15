@@ -9,12 +9,15 @@ const pool = new Pool({
     port: 5432,
     ssl: { rejectUnauthorized: false }
 });
+
+const frontendName = "https://ddruart19.github.io/react/";
+
 //Fetch All tasks
 const getTasks = (request, response) => {
     pool.query('SELECT * FROM task', (error, results) => {
         if (error)
             throw error;
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3002");
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).json(results.rows);
     });
 };
@@ -23,6 +26,7 @@ const getTaskById = (request, response) => {
     pool.query('SELECT * FROM task where task.id = $1', [request.params.id], (error, results) => {
         if (error)
             throw error;
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).json(results.rows[0]);
     });
 };
@@ -31,6 +35,7 @@ const createTask = (request, response) => {
     pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [request.body.name, request.body.completed, request.body.date], (error, results) => {
         if (error)
             throw error;
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).send("Task successfully added");
     });
 };
@@ -39,6 +44,7 @@ const updateTask = (request, response) => {
     pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.name, request.body.completed, request.body.date, request.params.id], (error, results) => {
         if (error)
             throw error;
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).send("Task successfully updated");
     });
 };
@@ -47,6 +53,7 @@ const deleteTask = (request, response) => {
     pool.query('DELETE from task where task.id = $1', [request.params.id], (error, results) => {
         if (error)
             throw error;
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).send("Task successfully deleted");
     });
 };
@@ -55,6 +62,7 @@ const validateTask = (request, response) => {
     pool.query('UPDATE task SET completed = $1 WHERE id = $2;', [request.body.completed, request.params.id], (error, results) => {
         if (error)
             throw error;
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).send("Task successfully validated");
     });
 };
