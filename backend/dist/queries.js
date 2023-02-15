@@ -14,7 +14,7 @@ const getTasks = (request, response) => {
     pool.query('SELECT * FROM task', (error, results) => {
         if (error)
             throw error;
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3002");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3002");
         response.status(200).json(results.rows);
     });
 };
