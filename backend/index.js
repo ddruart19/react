@@ -1,14 +1,10 @@
 const express = require('express');
-const product = require('./api/product');
-const tasks = require('./api/tasks');
 const app = express();
 const db = require('./dist/queries');
 const PORT = 3000;
 
-app.use("/api/product", product)
-
 //Fetch all tasks
-app.use('/api/tasks', tasks);
+app.get('/api/tasks', db.getTasks);
 //Fetch task by id
 app.get('/api/task/:id', db.getTaskById);
 //Create task
