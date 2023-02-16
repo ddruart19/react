@@ -10,14 +10,14 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-const frontendName = ["https://ddruart19.github.io"];
+const frontendName = ["http://localhost:3000"];
 
 //Fetch All tasks
 const getTasks = (request, response) => {
     pool.query('SELECT * FROM task', (error, results) => {
         if (error)
             throw error;
-        response.setHeader("Access-Control-Allow-Origin", frontendName);
+        // response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).json(results.rows);
     });
 };

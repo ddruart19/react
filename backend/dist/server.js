@@ -44,7 +44,7 @@ app.use(function(req, res, next) {
 app.options('/api/task/:id', cors(corsOptions), (request, response) => {
     response.header('Access-Control-Allow-Methods', 'DELETE');
     response.header('Access-Control-Allow-Headers', 'Content-Type');
-    response.header('Access-Control-Allow-Origin', frontendName);
+    response.header('Access-Control-Allow-Origin', corsOptions.origin);
     response.status(204).send();
   });
 
