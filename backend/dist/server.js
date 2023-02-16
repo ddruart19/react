@@ -16,8 +16,15 @@ app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
+const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
 const corsOptions = {
-    origin: ['https://ddruart19.github.io', "http://localhost:3000"],
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1 || !origin) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     optionsSuccessStatus: 200
 }
@@ -27,7 +34,7 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", ["https://ddruart19.github.io", "http://localhost:3000"]);
+    res.header("Access-Control-Allow-Origin", corsOptions.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
