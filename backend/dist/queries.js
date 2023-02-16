@@ -36,7 +36,7 @@ const createTask = (request, response) => {
         if (error)
             throw error;
         response.setHeader("Access-Control-Allow-Origin", frontendName);
-        response.status(200).send("Task successfully added");
+        response.status(200).json('{"message" : "Task successfully created"}');
     });
 };
 //Update task
