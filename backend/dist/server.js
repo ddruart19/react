@@ -42,9 +42,7 @@ app.use(function(req, res, next) {
 //Autorisation de requête http autre que get et post pour cette route
 // app.options('/api/task/:id', cors(corsOptions));
 
-
-
-
+app.options('*', cors(corsOptions));
 //Fetch all tasks
 app.get('/api/tasks', db.getTasks);
 //Fetch task by id
@@ -54,7 +52,7 @@ app.post('/api/task', db.createTask);
 //Update task
 app.put('/api/task/:id', db.updateTask);
 //Delete task
-app.options('/api/task/:id', cors(corsOptions));
+
 app.delete('/api/task/:id', cors(), db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
