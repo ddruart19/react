@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
 
 //Autorisation de requête http autre que get et post pour cette route
 // app.options('/api/task/:id', cors(corsOptions));
-app.options('/api/task/:id', cors(corsOptions));
+
 
 
 
@@ -54,7 +54,8 @@ app.post('/api/task', db.createTask);
 //Update task
 app.put('/api/task/:id', db.updateTask);
 //Delete task
-app.delete('/api/task/:id', cors(corsOptions), db.deleteTask);
+app.options('/api/task/:id', cors());
+app.delete('/api/task/:id', cors(), db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
 
