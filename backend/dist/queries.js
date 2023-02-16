@@ -35,6 +35,7 @@ const createTask = (request, response) => {
     pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [request.body.name, request.body.completed, request.body.date], (error, results) => {
         if (error)
             throw error;
+        request.setHeader("Access-Control-Allow-Origin", frontendName);
         response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).json(results.rows);
     });
