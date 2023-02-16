@@ -27,12 +27,12 @@ const corsOptions = {
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", corsOptions.origin);
-//     res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-//   });
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", corsOptions.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 //Autorisation de requête http autre que get et post pour cette route
 // app.options('/api/task/:id', cors(corsOptions));
