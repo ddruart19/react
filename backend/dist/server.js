@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", corsOptions.origin);
     res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+    return next();
   });
 
 //Autorisation de requête http autre que get et post pour cette route
