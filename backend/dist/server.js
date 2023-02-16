@@ -41,12 +41,7 @@ app.use(function(req, res, next) {
 
 //Autorisation de requête http autre que get et post pour cette route
 // app.options('/api/task/:id', cors(corsOptions));
-app.options('/api/task/:id', cors(corsOptions), (request, response) => {
-    response.header('Access-Control-Allow-Methods', 'DELETE');
-    response.header('Access-Control-Allow-Headers', 'Content-Type');
-    response.header('Access-Control-Allow-Origin', corsOptions.origin);
-    response.status(204).send();
-  });
+app.options('/api/task/:id', cors(corsOptions));
 
 
 
