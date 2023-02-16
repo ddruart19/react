@@ -36,7 +36,7 @@ const createTask = (request, response) => {
         if (error)
             throw error;
         response.setHeader("Access-Control-Allow-Origin", frontendName);
-        response.status(200).json(results.rows);
+        response.status(200).json(results);
     });
 };
 //Update task
