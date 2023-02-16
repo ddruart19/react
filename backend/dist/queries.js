@@ -10,7 +10,7 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-const frontendName = ["http://localhost:3000"];
+const frontendName = "http://localhost:3000";
 
 //Fetch All tasks
 const getTasks = (request, response) => {
