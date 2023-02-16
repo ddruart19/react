@@ -17,7 +17,7 @@ app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
 const corsOptions = {
-    origin: 'https://ddruart19.github.io',
+    origin: ['https://ddruart19.github.io', "http://localhost:3000"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     optionsSuccessStatus: 200
 }
