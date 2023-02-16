@@ -51,5 +51,7 @@ app.delete('/api/task/:id', db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
 
+app.options('/api/task/:id', cors(corsOptions));
+
 app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));
 
