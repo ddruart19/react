@@ -54,7 +54,7 @@ app.post('/api/task', db.createTask);
 //Update task
 app.put('/api/task/:id', db.updateTask);
 //Delete task
-app.delete('/api/task/:id', db.deleteTask);
+app.delete('/api/task/:id', cors(corsOptions), db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
 
