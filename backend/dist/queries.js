@@ -32,7 +32,6 @@ const getTaskById = (request, response) => {
 };
 //Create task
 const createTask = async (request, response) => {
-    console.log(request);
     await pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [request.body.name, request.body.completed, request.body.date], (error, results) => {
         if (error)
             throw error;
