@@ -11,39 +11,40 @@ const helmet_1 = __importDefault(require("helmet"));
 const db = require('./queries');
 const app = express();
 const cors = require('cors');
+app.use(cors());
 const port = 3001;
 app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
-const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
-const corsOptions = {
-    origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1 || !origin) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    optionsSuccessStatus: 200
-}
+// const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//       if (whitelist.indexOf(origin) !== -1 || !origin) {
+//         callback(null, true)
+//       } else {
+//         callback(new Error('Not allowed by CORS'))
+//       }
+//     },
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     optionsSuccessStatus: 200
+// }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", corsOptions.origin);
-    res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", corsOptions.origin);
+//     res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+//   });
 
 //Autorisation de requête http autre que get et post pour cette route
 // app.options('/api/task/:id', cors(corsOptions));
 
-app.options('*', cors(corsOptions));
+// app.options('*', cors(corsOptions));
 //Fetch all tasks
 app.get('/api/tasks', db.getTasks);
 //Fetch task by id
@@ -53,8 +54,7 @@ app.post('/api/task', db.createTask);
 //Update task
 app.put('/api/task/:id', db.updateTask);
 //Delete task
-
-app.delete('/api/task/:id', cors(), db.deleteTask);
+app.delete('/api/task/:id', db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
 
