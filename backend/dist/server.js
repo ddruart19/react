@@ -11,24 +11,17 @@ const helmet_1 = __importDefault(require("helmet"));
 const db = require('./queries');
 const app = express();
 const cors = require('cors');
-app.use(cors());
 const port = 3001;
 app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
 // const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//       if (whitelist.indexOf(origin) !== -1 || !origin) {
-//         callback(null, true)
-//       } else {
-//         callback(new Error('Not allowed by CORS'))
-//       }
-//     },
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     optionsSuccessStatus: 200
-// }
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    optionsSuccessStatus: 200
+}
 
 // app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({
@@ -46,7 +39,7 @@ app.use(bodyParser.urlencoded({
 
 // app.options('*', cors(corsOptions));
 //Fetch all tasks
-app.get('/api/tasks', db.getTasks);
+app.get('/api/tasks', cors(corsOptions), db.getTasks);
 //Fetch task by id
 app.get('/api/task/:id', db.getTaskById);
 //Create task
