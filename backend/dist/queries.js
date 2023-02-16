@@ -53,7 +53,7 @@ const deleteTask = (request, response) => {
     pool.query('DELETE from task where task.id = $1', [request.params.id], (error, results) => {
         if (error)
             throw error;
-        // response.setHeader("Access-Control-Allow-Origin", frontendName);
+        response.setHeader("Access-Control-Allow-Origin", frontendName);
         response.status(200).send("Task successfully deleted");
     });
 };
