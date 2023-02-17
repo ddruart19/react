@@ -41,7 +41,8 @@ const getTaskById = (request : Request, response : Response, next: NextFunction)
 
 //Create task
 const createTask = (request : Request, response : Response, next: NextFunction) => {
-    pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [request.body.name, request.body.completed, request.body.date], (error: Error, results: { rows: taskDB[]; }) => {
+    const { body } = request;
+    pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [body.name, body.completed, body.date], (error: Error, results: { rows: taskDB[]; }) => {
         //Send error to middleware error handling function
         if(error) return next(error) 
 
