@@ -41,7 +41,7 @@ app.put('/api/task/validate/:id', db.validateTask)
 //Middleware function for errors handling
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   console.log(error);
-  res.status(404).send('Not found')
+  res.status(500).send('Default error message')
 })
 
 
