@@ -1,12 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 const Pool = require('pg').Pool
 const pool  = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PWD,
-    port: 5432,
-    ssl: { rejectUnauthorized: false }
+    user: "postgres",
+    host: "localhost",
+    database: "todoapp",
+    password: "admin",
+    port: 5432
 })
 
 interface taskDB {
@@ -17,12 +16,15 @@ interface taskDB {
   }
  
 //Fetch All tasks
-const getTasks = (request : Request, response : Response) => {
+const getTasks = (request : Request, response : Response, next: NextFunction) => {
     pool.query('SELECT * FROM task', (error: Error, results: { rows: taskDB[]; }) => {
-        if (error) throw error
+        //Send error to middleware error handling function
+        if(error) return next(error) 
+
         response.status(200).json(results.rows)
     })
 }
+
 
 //Fetch task by id
 const getTaskById = (request : Request, response : Response) => {
