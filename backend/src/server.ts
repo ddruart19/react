@@ -14,14 +14,14 @@ app.use(compression());
 
 app.disable("x-powered-by");
 
-app.use(bodyParser.json())
 app.use(cors())
 
 app.use(
-    bodyParser.urlencoded({
-      extended: true,
-    })
- )
+  bodyParser.urlencoded({
+    extended: true,
+  })
+  )
+app.use(bodyParser.json())
 
 
 //Fetch all tasks

@@ -15,11 +15,11 @@ const port = 3000;
 app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
-app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
+app.use(bodyParser.json());
 //Fetch all tasks
 app.get('/api/tasks', db.getTasks);
 //Fetch task by id
