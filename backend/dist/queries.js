@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Pool = require('pg').Pool;
 const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "todoapp",
-    password: "admin",
-    port: 5432
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PWD,
+    port: 5432,
+    ssl: { rejectUnauthorized: false }
 });
 //Fetch All tasks
 const getTasks = (request, response, next) => {
@@ -55,7 +56,7 @@ const deleteTask = (request, response, next) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
-        response.status(204);
+        response.status(204).send("Task successfully deleted");
     });
 };
 //Validate task
