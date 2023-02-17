@@ -65,7 +65,7 @@ const deleteTask = (request: Request, response: Response, next: NextFunction) =>
         //Send error to middleware error handling function
         if(error) return next(error) 
 
-        response.status(204)
+        response.status(204).send("Task successfully deleted")
     })
 }
 

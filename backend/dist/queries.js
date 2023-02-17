@@ -14,6 +14,8 @@ const getTasks = (request, response, next) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
+        if (typeof results.rows === "undefined")
+            response.status(404).json("Tasks not found");
         response.status(200).json(results.rows);
     });
 };
@@ -23,6 +25,7 @@ const getTaskById = (request, response, next) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
+        //Return 404 not found if result is undefined
         if (typeof results.rows[0] === "undefined")
             response.status(404).json("Task not found");
         response.status(200).json(results.rows[0]);
@@ -34,7 +37,7 @@ const createTask = (request, response, next) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
-        response.status(200).send("Task successfully added");
+        response.status(201).send("Task successfully added");
     });
 };
 //Update task
@@ -52,7 +55,7 @@ const deleteTask = (request, response, next) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
-        response.status(200).send("Task successfully deleted");
+        response.status(204);
     });
 };
 //Validate task
