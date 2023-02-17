@@ -18,42 +18,49 @@ const getTasks = (request, response, next) => {
     });
 };
 //Fetch task by id
-const getTaskById = (request, response) => {
+const getTaskById = (request, response, next) => {
     pool.query('SELECT * FROM task where task.id = $1', [request.params.id], (error, results) => {
+        //Send error to middleware error handling function
         if (error)
-            throw error;
+            return next(error);
+        if (typeof results.rows[0] === "undefined")
+            response.status(404).json("Task not found");
         response.status(200).json(results.rows[0]);
     });
 };
 //Create task
-const createTask = (request, response) => {
+const createTask = (request, response, next) => {
     pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [request.body.name, request.body.completed, request.body.date], (error, results) => {
+        //Send error to middleware error handling function
         if (error)
-            throw error;
+            return next(error);
         response.status(200).send("Task successfully added");
     });
 };
 //Update task
-const updateTask = (request, response) => {
+const updateTask = (request, response, next) => {
     pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.name, request.body.completed, request.body.date, request.params.id], (error, results) => {
+        //Send error to middleware error handling function
         if (error)
-            throw error;
+            return next(error);
         response.status(200).send("Task successfully updated");
     });
 };
 //Delete task
-const deleteTask = (request, response) => {
+const deleteTask = (request, response, next) => {
     pool.query('DELETE from task where task.id = $1', [request.params.id], (error, results) => {
+        //Send error to middleware error handling function
         if (error)
-            throw error;
+            return next(error);
         response.status(200).send("Task successfully deleted");
     });
 };
 //Validate task
-const validateTask = (request, response) => {
+const validateTask = (request, response, next) => {
     pool.query('UPDATE task SET completed = $1 WHERE id = $2;', [request.body.completed, request.params.id], (error, results) => {
+        //Send error to middleware error handling function
         if (error)
-            throw error;
+            return next(error);
         response.status(200).send("Task successfully validated");
     });
 };

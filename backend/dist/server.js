@@ -35,6 +35,6 @@ app.put('/api/task/validate/:id', db.validateTask);
 //Middleware function for errors handling
 app.use((error, req, res, next) => {
     console.log(error);
-    res.status(404).send('Not found');
+    res.status(500).send('Default error message');
 });
 app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));

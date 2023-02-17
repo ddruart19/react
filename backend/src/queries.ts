@@ -31,7 +31,9 @@ const getTaskById = (request : Request, response : Response, next: NextFunction)
     pool.query('SELECT * FROM task where task.id = $1', [request.params.id], (error: Error, results: { rows: taskDB[]; }) => {
         //Send error to middleware error handling function
         if(error) return next(error) 
-
+        //Return 404 not found if result is undefined
+        if(typeof results.rows[0] === "undefined")response.status(404).json("Task not found")
+        
         response.status(200).json(results.rows[0])
     })
 }
