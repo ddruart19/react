@@ -1,0 +1,9 @@
+{
+    "dev": {
+      "driver": "pg",
+      "user": "${env:DB_USER}",
+      "password": "${env:DB_PWD}",
+      "host": "${env:DB_HOST}",
+      "database": "${env:DB_NAME}"
+    }
+  }

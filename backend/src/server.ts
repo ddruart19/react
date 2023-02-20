@@ -2,6 +2,7 @@
 import compression from "compression";
 const bodyParser = require('body-parser');
 const express = require('express');
+const dbmigrate = require('db-migrate')
 import { Request, Response, NextFunction } from 'express';
 import helmet from "helmet";
 const db = require('./queries');
@@ -44,6 +45,13 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Default error message')
 })
 
+var dbm = dbmigrate.getInstance(true);
+dbm.sync('20150207135259')
+.then(function() {
+
+  console.log('successfully migrated 12 migrations up');
+  return;
+});
 
 app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));
 

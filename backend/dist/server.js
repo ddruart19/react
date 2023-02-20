@@ -7,39 +7,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const compression_1 = __importDefault(require("compression"));
 const bodyParser = require('body-parser');
 const express = require('express');
+const dbmigrate = require('db-migrate');
 const helmet_1 = __importDefault(require("helmet"));
 const db = require('./queries');
 const app = express();
 const cors = require('cors');
-const port = 3001;
+const port = 3000;
 app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
-app.use(bodyParser.json());
-// const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
-const corsOptions = {
-    origin: 'https://ddruart19.github.io',
-    methods: 'GET, POST, PUT, DELETE',
-    optionsSuccessStatus: 200
-}
-
-// app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
-app.use(function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", corsOptions.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    return next();
-  });
-
-//Autorisation de requête http autre que get et post pour cette route
-// app.options('/api/task/:id', cors(corsOptions));
-
-// app.options('*', cors(corsOptions));
+app.use(bodyParser.json());
 //Fetch all tasks
-app.get('/api/tasks', cors(corsOptions), db.getTasks);
+app.get('/api/tasks', db.getTasks);
 //Fetch task by id
 app.get('/api/task/:id', db.getTaskById);
 //Create task
@@ -50,8 +33,15 @@ app.put('/api/task/:id', db.updateTask);
 app.delete('/api/task/:id', db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
-
-app.options('*', cors());
-
+//Middleware function for errors handling
+app.use((error, req, res, next) => {
+    console.log(error);
+    res.status(500).send('Default error message');
+});
+var dbm = dbmigrate.getInstance(true);
+dbm.sync('20150207135259')
+    .then(function () {
+    console.log('successfully migrated 12 migrations up');
+    return;
+});
 app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));
-
