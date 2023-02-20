@@ -17,7 +17,7 @@ interface taskDB {
  
 //Fetch All tasks
 const getTasks = (request : Request, response : Response, next: NextFunction) => {
-    pool.query('SELECT * FROM task where id=3', (error: Error, results: { rows: taskDB[]; }) => {
+    pool.query('SELECT * FROM task', (error: Error, results: { rows: taskDB[]; }) => {
         //Send error to middleware error handling function
         if(error) return next(error) 
         if(typeof results.rows === "undefined")response.status(404).json("Tasks not found")
