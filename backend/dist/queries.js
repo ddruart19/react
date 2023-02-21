@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 //Fetch All tasks
 const getTasks = (request, response, next) => {
-    pool.query('SELECT * FROM task', (error, results) => {
+    pool.query('SELECT * FROM task where id=3', (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -68,11 +68,24 @@ const validateTask = (request, response, next) => {
         response.status(200).send("Task successfully validated");
     });
 };
+//Search with text
+const searchTaskWithText = (request, response, next) => {
+    pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.body.search], (error, results) => {
+        //Send error to middleware error handling function
+        if (error)
+            return next(error);
+        //Return 404 not found if result is undefined
+        if (typeof results.rows === "undefined")
+            response.status(404).json("Task not found");
+        response.status(200).send(results.rows);
+    });
+};
 module.exports = {
     getTasks,
     getTaskById,
     createTask,
     updateTask,
     deleteTask,
-    validateTask
+    validateTask,
+    searchTaskWithText
 };
