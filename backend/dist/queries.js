@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 //Fetch All tasks
 const getTasks = (request, response, next) => {
-    pool.query('SELECT * FROM task where id=3', (error, results) => {
+    pool.query('SELECT * FROM task', (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
