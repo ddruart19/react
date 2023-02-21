@@ -82,7 +82,7 @@ const validateTask = (request: Request, response: Response, next: NextFunction) 
 
 //Search with text
 const searchTaskWithText = (request: Request, response: Response, next: NextFunction) => {
-    pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.params.search], (error: Error, results: { rows: taskDB[]; }) => {
+    pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.query.search], (error: Error, results: { rows: taskDB[]; }) => {
         //Send error to middleware error handling function
         if(error) return next(error) 
         //Return 404 not found if result is undefined
