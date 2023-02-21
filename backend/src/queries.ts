@@ -88,7 +88,7 @@ const searchTaskWithText = (request: Request, response: Response, next: NextFunc
         //Return 404 not found if result is undefined
         if(typeof results.rows === "undefined")response.status(404).json("Task not found")
 
-        response.status(200).send(request.query)
+        response.status(200).json(results.rows)
     })
 }
 
