@@ -50,6 +50,8 @@ app.put('/api/task/:id', db.updateTask);
 app.delete('/api/task/:id', db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
+//Search task
+app.post('/api/task/search', db.searchTaskWithText)
 
 app.options('*', cors());
 
