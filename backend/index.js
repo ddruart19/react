@@ -51,7 +51,7 @@ app.delete('/api/task/:id', db.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', db.validateTask);
 //Search task
-app.get('/api/task?search=:text', db.searchTaskWithText)
+app.get('/api/task', db.searchTaskWithText)
 
 app.options('*', cors());
 
