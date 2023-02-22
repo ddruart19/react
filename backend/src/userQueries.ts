@@ -34,7 +34,7 @@ const createUser = (request : Request, response : Response, next: NextFunction) 
     })
     .then((hash: string) => {
         console.log("body : ", body)
-        pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hash], (error: Error, results: { rows: userDBOutput[]; }) => {
+        pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, body.password], (error: Error, results: { rows: userDBOutput[]; }) => {
             //Send error to middleware error handling function
             if(error) return next(error) 
     
