@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 const bcrypt = require('bcrypt')
-// import pool from "./database";
+import pool from "./database";
 
 
-// interface userDBOutput {
-//     id: number;
-//     email: string;
-//     name: string;
-//     surname: string;
-//     password: string;
-// }
+interface userDBOutput {
+    id: number;
+    email: string;
+    name: string;
+    surname: string;
+    password: string;
+}
 // interface userDBInput {
 //     email: string;
 //     name: string;
@@ -32,14 +32,14 @@ const createUser = (request : Request, response : Response, next: NextFunction) 
         console.log('Salt: ', salt)
         return bcrypt.hash(body.password, salt)
     })
-    .then((hash: any) => {
-        // pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hash], (error: Error, results: { rows: userDBOutput[]; }) => {
-        //     //Send error to middleware error handling function
-        //     if(error) return next(error) 
+    .then((hash: string) => {
+        console.log("body : ", body)
+        pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hash], (error: Error, results: { rows: userDBOutput[]; }) => {
+            //Send error to middleware error handling function
+            if(error) return next(error) 
     
-        //     response.status(201).send("User successfully created")
-        // })
-        console.log("Hash : ", hash)
+            response.status(201).send("User successfully created")
+        })
     })
     .catch((err: { message: any; }) => console.error(err.message))
 
