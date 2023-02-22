@@ -5,6 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require('bcrypt');
 const database_1 = __importDefault(require("./database"));
+// interface userDBOutput {
+//     id: number;
+//     email: string;
+//     name: string;
+//     surname: string;
+//     password: string;
+// }
 // interface userDBInput {
 //     email: string;
 //     name: string;
@@ -27,14 +34,17 @@ const createUser = (request, response, next) => {
         .then((hash) => {
         console.log("body : ", body);
         hashedPwd = hash;
+        return database_1.default.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd]);
+    }).
+        then(() => {
+        response.status(201).send("User successfully created");
     })
         .catch((err) => console.error(err.message));
-    database_1.default.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error, results) => {
-        //Send error to middleware error handling function
-        if (error)
-            return next(error);
-        response.status(201).send("User successfully created");
-    });
+    // pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error: Error, results: { rows: userDBOutput[]; }) => {
+    //     //Send error to middleware error handling function
+    //     if(error) return next(error) 
+    //     response.status(201).send("User successfully created")
+    // })
 };
 module.exports = {
     createUser
