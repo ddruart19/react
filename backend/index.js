@@ -8,7 +8,8 @@ const compression_1 = __importDefault(require("compression"));
 const bodyParser = require('body-parser');
 const express = require('express');
 const helmet_1 = __importDefault(require("helmet"));
-const db = require('./dist/queries');
+const taskQueries = require('./dist/taskQueries');
+const userQueries = require('./dist/userQueries')
 const app = express();
 const cors = require('cors');
 const port = 3001;
@@ -39,19 +40,25 @@ app.use(function(req, res, next) {
 
 // app.options('*', cors(corsOptions));
 //Fetch all tasks
-app.get('/api/tasks', cors(corsOptions), db.getTasks);
+app.get('/api/tasks', cors(corsOptions), taskQueries.getTasks);
 //Fetch task by id
-app.get('/api/task/:id', db.getTaskById);
+app.get('/api/task/:id', taskQueries.getTaskById);
 //Create task
-app.post('/api/task', db.createTask);
+app.post('/api/task', taskQueries.createTask);
 //Update task
-app.put('/api/task/:id', db.updateTask);
+app.put('/api/task/:id', taskQueries.updateTask);
 //Delete task
-app.delete('/api/task/:id', db.deleteTask);
+app.delete('/api/task/:id', taskQueries.deleteTask);
 //Validate task
-app.put('/api/task/validate/:id', db.validateTask);
+app.put('/api/task/validate/:id', taskQueries.validateTask);
 //Search task
-app.post('/api/task/search', db.searchTaskWithText)
+app.post('/api/task/search', taskQueries.searchTaskWithText)
+
+
+
+
+//Create user
+app.post('/api/user', userQueries.createUser);
 
 app.options('*', cors());
 
