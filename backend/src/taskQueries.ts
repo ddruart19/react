@@ -8,6 +8,7 @@ interface taskDB {
     name: string;
     completed: boolean;
     date: string;
+    user_id: number;
   }
  
 //Fetch All tasks
@@ -37,7 +38,7 @@ const getTaskById = (request : Request, response : Response, next: NextFunction)
 //Create task
 const createTask = (request : Request, response : Response, next: NextFunction) => {
     const { body } = request;
-    pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [body.name, body.completed, body.date], (error: Error, results: { rows: taskDB[]; }) => {
+    pool.query('INSERT INTO task(name, completed, date, user_id) VALUES($1, $2, $3, $4)', [body.name, body.completed, body.date, body.user_id], (error: Error, results: { rows: taskDB[]; }) => {
         //Send error to middleware error handling function
         if(error) return next(error) 
 

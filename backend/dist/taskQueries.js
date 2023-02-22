@@ -31,7 +31,7 @@ const getTaskById = (request, response, next) => {
 //Create task
 const createTask = (request, response, next) => {
     const { body } = request;
-    database_1.default.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [body.name, body.completed, body.date], (error, results) => {
+    database_1.default.query('INSERT INTO task(name, completed, date, user_id) VALUES($1, $2, $3, $4)', [body.name, body.completed, body.date, body.user_id], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
