@@ -70,7 +70,7 @@ const validateTask = (request, response, next) => {
 };
 //Search with text
 const searchTaskWithText = (request, response, next) => {
-    pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.query.search], (error, results) => {
+    pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.body.search], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
