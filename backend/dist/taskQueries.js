@@ -1,9 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const pool = require('./database');
+// const pool = require('./database')
+const database_1 = __importDefault(require("./database"));
 //Fetch All tasks
 const getTasks = (request, response, next) => {
-    pool.query('SELECT * FROM task', (error, results) => {
+    database_1.default.query('SELECT * FROM task', (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -14,7 +18,7 @@ const getTasks = (request, response, next) => {
 };
 //Fetch task by id
 const getTaskById = (request, response, next) => {
-    pool.query('SELECT * FROM task where task.id = $1', [request.params.id], (error, results) => {
+    database_1.default.query('SELECT * FROM task where task.id = $1', [request.params.id], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -27,7 +31,7 @@ const getTaskById = (request, response, next) => {
 //Create task
 const createTask = (request, response, next) => {
     const { body } = request;
-    pool.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [body.name, body.completed, body.date], (error, results) => {
+    database_1.default.query('INSERT INTO task(name, completed, date) VALUES($1, $2, $3)', [body.name, body.completed, body.date], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -36,7 +40,7 @@ const createTask = (request, response, next) => {
 };
 //Update task
 const updateTask = (request, response, next) => {
-    pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.name, request.body.completed, request.body.date, request.params.id], (error, results) => {
+    database_1.default.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [request.body.name, request.body.completed, request.body.date, request.params.id], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -45,7 +49,7 @@ const updateTask = (request, response, next) => {
 };
 //Delete task
 const deleteTask = (request, response, next) => {
-    pool.query('DELETE from task where task.id = $1', [request.params.id], (error, results) => {
+    database_1.default.query('DELETE from task where task.id = $1', [request.params.id], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -54,7 +58,7 @@ const deleteTask = (request, response, next) => {
 };
 //Validate task
 const validateTask = (request, response, next) => {
-    pool.query('UPDATE task SET completed = $1 WHERE id = $2;', [request.body.completed, request.params.id], (error, results) => {
+    database_1.default.query('UPDATE task SET completed = $1 WHERE id = $2;', [request.body.completed, request.params.id], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);
@@ -63,7 +67,7 @@ const validateTask = (request, response, next) => {
 };
 //Search with text
 const searchTaskWithText = (request, response, next) => {
-    pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.body.search], (error, results) => {
+    database_1.default.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [request.body.search], (error, results) => {
         //Send error to middleware error handling function
         if (error)
             return next(error);

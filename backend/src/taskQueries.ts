@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
-const pool = require('./database')
+// const pool = require('./database')
+import pool from "./database";
 
 interface taskDB {
     id: string;
