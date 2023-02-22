@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require('bcrypt');
-const pool = require('./database');
+const database_1 = __importDefault(require("./database"));
 // interface userDBInput {
 //     email: string;
 //     name: string;
@@ -21,7 +24,7 @@ const createUser = (request, response, next) => {
         return bcrypt.hash(body.password, salt);
     })
         .then((hash) => {
-        pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hash], (error, results) => {
+        database_1.default.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hash], (error, results) => {
             //Send error to middleware error handling function
             if (error)
                 return next(error);
