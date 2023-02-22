@@ -20,7 +20,7 @@ interface userDBOutput {
 //Create user
 const createUser = (request : Request, response : Response, next: NextFunction) => {
     const { body } = request;
-
+    let hashedPwd: string = ""
     //Test typeof
 
     //Test if attributes arent empty
@@ -34,15 +34,16 @@ const createUser = (request : Request, response : Response, next: NextFunction) 
     })
     .then((hash: string) => {
         console.log("body : ", body)
-        pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, body.password], (error: Error, results: { rows: userDBOutput[]; }) => {
-            //Send error to middleware error handling function
-            if(error) return next(error) 
-    
-            response.status(201).send("User successfully created")
-        })
+        hashedPwd = hash;
     })
     .catch((err: { message: any; }) => console.error(err.message))
 
+    pool.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error: Error, results: { rows: userDBOutput[]; }) => {
+        //Send error to middleware error handling function
+        if(error) return next(error) 
+
+        response.status(201).send("User successfully created")
+    })
     
 }
 

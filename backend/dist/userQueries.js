@@ -14,6 +14,7 @@ const database_1 = __importDefault(require("./database"));
 //Create user
 const createUser = (request, response, next) => {
     const { body } = request;
+    let hashedPwd = "";
     //Test typeof
     //Test if attributes arent empty
     //Hash pwd
@@ -25,14 +26,15 @@ const createUser = (request, response, next) => {
     })
         .then((hash) => {
         console.log("body : ", body);
-        database_1.default.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, body.password], (error, results) => {
-            //Send error to middleware error handling function
-            if (error)
-                return next(error);
-            response.status(201).send("User successfully created");
-        });
+        hashedPwd = hash;
     })
         .catch((err) => console.error(err.message));
+    database_1.default.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error, results) => {
+        //Send error to middleware error handling function
+        if (error)
+            return next(error);
+        response.status(201).send("User successfully created");
+    });
 };
 module.exports = {
     createUser
