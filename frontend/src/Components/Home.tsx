@@ -57,7 +57,14 @@ const Home: React.FC = () => {
                         Next task to do 
                     </h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">
-                    {nextTaskToDo.name} before {showFullDate(nextTaskToDo.date)}
+                    {(()=> {
+                        if(nextTaskToDo){
+                            return (nextTaskToDo.name + " before " + showFullDate(nextTaskToDo.date))
+                        }else{
+                            return ("No task to do")
+                        }
+                    })()}
+                    {/* {nextTaskToDo.name} before {showFullDate(nextTaskToDo.date)} */}
                     </p>
                 </Card>
             </div>

@@ -1,8 +1,12 @@
 import { Button, Navbar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import './Header.css';
+
+
+
 const Header = () => {
     const location = useLocation();
+
     return(   
         <Navbar fluid={true} rounded={true}>
             {/* Logo */}
@@ -19,11 +23,18 @@ const Header = () => {
                 </span>
             </Navbar.Brand>
 
+
+
             {/* Create Task button */}
             <div className="flex md:order-2">
                 <Link to="/create">
-                    <Button>
+                    <Button color="success">
                         Create task
+                    </Button>
+                </Link>
+                <Link to="/signup">
+                    <Button>
+                        Sign Up
                     </Button>
                 </Link>
                 <Navbar.Toggle />

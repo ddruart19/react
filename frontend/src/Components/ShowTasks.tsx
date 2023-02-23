@@ -1,4 +1,6 @@
-import { Table } from "flowbite-react";
+import { Button, Table, TextInput } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { searchTaskByName } from "../APICall";
 import { useFetchAllTasks } from "../App";
 import { ITaskDB } from "../Interfaces";
 import TodoTask from "./TodoTask";
@@ -14,6 +16,23 @@ const ShowTasks = () =>{
     //  todoToEdit.completed = isCompleted;
     }
 
+    const [searchValue, setSearchValue] = useState("");
+    const [todoListFilter, setTodoListFilter] = useState<ITaskDB[] | undefined>(undefined)
+
+
+
+    const handleSubmit = () => {
+        //Replace space between word by | operator and send request to API
+        searchTaskByName(searchValue.replace(/ /g, ' | ')).then(res => res.json()).then(data => setTodoListFilter(data))
+    }
+    
+    const handleChange = (event : React.FormEvent<HTMLInputElement>) => {
+        setSearchValue(event.currentTarget.value)
+    }
+
+    const resetFilter = () => {
+      setTodoListFilter(undefined)
+    }
     const fetchTodoList = useFetchAllTasks();
 
     if (fetchTodoList.status === 'loading') {
@@ -24,9 +43,25 @@ const ShowTasks = () =>{
       return <span>Error: {fetchTodoList.error.message}</span>
     }
 
+
     return(
         <div className="todoList">
-
+          <form onSubmit={handleSubmit}>
+              <TextInput
+                  id="searchBar"
+                  value={searchValue}
+                  type="text"
+                  placeholder="Search for a task"
+                  onChange={handleChange}
+                  required={true}
+              />
+              <Button type="submit">
+                  Search
+              </Button>
+              <Button onClick={resetFilter}>
+                  Reset filter
+              </Button>
+          </form>
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>
@@ -53,26 +88,25 @@ const ShowTasks = () =>{
             </Table.Head>
 
             <Table.Body className="divide-y">
-              {fetchTodoList.data!.map((task:ITaskDB, key: number)=>{
-                return <TodoTask key={key} task={task} completeTask={completeTask}/>
-              })}
+
+              {(() => {
+                if (todoListFilter) {
+                  return (
+                    todoListFilter.map((task:ITaskDB, key: number)=>{
+                      return <TodoTask key={key} task={task} completeTask={completeTask}/>
+                    })
+                  )
+                } else if(fetchTodoList.data){
+                  return (
+                    fetchTodoList.data.map((task:ITaskDB, key: number)=>{
+                      return <TodoTask key={key} task={task} completeTask={completeTask}/>
+                    })
+                  )
+                }
+              })()}
+
             </Table.Body>
           </Table>
-        {/* <table>
-          <thead>
-            <tr>
-              <th className="completeCol">Completed</th>
-              <th>Task</th>
-              <th>Deadline (days)</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {todo.todoList.map((task:ITask, key: number)=>{
-              return <TodoTask key={key} task={task} completeTask={completeTask}/>
-            })}
-          </tbody>
-        </table> */}
       </div>
     );
 }
