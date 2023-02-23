@@ -17,7 +17,7 @@ const createUser = (request, response, next) => {
         if (error)
             return next(error);
         if (results.rows.length > 0)
-            response.status(409).send("Email already exists");
+            throw new Error('Email already taken');
     });
     //Hash pwd
     bcrypt

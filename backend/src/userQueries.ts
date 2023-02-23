@@ -23,7 +23,7 @@ const createUser = (request : Request, response : Response, next: NextFunction) 
     pool.query('SELECT * FROM users WHERE email like $1', [body.email],(error: Error, results: { rows: userDBOutput[]; }) => {
         //Send error to middleware error handling function
         if(error) return next(error) 
-        if(results.rows.length > 0)response.status(409).send("Email already exists")
+        if(results.rows.length > 0)throw new Error('Email already taken');
     })
     //Hash pwd
     bcrypt
