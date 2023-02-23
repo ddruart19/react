@@ -17,7 +17,7 @@ const createUser = (request, response, next) => {
         if (error)
             return next(error);
         if (results.rows.length > 0)
-            response.status(409).json({ message: "Email already exists" });
+            throw new Error('Email blalblalba');
     });
     //Hash pwd
     bcrypt
