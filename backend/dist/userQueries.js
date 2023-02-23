@@ -5,18 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require('bcrypt');
 const database_1 = __importDefault(require("./database"));
-// interface userDBInput {
-//     email: string;
-//     name: string;
-//     surname: string;
-//     password: string;
-// }
 //Create user
 const createUser = (request, response, next) => {
     const { body } = request;
     let hashedPwd = "";
     //Test typeof
     //Test if attributes arent empty
+    //Test if email exists in db
+    if (isEmailExisting(body.email))
+        response.status(409).send("Email already exists");
     //Hash pwd
     bcrypt
         .genSalt(10)
@@ -40,6 +37,17 @@ const createUser = (request, response, next) => {
     //     if(error) return next(error) 
     //     response.status(201).send("User successfully created")
     // })
+};
+//Check if email exist
+const isEmailExisting = async (email) => {
+    await database_1.default.query('SELECT * FROM users WHERE email like $1', [email], (error, results) => {
+        if (error)
+            return error;
+        if (results.rows.length > 0)
+            return true;
+        return false;
+    });
+    return false;
 };
 module.exports = {
     createUser
