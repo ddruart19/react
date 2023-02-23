@@ -27,7 +27,7 @@ const createUser = (request, response, next) => {
         .then((hash) => {
         console.log("body : ", body);
         hashedPwd = hash;
-        database_1.default.query('INSERT INTO user(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error, results) => {
+        database_1.default.query('INSERT INTO users(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error, results) => {
             //Send error to middleware error handling function
             if (error)
                 return next(error);
