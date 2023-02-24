@@ -59,7 +59,7 @@ app.post('/api/task/search', taskQueries.searchTaskWithText);
 
 //Create user
 app.post('/api/user', userQueries.createUser);
-app.post('api/user/connection', userQueries.authUser);
+app.post('/api/user/connection', userQueries.authUser);
 
 app.options('*', cors());
 
