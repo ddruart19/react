@@ -33,7 +33,7 @@ const createUser = (request, response, next) => {
             //Send error to middleware error handling function
             if (error)
                 return next(error);
-            response.status(201).send("User successfully created");
+            response.status(201).json({ message: "User successfully created" });
         });
     })
         .catch((err) => console.error(err.message));
