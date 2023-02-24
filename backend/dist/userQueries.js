@@ -54,15 +54,11 @@ const createUser = (request, response, next) => {
 //User Authentication
 const authUser = (request, response) => {
     const { body } = request;
-    database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
+    database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], async (error, results) => {
         console.log("User pwd : ", body.password, "\nDb pwd : ", results.rows[0].password);
-        bcrypt.compare(body.password, results.rows[0].password, (err, res) => {
-            console.log(res);
-            if (res)
-                response.status(200).json({ message: "Connection successfull" });
-            else
-                response.status(200).json({ message: "Connection failed" });
-        });
+        const isConnectionSuccess = await bcrypt.compare(body.password, results.rows[0].password);
+        if (isConnectionSuccess)
+            response.status(200).json({ message: "Connection success" });
         response.status(200).json({ message: "Connection failed" });
     });
 };
