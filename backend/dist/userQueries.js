@@ -55,7 +55,6 @@ const createUser = (request, response, next) => {
 const authUser = (request, response) => {
     const { body } = request;
     database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
-        response.status(403).json(results);
         bcrypt.compare(body.password, results.rows[0].password, (err, res) => {
             if (res)
                 response.status(200).json({ message: "Connection successfull" });

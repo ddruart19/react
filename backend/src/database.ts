@@ -6,5 +6,4 @@ export const pool  = new Pool({
     password: process.env.DB_PWD,
     port: 5432
 })
-
 export default pool;
