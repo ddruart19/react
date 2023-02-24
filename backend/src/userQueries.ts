@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 const bcrypt = require('bcrypt')
 import pool from "./database";
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
 
 
 interface userDBOutput {
@@ -64,15 +66,21 @@ const createUser = (request : Request, response : Response, next: NextFunction) 
 //User Authentication
 const authUser = (request : Request, response : Response) => {
     const { body } = request;
-    pool.query('SELECT * FROM users WHERE email like $1', [body.email],(error: Error, results: { rows: userDBOutput[]; }) => {
-        if(results.rows.length < 1) return response.status(409).json({message: "Wrong email"})
-        if(bcrypt.compareSync(body.password, results.rows[0].password)){
-            return response.status(200).json({message: "Connection success"})
-        }
-        
-        return response.status(409).json({message: "Wrong password"})
-        
-    })
+    passport.use(
+        new LocalStrategy(
+            function verify(email: string, password: string, cb: any){
+                pool.query('SELECT * FROM users WHERE email like $1', [body.email],(error: Error, results: { rows: userDBOutput[]; }) => {
+                    if(results.rows.length < 1) return response.status(409).json({message: "Wrong email"})
+                    if(bcrypt.compareSync(body.password, results.rows[0].password)){
+                        return response.status(200).json({message: "Connection success"})
+                    }
+                    
+                    return response.status(409).json({message: "Wrong password"})
+                    
+                })
+            }
+        )
+    )
 }
 module.exports ={
     createUser,
