@@ -23,11 +23,9 @@ const createUser = (request, response, next) => {
     bcrypt
         .genSalt(10)
         .then((salt) => {
-        console.log('Salt: ', salt);
         return bcrypt.hash(body.password, salt);
     })
         .then((hash) => {
-        console.log("body : ", body);
         hashedPwd = hash;
         database_1.default.query('INSERT INTO users(email, name, surname, password) VALUES($1, $2, $3, $4)', [body.email, body.name, body.surname, hashedPwd], (error, results) => {
             //Send error to middleware error handling function
@@ -43,6 +41,32 @@ const createUser = (request, response, next) => {
     //     response.status(201).send("User successfully created")
     // })
 };
+//Get user by email
+// const getUserByEmail = async (email: string) => {
+//     let user!: userDBOutput;
+//     await pool.query('SELECT * FROM users WHERE email like $1', [email],(error: Error, results: { rows: userDBOutput[]; }) => {
+//         //Send error to middleware error handling function
+//         if(error || !results.rows) return undefined
+//         user = results.rows[0]
+//     })
+//     return user;
+// }
+//User Authentication
+const authUser = (request, response) => {
+    const { body } = request;
+    database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
+        if (!results.rows)
+            response.status(403).json({ message: "Incorrect email" });
+        bcrypt.compare(body.password, results.rows[0].password, (err, res) => {
+            if (res)
+                response.status(200).json({ message: "Connection successfull" });
+            else
+                response.status(200).json({ message: "Connection failed" });
+        });
+        response.status(200).json({ message: "Connection failed" });
+    });
+};
 module.exports = {
-    createUser
+    createUser,
+    authUser
 };

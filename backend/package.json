@@ -29,6 +29,9 @@
     "db-migrate-pg": "^1.2.2",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "pg": "^8.9.0"
   },
   "devDependencies": {

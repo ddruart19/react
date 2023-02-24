@@ -52,13 +52,14 @@ app.delete('/api/task/:id', taskQueries.deleteTask);
 //Validate task
 app.put('/api/task/validate/:id', taskQueries.validateTask);
 //Search task
-app.post('/api/task/search', taskQueries.searchTaskWithText)
+app.post('/api/task/search', taskQueries.searchTaskWithText);
 
 
 
 
 //Create user
 app.post('/api/user', userQueries.createUser);
+app.post('api/user/connection', userQueries.authUser);
 
 app.options('*', cors());
 
