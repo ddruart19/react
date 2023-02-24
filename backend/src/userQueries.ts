@@ -65,7 +65,7 @@ const createUser = (request : Request, response : Response, next: NextFunction) 
 const authUser = (request : Request, response : Response) => {
     const { body } = request;
     pool.query('SELECT * FROM users WHERE email like $1', [body.email],(error: Error, results: { rows: userDBOutput[]; }) => {
-        if(results.rows.length < 1)response.status(403).json({message: "Incorrect email"})
+        response.status(403).json(results)
 
         bcrypt.compare(body.password, results.rows[0].password, (err: Error, res: Response) => {
             if(res)response.status(200).json({message: "Connection successfull"})
