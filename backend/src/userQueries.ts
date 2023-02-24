@@ -66,7 +66,8 @@ const authUser = (request : Request, response : Response) => {
     const { body } = request;
     pool.query('SELECT * FROM users WHERE email like $1', [body.email],(error: Error, results: { rows: userDBOutput[]; }) => {
         console.log("User pwd : ", body.password, "\nDb pwd : ", results.rows[0].password)
-        bcrypt.compare(body.password, results.rows[0].password, (err: Error, res: Response) => {
+        bcrypt.compare(body.password, results.rows[0].password, (err: any, res: any) => {
+            console.log(res)
             if(res)response.status(200).json({message: "Connection successfull"})
             else response.status(200).json({message: "Connection failed"})
         })

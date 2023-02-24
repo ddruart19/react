@@ -57,6 +57,7 @@ const authUser = (request, response) => {
     database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
         console.log("User pwd : ", body.password, "\nDb pwd : ", results.rows[0].password);
         bcrypt.compare(body.password, results.rows[0].password, (err, res) => {
+            console.log(res);
             if (res)
                 response.status(200).json({ message: "Connection successfull" });
             else
