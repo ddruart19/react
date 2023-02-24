@@ -55,7 +55,7 @@ const createUser = (request, response, next) => {
 const authUser = (request, response) => {
     const { body } = request;
     database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
-        if (!results.rows)
+        if (results.rows.length < 1)
             response.status(403).json({ message: "Incorrect email" });
         bcrypt.compare(body.password, results.rows[0].password, (err, res) => {
             if (res)
