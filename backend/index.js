@@ -10,8 +10,11 @@ const express = require('express');
 const helmet_1 = __importDefault(require("helmet"));
 const taskQueries = require('./dist/taskQueries');
 const userQueries = require('./dist/userQueries');
+var session = require('express-session');
+var logger = require('morgan');
 const passport = require("passport");
 var LocalStrategy = require('passport-local');
+var SQLiteStore = require('connect-sqlite3')(session);
 const bcrypt = require('bcrypt')
 const app = express();
 const cors = require('cors');
@@ -67,6 +70,7 @@ app.post('/api/task/search', taskQueries.searchTaskWithText);
 app.post('/api/user', userQueries.createUser);
 //Login user
 app.post('/api/user/connection', passport.authenticate('local', {
+    session: false,
     successRedirect: '/',
     failureRedirect: '/signup'
   }));
