@@ -10,6 +10,7 @@ const express = require('express');
 const helmet_1 = __importDefault(require("helmet"));
 const taskQueries = require('./dist/taskQueries');
 const userQueries = require('./dist/userQueries');
+const passport = require("passport");
 const app = express();
 const cors = require('cors');
 const port = 3001;
