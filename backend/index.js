@@ -79,11 +79,11 @@ app.put('/api/task/validate/:id', taskQueries.validateTask);
 app.post('/api/task/search', taskQueries.searchTaskWithText);
 
 
-passport.use('local', new LocalStrategy(
-    function verify(user, cb) {
+passport.use(new LocalStrategy(
+    (user, cb) => {
         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
         pool.query('SELECT * FROM users WHERE email like $1', [user.email],(error, results) => {
-            if(bcrypt.compareSync(user.password, results.rows[0].password)){
+            if(bcrypt.compare(user.password, results.rows[0].password)){
                 return cb(null, {email: results.rows[0].email}, {message: 'Logged In Successfully'});
             }
             return cb(null, false, {message: 'Incorrect email or password.'});
