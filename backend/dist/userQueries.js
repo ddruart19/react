@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require('bcrypt');
 const database_1 = __importDefault(require("./database"));
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
 //Create user
 const createUser = (request, response, next) => {
     const { body } = request;
@@ -54,14 +56,16 @@ const createUser = (request, response, next) => {
 //User Authentication
 const authUser = (request, response) => {
     const { body } = request;
-    database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
-        if (results.rows.length < 1)
-            return response.status(409).json({ message: "Wrong email" });
-        if (bcrypt.compareSync(body.password, results.rows[0].password)) {
-            return response.status(200).json({ message: "Connection success" });
-        }
-        return response.status(409).json({ message: "Wrong password" });
-    });
+    passport.use(new LocalStrategy(function verify(email, password, cb) {
+        database_1.default.query('SELECT * FROM users WHERE email like $1', [body.email], (error, results) => {
+            if (results.rows.length < 1)
+                return response.status(409).json({ message: "Wrong email" });
+            if (bcrypt.compareSync(body.password, results.rows[0].password)) {
+                return response.status(200).json({ message: "Connection success" });
+            }
+            return response.status(409).json({ message: "Wrong password" });
+        });
+    }));
 };
 module.exports = {
     createUser,

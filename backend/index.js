@@ -59,7 +59,10 @@ app.post('/api/task/search', taskQueries.searchTaskWithText);
 
 //Create user
 app.post('/api/user', userQueries.createUser);
-app.post('/api/user/connection', userQueries.authUser);
+app.post('/api/user/connection', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/signup'
+  }));
 
 app.options('*', cors());
 
