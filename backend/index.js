@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import app from "./app";
 const compression_1 = __importDefault(require("compression"));
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 const express = require('express');
 const helmet_1 = __importDefault(require("helmet"));
 const taskQueries = require('./dist/taskQueries');
@@ -21,7 +22,7 @@ app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
 
-app.use(cookiePrser());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true}));
 app.use(
   session({
