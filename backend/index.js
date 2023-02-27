@@ -28,7 +28,6 @@ app.use(express.urlencoded({ extended: true}));
 app.use(
   session({
     secret: "this_is_a_secret",
-    store: pgSessionStorage,
     resave: true,
     saveUnitialized: true,
     rolling: true, // forces resetting of max age
