@@ -19,7 +19,7 @@ app.disable("x-powered-by");
 app.use(bodyParser.json());
 const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
 const corsOptions = {
-    origin: ['https://ddruart19.github.io', "http://localhost:3000"],
+    origin: "http://localhost:3000",
     methods: 'GET, POST, PUT, DELETE',
     optionsSuccessStatus: 200
 }
