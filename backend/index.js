@@ -11,6 +11,7 @@ const helmet_1 = __importDefault(require("helmet"));
 const taskQueries = require('./dist/taskQueries');
 const userQueries = require('./dist/userQueries');
 const passport = require("passport");
+const bcrypt = require('bcrypt')
 const app = express();
 const cors = require('cors');
 const port = 3001;
@@ -56,10 +57,23 @@ app.put('/api/task/validate/:id', taskQueries.validateTask);
 app.post('/api/task/search', taskQueries.searchTaskWithText);
 
 
-
+//Passport strategy
+passport.use(new LocalStrategy(
+    function verify(user, cb) {
+        //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+        pool.query('SELECT * FROM users WHERE email like $1', user.email,(error, results) => {
+            if(bcrypt.compareSync(user.password, results.rows[0].password)){
+                return cb(null, {email: results.rows[0].email}, {message: 'Logged In Successfully'});
+            }
+            return cb(null, false, {message: 'Incorrect email or password.'});
+            
+        })
+    }
+));
 
 //Create user
 app.post('/api/user', userQueries.createUser);
+//Login user
 app.post('/api/user/connection', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signup'
