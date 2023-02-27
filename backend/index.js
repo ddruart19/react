@@ -8,6 +8,7 @@ const compression_1 = __importDefault(require("compression"));
 const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 const express = require('express');
+var session = require('express-session')
 const helmet_1 = __importDefault(require("helmet"));
 const taskQueries = require('./dist/taskQueries');
 const userQueries = require('./dist/userQueries');
