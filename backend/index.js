@@ -21,6 +21,21 @@ app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
 
+app.use(cookiePrser());
+app.use(express.urlencoded({ extended: true}));
+app.use(
+  session({
+    secret: "this_is_a_secret",
+    store: pgSessionStorage,
+    resave: true,
+    saveUnitialized: true,
+    rolling: true, // forces resetting of max age
+    cookie: {
+      maxAge: 360000,
+      secure: false // this should be true only when you don't want to show it for security reason
+    }
+  })
+);
 /*Initialize Passport*/
 app.use(passport.initialize());
 app.use(passport.session());
