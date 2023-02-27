@@ -11,6 +11,7 @@ const helmet_1 = __importDefault(require("helmet"));
 const taskQueries = require('./dist/taskQueries');
 const userQueries = require('./dist/userQueries');
 const passport = require("passport");
+var LocalStratgy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt')
 const app = express();
 const cors = require('cors');
@@ -19,6 +20,11 @@ app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.disable("x-powered-by");
 app.use(bodyParser.json());
+
+/*Initialize Passport*/
+app.use(passport.initialize());
+app.use(passport.session());
+
 const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
 const corsOptions = {
     origin: "http://localhost:3000",
