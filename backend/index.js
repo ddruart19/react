@@ -97,8 +97,8 @@ app.post('/api/user', userQueries.createUser);
 //Login user
 app.post('/api/user/connection', passport.authenticate('local', {
     session: false,
-    successRedirect: '/',
-    failureRedirect: '/signup'
+    successRedirect: console.log("Success connection"),
+    failureRedirect: console.log("Fail connection")
   }));
 
 app.options('*', cors());
