@@ -37,6 +37,11 @@ const Header = () => {
                         Sign Up
                     </Button>
                 </Link>
+                <Link to="/signin">
+                    <Button>
+                        Sign In
+                    </Button>
+                </Link>
                 <Navbar.Toggle />
             </div>
 

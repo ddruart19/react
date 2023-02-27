@@ -4,6 +4,7 @@ import CreateTask from '../Components/CreateTask';
 import EditTask from '../Components/EditTask';
 import Home from '../Components/Home';
 import ShowTasks from '../Components/ShowTasks';
+import SignInForm from '../Components/SignInForm';
 import SignUpForm from '../Components/SignUpForm';
 import TimelineList from '../Components/TimelineList';
 
@@ -19,6 +20,7 @@ const Main = () => {
             <Route path='/timeline' element={<TimelineList/>}/>
             <Route path='/calendar' element={<CalendarTask/>}/>
             <Route path='/signup' element={<SignUpForm/>}/>
+            <Route path='/signin' element={<SignInForm/>}/>
         </Routes>
     );
 }
