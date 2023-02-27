@@ -22,7 +22,7 @@ interface userLoginInput{
     password: string;
 }
 
-passport.use(new LocalStrategy(
+passport.use('local', new LocalStrategy(
     function verify(user:userLoginInput, cb: (error: any, user: userDBOutput | false, message: any) => any) {
         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
         pool.query('SELECT * FROM users WHERE email like $1', [user.email],(error: Error, results: { rows: userDB[]; }) => {
