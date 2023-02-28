@@ -25,18 +25,18 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true}));
-app.use(
-  session({
-    secret: "this_is_a_secret",
-    resave: true,
-    saveUnitialized: true,
-    rolling: true, // forces resetting of max age
-    cookie: {
-      maxAge: 360000,
-      secure: false // this should be true only when you don't want to show it for security reason
-    }
-  })
-);
+// app.use(
+//   session({
+//     secret: "this_is_a_secret",
+//     resave: true,
+//     saveUnitialized: true,
+//     rolling: true, // forces resetting of max age
+//     cookie: {
+//       maxAge: 360000,
+//       secure: false // this should be true only when you don't want to show it for security reason
+//     }
+//   })
+// );
 /*Initialize Passport*/
 app.use(passport.initialize());
 app.use(passport.session());
@@ -79,27 +79,27 @@ app.put('/api/task/validate/:id', taskQueries.validateTask);
 app.post('/api/task/search', taskQueries.searchTaskWithText);
 
 
-passport.use(new LocalStrategy(
-    (user, cb) => {
-        //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
-        pool.query('SELECT * FROM users WHERE email like $1', [user.email],(error, results) => {
-            if(bcrypt.compare(user.password, results.rows[0].password)){
-                return cb(null, {email: results.rows[0].email}, {message: 'Logged In Successfully'});
-            }
-            return cb(null, false, {message: 'Incorrect email or password.'});
+// passport.use(new LocalStrategy(
+//     (user, cb) => {
+//         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+//         pool.query('SELECT * FROM users WHERE email like $1', [user.email],(error, results) => {
+//             if(bcrypt.compare(user.password, results.rows[0].password)){
+//                 return cb(null, {email: results.rows[0].email}, {message: 'Logged In Successfully'});
+//             }
+//             return cb(null, false, {message: 'Incorrect email or password.'});
             
-        })
-    }
-));
+//         })
+//     }
+// ));
 
 //Create user
 app.post('/api/user', userQueries.createUser);
 //Login user
-app.post('/api/user/connection', passport.authenticate('local', {
-    session: false,
-    successRedirect: console.log("Success connection"),
-    failureRedirect: console.log("Fail connection")
-  }));
+// app.post('/api/user/connection', passport.authenticate('local', {
+//     session: false,
+//     successRedirect: console.log("Success connection"),
+//     failureRedirect: console.log("Fail connection")
+//   }));
 
 app.options('*', cors());
 
