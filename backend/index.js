@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: true}));
 
 const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "https://ddruart19.github.io",
     methods: 'GET, POST, PUT, DELETE',
     optionsSuccessStatus: 200
 }
