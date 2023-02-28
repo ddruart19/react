@@ -24,3 +24,22 @@ export interface OutputTaskUpdate{
     date: Date;
     id : number;
 }
+
+export interface OutputUserCreation{
+    email: string;
+    name: string;
+    surname: string;
+    password: string;
+}
+
+export interface UserDB{
+    id: number;
+    email: string;
+    name: string;
+    surname: string;
+}
+
+export interface UserConnectionOutput{
+    email: string;
+    password: string;
+}

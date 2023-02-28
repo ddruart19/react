@@ -65,28 +65,12 @@ const CreateTask = () => {
     const initialValues : FormValues = {taskName: "", taskDate: "2023-02-02"};
 
     const addTask = async (values : FormValues) => {
-        // const newTask = {
-        //   id: todo.todoList.length + 1,
-        //   name: values.taskName,
-        //   completed: false,
-        //   date: new Date(values.taskDate)
-        // }
-        // todo.todoList.push(newTask);
-        // todo.setTodoList(todo.todoList);
-
-        //Add task in DB
-        // createTask({
-        //   name : values.taskName,
-        //   completed: false,
-        //   date: new Date(values.taskDate)
-        // }).then(res => res.json()).then(data => console.log(data)).catch(error => console.log(error));
-
         createMutation.mutate({
           name : values.taskName,
           completed: false,
           date: new Date(values.taskDate)
         });
-      }
+    }
 
     
 
