@@ -2,11 +2,10 @@
 const passport = require("passport")
 const LocalStrategy = require('passport-local').Strategy;
 import pool from "./database";
-import { sessionUser } from "./interfaces";
 const bcrypt = require('bcrypt')
 
 
-interface userDBOutput {
+interface userDB {
     id: number;
     email: string;
     name: string;
@@ -14,17 +13,21 @@ interface userDBOutput {
     password: string;
 }
 
+interface userDBOutput{
+    email: string;
+}
 
+interface userLoginInput{
+    email: string;
+    password: string;
+}
 
-passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password'
-    }, 
-    function (email: string, password:string, cb: (error: any, user: boolean, message: any) => any) {
+passport.use('local', new LocalStrategy(
+    function verify(user:userLoginInput, cb: (error: any, user: userDBOutput | false, message: any) => any) {
         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
-        pool.query('SELECT * FROM users WHERE email like $1', email,(error: Error, results: { rows: userDBOutput[]; }) => {
-            if(bcrypt.compareSync(password, results.rows[0].password)){
-                return cb(null, true, {message: 'Logged In Successfully'});
+        pool.query('SELECT * FROM users WHERE email like $1', [user.email],(error: Error, results: { rows: userDB[]; }) => {
+            if(bcrypt.compareSync(user.password, results.rows[0].password)){
+                return cb(null, {email: results.rows[0].email}, {message: 'Logged In Successfully'});
             }
             return cb(null, false, {message: 'Incorrect email or password.'});
             

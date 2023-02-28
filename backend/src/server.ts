@@ -2,7 +2,7 @@
 import compression from "compression";
 const bodyParser = require('body-parser');
 const express = require('express');
-const dbmigrate = require('db-migrate')
+const dbmigrate = require('db-migrate');
 import { Request, Response, NextFunction } from 'express';
 import helmet from "helmet";
 const taskQueries = require('./taskQueries');

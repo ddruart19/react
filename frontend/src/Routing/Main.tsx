@@ -21,7 +21,6 @@ const Main = () => {
             <Route path='/calendar' element={<CalendarTask/>}/>
             <Route path='/signup' element={<SignUpForm/>}/>
             <Route path='/signin' element={<SignInForm/>}/>
-
         </Routes>
     );
 }

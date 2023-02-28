@@ -66,7 +66,6 @@ const SignInForm = () => {
                             <Field name="email" placeholder="Your email" component={InputText} type="email"/>
                         </label>
                     </div>
-
                     {/* PASSWORD */}
                     <div>
                         <label>
@@ -87,5 +86,4 @@ const SignInForm = () => {
         </>
     )
 }
-
 export default SignInForm
