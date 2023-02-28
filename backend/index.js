@@ -38,8 +38,8 @@ app.use(express.urlencoded({ extended: true}));
 //   })
 // );
 /*Initialize Passport*/
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const whitelist = ['https://ddruart19.github.io', "http://localhost:3000"];
 const corsOptions = {
