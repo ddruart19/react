@@ -61,7 +61,7 @@ typings/
 .next
 
 # Dossier dist
-/dist
+#/dist
 
 # Dossier Vercel
 /.vercel
