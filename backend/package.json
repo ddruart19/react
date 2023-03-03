@@ -9,7 +9,7 @@
     "build": "npm run build-ts",
     "build-ts": "tsc",
     "clean": "rm -rf ./dist",
-    "serve": "node dist/server.js",
+    "serve": "node public/index.js",
     "start": "npm run serve",
     "test": "jest",
     "watch-ts": "tsc --watch"
