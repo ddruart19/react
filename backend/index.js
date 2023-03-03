@@ -10,6 +10,7 @@ var cookieParser = require('cookie-parser')
 const express = require('express');
 var session = require('express-session')
 const helmet_1 = __importDefault(require("helmet"));
+const { body, validationResult } = require('express-validator');
 const taskQueries = require('./dist/taskQueries');
 const userQueries = require('./dist/userQueries');
 const passport = require("passport");
@@ -64,7 +65,7 @@ app.use(function(req, res, next) {
 
 // app.options('*', cors(corsOptions));
 //Fetch all tasks
-app.get('/api/tasks', cors(corsOptions), taskQueries.getTasks);
+app.get('/api/tasks', taskQueries.getTasks);
 //Fetch task by id
 app.get('/api/task/:id', taskQueries.getTaskById);
 //Create task
@@ -93,7 +94,12 @@ passport.use(new LocalStrategy(
 ));
 
 //Create user
-app.post('/api/user', userQueries.createUser);
+app.post('/api/user', 
+  body('email').isEmail().normalizeEmail(), 
+  body('name').not().isEmpty().trim().escape(),
+  body('surname').not().isEmpty().trim().escape(),
+  body('password').isLength({min:6}),
+  userQueries.createUser);
 //Login user
 app.post('/api/user/connection', passport.authenticate('local', {
     session: false,
