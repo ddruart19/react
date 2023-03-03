@@ -1,5 +1,7 @@
-//Load env variable
-require('dotenv').config();
+//import env var from .env file if not in production
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
 
 const db = {
     user: process.env.DB_USER,
