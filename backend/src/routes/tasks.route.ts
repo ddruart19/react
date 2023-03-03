@@ -9,12 +9,15 @@ const tasksController = require('../controllers/tasks.controller')
 router.post("/", (req : Request, res : Response) => {
     res.json({'message': 'Create tasks'})
   })
+
 //Read
 router.get("/", tasksController.get)
+
 //Update
 router.put("/:id", (req : Request, res : Response) => {
     res.json({'message': 'Update tasks'})
   })
+  
 //Delete
 router.delete("/:id", (req : Request, res : Response) => {
     res.json({'message': 'Delete tasks'})

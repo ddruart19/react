@@ -3,15 +3,10 @@ import { Request, Response } from "express"
 const bodyParser = require('body-parser')
 import compression from "compression"
 import helmet from "helmet"
-
-//import des variables d'environnement
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+const tasksRouter = require('./routes/tasks.route');
 
 const app = express()
 const port = process.env.PORT || 3000;
-const tasksRouter = require('./routes/tasks.route');
 
 app.use(helmet()); // set well-known security-related HTTP headers
 app.use(compression());

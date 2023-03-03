@@ -1,13 +1,21 @@
+import { TaskInput } from "src/models/tasks.model"
 import {pool} from "./db.service"
 
 //Create
-const create = async (request : Request, response : Response) => {
-
+const create = async (task: TaskInput) => {
+    const result = await pool.query(
+        'INSERT INTO task(name, completed, date, user_id) VALUES($1, $2, $3, $4)',
+        [task.name, task.completed, task.date, task.user_id])
+    return result
 }
 
 //Read
-const get = async (request : Request, response : Response) => {
+const getAll = async () => {
     const result = await pool.query('SELECT * FROM task')
+    return result.rows
+}
+const getByName = async (name: string) => {
+    const result = await pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [name])
     return result.rows
 }
 
@@ -24,7 +32,8 @@ const remove = (request : Request, response : Response) => {
 
 module.exports = {
     create,
-    get,
+    getAll,
+    getByName,
     update,
     remove
 }
