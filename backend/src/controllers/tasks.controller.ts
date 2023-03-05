@@ -16,6 +16,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
         res.status(200).send(result)
     }catch(err: any){
         console.error(`Error while creating task`, err.message)
+        res.status(500).send(err.message)
+
     }
 }
 //Read
@@ -26,6 +28,7 @@ const get = async (req: Request, res: Response, next: NextFunction) => {
         else res.status(404).json({message : "No task found"})
     } catch(err: any) {
         console.error(`Error while getting tasks`, err.message)
+        res.status(500).send(err.message)
     }
 }
 
