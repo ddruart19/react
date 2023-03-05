@@ -9,6 +9,15 @@ const create = async (user: UserInputCreate) => {
     return result.rowCount
 }
 
+//Read
+const getByEmail = async (email: string) => {
+    const result = await pool.query('SELECT * FROM users where email like $1', 
+    [email])
+    return result.rows[0]
+}
+
+
 module.exports = {
-    create
+    create,
+    getByEmail
 }
