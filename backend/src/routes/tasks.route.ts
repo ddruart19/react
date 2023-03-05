@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-import { Request, Response } from "express"
 
 const tasksController = require('../controllers/tasks.controller')
 
@@ -12,9 +11,7 @@ router.post("/", tasksController.create)
 router.get("/", tasksController.get)
 
 //Update
-router.put("/:id", (req : Request, res : Response) => {
-    res.json({'message': 'Update tasks'})
-  })
+router.put("/:id", tasksController.update)
   
 //Delete
 router.delete("/:id", tasksController.remove)
