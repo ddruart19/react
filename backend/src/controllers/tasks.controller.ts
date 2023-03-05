@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express"
-import { TaskInput } from "src/models/tasks.model"
+import { TaskInputCreate, TaskInputUpdate } from "src/models/tasks.model"
 
 const tasks = require('../services/tasks.service')
 
 //Create
 const create = async (req: Request, res: Response, next: NextFunction) => {
-    let task: TaskInput = {
+    let task: TaskInputCreate = {
         name: req.body.name,
         completed: req.body.completed,
         date: new Date(req.body.date),
@@ -34,7 +34,21 @@ const get = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 //Update
-
+const update = async (req: Request, res: Response, next: NextFunction) => {
+    let task: TaskInputUpdate = {
+        name: req.body.name,
+        completed: req.body.completed,
+        date: new Date(req.body.date)
+    }
+    try {
+        let result = await tasks.update(req.params.id, task)
+        if(result > 0) res.status(201).json({message : "Task successfully updated "})
+        else res.status(400).json({message : "Impossible to update task"})
+    } catch (err: any) {
+        console.error(`Error while getting tasks`, err.message)
+        res.status(500).send(err.message)
+    }
+}
 
 //Delete
 const remove = (req: Request, res: Response, next: NextFunction) => {
@@ -48,8 +62,10 @@ const remove = (req: Request, res: Response, next: NextFunction) => {
         res.status(500).send(err.message)
     }
 }
+
 module.exports = {
     get,
     create,
-    remove
+    remove,
+    update
 }
