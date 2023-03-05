@@ -7,6 +7,10 @@ const users = require('../services/users.service')
 //Create
 const create = async (req: Request, res: Response, next: NextFunction) => {
     try{
+        //Check if email already exists
+        let useremail = await users.getByEmail(req.body.email)
+
+        //Password crypting
         bcrypt
         .genSalt(10)
         .then((salt: any) => {
@@ -25,9 +29,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
         })
 
     }catch(err: any){
-        console.error(`Error while creating task`, err.message)
+        console.error(`Error while creating user`, err.message)
         res.status(500).send(err.message)
-
     }
 }
 
