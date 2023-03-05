@@ -7,11 +7,9 @@ const tasks = require('../services/tasks.service')
 //Read
 const get = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        if(req.query.name){
-            res.json(await tasks.getByName(req.query.name)) 
-        }else {
-            res.json(await tasks.getAll())
-        }
+        let result = req.query.name ? await tasks.getByName(req.query.name) : await tasks.getAll()
+        if(result.length > 0) res.status(200).json(result)
+        else res.status(404).json({message : "No task found"})
     } catch(err: any) {
         console.error(`Error while getting tasks`, err.message)
     }
