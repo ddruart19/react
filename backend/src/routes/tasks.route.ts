@@ -17,8 +17,6 @@ router.put("/:id", (req : Request, res : Response) => {
   })
   
 //Delete
-router.delete("/:id", (req : Request, res : Response) => {
-    res.json({'message': 'Delete tasks'})
-  })
+router.delete("/:id", tasksController.remove)
 
 module.exports = router;
