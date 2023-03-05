@@ -13,7 +13,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     }
     try{
         let result = await tasks.create(task)
-        res.status(200).send(result)
+        if(result > 0) res.status(201).json({message : "Task successfully created"})
+        else res.status(400).json({message : "Impossible to create task"})
     }catch(err: any){
         console.error(`Error while creating task`, err.message)
         res.status(500).send(err.message)
@@ -33,6 +34,7 @@ const get = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 //Update
+
 
 //Delete
 

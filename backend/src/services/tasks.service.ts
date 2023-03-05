@@ -6,7 +6,7 @@ const create = async (task: TaskInput) => {
     const result = await pool.query(
         'INSERT INTO task(name, completed, date, user_id) VALUES($1, $2, $3, $4)',
         [task.name, task.completed, task.date, task.user_id])
-    return result
+    return result.rowCount
 }
 
 //Read
