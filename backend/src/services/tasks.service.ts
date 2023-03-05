@@ -25,8 +25,9 @@ const update = (request : Request, response : Response) => {
 }
 
 //Delete
-const remove = (request : Request, response : Response) => {
-
+const remove = async (task_id: number) => {
+    const result = await pool.query('DELETE from task where task.id = $1', [task_id])
+    return result
 }
 
 
