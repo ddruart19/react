@@ -1,8 +1,14 @@
-export interface TaskInput{
+export interface TaskInputCreate{
     name: string;
     completed: boolean;
     date: Date;
     user_id: number;
+}
+
+export interface TaskInputUpdate{
+    name: string;
+    completed: boolean;
+    date: Date;
 }
 
 export interface TaskOutput{
