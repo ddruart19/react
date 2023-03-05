@@ -17,3 +17,5 @@ router.put("/:id", tasksController.update)
 router.delete("/:id", tasksController.remove)
 
 module.exports = router;
+
+export {}
