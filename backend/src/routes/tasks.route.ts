@@ -6,9 +6,7 @@ const tasksController = require('../controllers/tasks.controller')
 
 
 //Create
-router.post("/", (req : Request, res : Response) => {
-    res.json({'message': 'Create tasks'})
-  })
+router.post("/", tasksController.create)
 
 //Read
 router.get("/", tasksController.get)
