@@ -8,7 +8,7 @@ const users = require('../services/users.service')
 const create = async (req: Request, res: Response, next: NextFunction) => {
     try{
         //Check if email already exists
-        let useremail = await users.getByEmail(req.body.email)
+        if(await users.getByEmail(req.body.email))return res.status(400).json({message : "Email already exists"})
 
         //Password crypting
         bcrypt
@@ -24,14 +24,15 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
                 password: hash
             }
             let result = await users.create(user)
-            if(result > 0) res.status(201).json({message : "Task successfully created"})
-            else res.status(400).json({message : "Impossible to create task"})
+            if(result > 0) res.status(201).json({message : "User successfully created"})
+            else res.status(400).json({message : "Impossible to create user"})
         })
 
     }catch(err: any){
         console.error(`Error while creating user`, err.message)
         res.status(500).send(err.message)
     }
+    return 
 }
 
 
