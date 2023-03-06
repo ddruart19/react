@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express"
-import { UserDB, UserInputCreate } from "src/models/users.model"
+import passport from "passport"
+import { UserInputCreate, UserOutputConnection } from "src/models/users.model"
 const bcrypt = require('bcrypt')
 
 const users = require('../services/users.service')
+
 
 //Create
 const create = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,18 +38,19 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 //Authentication
-const authentication = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        let userDB: UserDB = await users.getByEmail(req.body.email)
-        if(!userDB) res.status(409).json({message : "Wrong email/password"})
+// const authentication = async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         let userDB: UserDB = await users.getByEmail(req.body.email)
+//         if(!userDB) res.status(409).json({message : "Wrong email/password"})
 
-        //Password verification
-        if(bcrypt.compareSync(req.body.password, userDB.password)) res.status(200).json({message: "Connection success"})
-        else res.status(409).json({message : "Wrong email/password"})
-    } catch (err : any) {
-        
-    }
-}
+//         //Password verification
+//         if(bcrypt.compareSync(req.body.password, userDB.password)) res.status(200).json({message: "Connection success"})
+//         else res.status(409).json({message : "Wrong email/password"})
+//     } catch (err : any) {
+//         console.error(`Error while authenticating user`, err.message)
+//         res.status(500).send(err.message)
+//     }
+// }
 
 
 module.exports = {
