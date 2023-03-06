@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express"
 import { TaskInputCreate, TaskInputUpdate } from "src/models/tasks.model"
-
 const tasks = require('../services/tasks.service')
 
 //Create
@@ -13,11 +12,11 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     }
     try{
         let result = await tasks.create(task)
-        if(result > 0) res.status(201).json({message : "Task successfully created"})
-        else res.status(400).json({message : "Impossible to create task"})
+        if(result > 0) return res.status(201).json({message : "Task successfully created"})
+        else return res.status(400).json({message : "Impossible to create task"})
     }catch(err: any){
         console.error(`Error while creating task`, err.message)
-        res.status(500).send(err.message)
+        return res.status(500).send(err.message)
 
     }
 }
@@ -25,11 +24,11 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 const get = async (req: Request, res: Response, next: NextFunction) => {
     try{
         let result = req.query.name ? await tasks.getByName(req.query.name) : await tasks.getAll()
-        if(result.length > 0) res.status(200).json(result)
-        else res.status(404).json({message : "No task found"})
+        if(result.length > 0) return res.status(200).json(result)
+        else return res.status(404).json({message : "No task found"})
     } catch(err: any) {
         console.error(`Error while getting tasks`, err.message)
-        res.status(500).send(err.message)
+        return res.status(500).send(err.message)
     }
 }
 
@@ -42,11 +41,11 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
     }
     try {
         let result = await tasks.update(req.params.id, task)
-        if(result > 0) res.status(201).json({message : "Task successfully updated "})
-        else res.status(400).json({message : "Impossible to update task"})
+        if(result > 0) return res.status(201).json({message : "Task successfully updated "})
+        else return res.status(400).json({message : "Impossible to update task"})
     } catch (err: any) {
         console.error(`Error while getting tasks`, err.message)
-        res.status(500).send(err.message)
+        return res.status(500).send(err.message)
     }
 }
 
@@ -56,10 +55,10 @@ const remove = (req: Request, res: Response, next: NextFunction) => {
         let result = tasks.remove(req.params.id)
         // if(result > 0) res.status(204).json({message : "Task successfully deleted"})
         // else res.status(400).json({message : "Impossible to delete task"})
-        res.status(204).json(result)
+        return res.status(204).json(result)
     } catch(err: any){
         console.error(`Error while getting tasks`, err.message)
-        res.status(500).send(err.message)
+        return res.status(500).send(err.message)
     }
 }
 
