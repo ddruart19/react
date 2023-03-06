@@ -12,13 +12,13 @@ const create = async (req, res, next) => {
     try {
         let result = await tasks.create(task);
         if (result > 0)
-            res.status(201).json({ message: "Task successfully created" });
+            return res.status(201).json({ message: "Task successfully created" });
         else
-            res.status(400).json({ message: "Impossible to create task" });
+            return res.status(400).json({ message: "Impossible to create task" });
     }
     catch (err) {
         console.error(`Error while creating task`, err.message);
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
 };
 //Read
@@ -26,13 +26,13 @@ const get = async (req, res, next) => {
     try {
         let result = req.query.name ? await tasks.getByName(req.query.name) : await tasks.getAll();
         if (result.length > 0)
-            res.status(200).json(result);
+            return res.status(200).json(result);
         else
-            res.status(404).json({ message: "No task found" });
+            return res.status(404).json({ message: "No task found" });
     }
     catch (err) {
         console.error(`Error while getting tasks`, err.message);
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
 };
 //Update
@@ -45,13 +45,13 @@ const update = async (req, res, next) => {
     try {
         let result = await tasks.update(req.params.id, task);
         if (result > 0)
-            res.status(201).json({ message: "Task successfully updated " });
+            return res.status(201).json({ message: "Task successfully updated " });
         else
-            res.status(400).json({ message: "Impossible to update task" });
+            return res.status(400).json({ message: "Impossible to update task" });
     }
     catch (err) {
         console.error(`Error while getting tasks`, err.message);
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
 };
 //Delete
@@ -60,11 +60,11 @@ const remove = (req, res, next) => {
         let result = tasks.remove(req.params.id);
         // if(result > 0) res.status(204).json({message : "Task successfully deleted"})
         // else res.status(400).json({message : "Impossible to delete task"})
-        res.status(204).json(result);
+        return res.status(204).json(result);
     }
     catch (err) {
         console.error(`Error while getting tasks`, err.message);
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
 };
 module.exports = {

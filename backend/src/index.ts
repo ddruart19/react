@@ -11,14 +11,18 @@ var session = require('express-session');
 const app = express()
 const port = process.env.PORT || 3000;
 
+//import env var from .env file if not in production
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(passport.authenticate('session'));
 
 app.use(helmet()); // set well-known security-related HTTP headers
