@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import passport from "passport"
-import { UserInputCreate, UserOutputConnection } from "src/models/users.model"
+import { UserInputCreate } from "src/models/users.model"
 const bcrypt = require('bcrypt')
 
 const users = require('../services/users.service')
@@ -54,6 +53,5 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
 
 module.exports = {
-    create,
-    authentication
+    create
 }
