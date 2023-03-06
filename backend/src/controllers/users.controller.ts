@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 
 const users = require('../services/users.service')
 
+
 //Create
 const create = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -34,6 +35,21 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
     }
     return 
 }
+
+//Authentication
+// const authentication = async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         let userDB: UserDB = await users.getByEmail(req.body.email)
+//         if(!userDB) res.status(409).json({message : "Wrong email/password"})
+
+//         //Password verification
+//         if(bcrypt.compareSync(req.body.password, userDB.password)) res.status(200).json({message: "Connection success"})
+//         else res.status(409).json({message : "Wrong email/password"})
+//     } catch (err : any) {
+//         console.error(`Error while authenticating user`, err.message)
+//         res.status(500).send(err.message)
+//     }
+// }
 
 
 module.exports = {
