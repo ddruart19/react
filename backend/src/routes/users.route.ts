@@ -5,6 +5,7 @@ const usersController = require('../controllers/users.controller')
 
 //Create
 router.post('/', usersController.create)
+router.post('/login', usersController.authentication)
 
 
 
