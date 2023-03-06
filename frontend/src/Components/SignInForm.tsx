@@ -1,7 +1,13 @@
 import { Button, TextInput } from "flowbite-react";
-import { Formik, Field, FieldProps, Form } from "formik";
-import { useState } from "react";
-import { logInAPI } from "../APICall";
+import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
+import { CSSProperties } from "react";
+import { useQuery } from "react-query";
+import * as Yup from "yup";
+import { authUser } from "../APICall";
+
+const divErrorStyles: CSSProperties = {
+    color: 'red',
+}
 
 interface FormValues{
     email: string;
@@ -19,23 +25,37 @@ const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     );
 }
 
-const logIn = (values: FormValues) => {
-    logInAPI(values)
+const Validators = Yup.object().shape({
+    email: Yup.string()
+    .required('Email is required'),
+    password: Yup.string()
+      .required('Password is required')
+  });
+
+const userAuthentication = (values: FormValues) => {
+    authUser(values).then(res => {
+        if(res.status === 409)res.json().then(data => alert(data.message))
+        else{
+            alert("Token creation here")
+        }
+    })
 }
 
 const SignInForm = () => {
-    const [initialValues, setInitialValues] = useState<FormValues>({
-        email: "",
-        password: ""
-    })
+
+    const initialValues : FormValues = {            
+        email : "",
+        password : ""
+    };
 
     return (
         <>
-             <Formik
+         <Formik
             initialValues={initialValues}
+            validationSchema={Validators}
             onSubmit={(values, actions) => {
-            logIn(values)
-            actions.setSubmitting(false);
+                userAuthentication(values);
+                actions.setSubmitting(false);
             }}
             >
                 <Form className="flex flex-col gap-4">
@@ -52,7 +72,14 @@ const SignInForm = () => {
                             Password :
                             <Field name="password" placeholder="Your password" component={InputText} type="password"/>
                         </label>
+                        <ErrorMessage name="userPwd">
+                            {msg =>{
+                            // setColorOfInputName("failure");
+                            return <span style={divErrorStyles}>{msg}</span>;
+                            } }
+                        </ErrorMessage>
                     </div>
+
                     <Button type="submit">Sign in</Button>
                 </Form>
             </Formik>

@@ -25,7 +25,21 @@ export interface OutputTaskUpdate{
     id : number;
 }
 
-export interface OutputLoginUser {
+export interface OutputUserCreation{
+    email: string;
+    name: string;
+    surname: string;
+    password: string;
+}
+
+export interface UserDB{
+    id: number;
+    email: string;
+    name: string;
+    surname: string;
+}
+
+export interface UserConnectionOutput{
     email: string;
     password: string;
 }

@@ -1,4 +1,4 @@
-import { OutputLoginUser, OutputTaskCreation, OutputTaskUpdate } from "./Interfaces";
+import { OutputTaskCreation, OutputTaskUpdate, OutputUserCreation, UserConnectionOutput } from "./Interfaces";
 
 
 const END_POINT: string = "https://backend-xi-six.vercel.app";
@@ -58,9 +58,19 @@ export const searchTaskByName = async (search: string) => {
     });   
 }
 
-// Log in
+// Create User
+export const createUser = (user: OutputUserCreation) => {
+    return fetch(END_POINT + '/api/user', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+    });    
+}
 
-export const logInAPI = (user: OutputLoginUser) => {
+// Authentication User
+export const authUser = (user: UserConnectionOutput) => {
     return fetch(END_POINT + '/api/user/connection', {
         method: 'POST',
         body: JSON.stringify(user),
