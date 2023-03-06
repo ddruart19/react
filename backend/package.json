@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@types/express-session": "^1.17.6",
+    "@types/express-validator": "^3.0.0",
     "@types/pg": "^8.6.6",
     "bcrypt": "^5.1.0",
     "bcrypt-ts": "^3.0.0",
