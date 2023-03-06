@@ -1,12 +1,15 @@
 {
-  "version": 2,
+    "version": 2,
     "builds": [
-        { "src": "public/index.js.func/backend/public/index.js", "use": "@now/node" }
+      {
+        "src": "public/index.js",
+        "use": "@vercel/node"
+      }
     ],
-  "routes":[
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ]
-}
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "public/index.js"
+      }
+    ]
+  }
