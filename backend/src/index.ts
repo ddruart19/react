@@ -45,3 +45,5 @@ app.use('/api/users', usersRouter)
 app.listen(port, () =>
     console.log(`Starting ExpressJS server on Port ${port}`)
 );
+//Export app to be able to run it as serverless function
+module.exports = app
