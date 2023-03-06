@@ -24,3 +24,8 @@ export interface OutputTaskUpdate{
     date: Date;
     id : number;
 }
+
+export interface OutputLoginUser {
+    email: string;
+    password: string;
+}
