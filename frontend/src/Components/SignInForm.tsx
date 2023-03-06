@@ -1,6 +1,7 @@
 import { Button, TextInput } from "flowbite-react";
 import { Formik, Field, FieldProps, Form } from "formik";
 import { useState } from "react";
+import { logInAPI } from "../APICall";
 
 interface FormValues{
     email: string;
@@ -19,7 +20,7 @@ const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
 }
 
 const logIn = (values: FormValues) => {
-    alert("Email : " + values.email + "\nPwd : " + values.password)
+    logInAPI(values)
 }
 
 const SignInForm = () => {
