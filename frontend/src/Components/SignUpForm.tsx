@@ -1,7 +1,7 @@
 import { Button, TextInput } from "flowbite-react";
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers, FormikValues } from "formik"
-import { CSSProperties, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik"
+import { CSSProperties } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import * as Yup from "yup";
 import { createUser } from "../APICall";
 
@@ -50,14 +50,14 @@ const SignUpForm = () => {
         surname : "",
         password : ""
     };
-    const queryClient = useQueryClient()
+
     const createUserMutation = useMutation(createUser, {
         onSuccess : (response: Response) => {
             console.log(response)
             response.json().then(data => alert(data.message))
         },
         onError: (error: Error) => {
-            console.log(error)
+            console.error("Error while creating user", error.message)
             alert(error.message)
         }
     })

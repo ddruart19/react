@@ -65,7 +65,7 @@ const EditTask = () => {
             name : values.taskName,
             completed: fetchTaskByIdQuery.data!.completed,
             date: new Date(values.taskDate),
-            id: fetchTaskByIdQuery.data!.id
+            id: Number(id)
           })
     }
 

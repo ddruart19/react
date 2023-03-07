@@ -1,7 +1,6 @@
 import { Button, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
 import { CSSProperties } from "react";
-import { useQuery } from "react-query";
 import * as Yup from "yup";
 import { authUser } from "../APICall";
 
@@ -33,12 +32,9 @@ const Validators = Yup.object().shape({
   });
 
 const userAuthentication = (values: FormValues) => {
-    authUser(values).then(res => {
-        if(res.status === 409)res.json().then(data => alert(data.message))
-        else{
-            alert("Token creation here")
-        }
-    })
+    authUser(values).then(res => res.json()).then(data => {
+        if(data.id)alert("Connection successfull")
+    }).catch(error => alert("Connection failed"))
 }
 
 const SignInForm = () => {

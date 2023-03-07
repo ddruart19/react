@@ -39,7 +39,7 @@ export interface UserDB{
     surname: string;
 }
 
-export interface UserConnectionOutput{
+export interface OutputUserConnection{
     email: string;
     password: string;
 }

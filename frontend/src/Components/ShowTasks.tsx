@@ -1,6 +1,6 @@
 import { Button, Table, TextInput } from "flowbite-react";
-import { useEffect, useState } from "react";
-import { fetchTaskByName, searchTaskByName } from "../APICall";
+import { useState } from "react";
+import { fetchTaskByName } from "../APICall";
 import { useFetchAllTasks } from "../App";
 import { ITaskDB } from "../Interfaces";
 import TodoTask from "./TodoTask";
