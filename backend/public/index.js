@@ -14,9 +14,9 @@ var session = require('express-session');
 const app = express();
 const port = process.env.PORT || 3000;
 //import env var from .env file if not in production
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -37,3 +37,5 @@ app.get('/', (req, res) => {
 app.use('/api/tasks', tasksRouter);
 app.use('/api/users', usersRouter);
 app.listen(port, () => console.log(`Starting ExpressJS server on Port ${port}`));
+//Export app to be able to run it as serverless function
+module.exports = app;
