@@ -1,20 +1,29 @@
 const express = require('express')
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 const bodyParser = require('body-parser')
 import compression from "compression"
 import helmet from "helmet"
 const tasksRouter = require('./routes/tasks.route')
 const usersRouter = require('./routes/users.route')
 import passport from "passport"
+import cors from 'cors'
 var session = require('express-session');
 
 const app = express()
 const port = process.env.PORT || 3000;
+const allowedOrigins = ['http://localhost:3000']
+
+const corsOptions: cors.CorsOptions = {
+  origin: allowedOrigins,
+  methods: 'GET, POST, PUT, DELETE'
+}
 
 //import env var from .env file if not in production
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+
+app.use(cors(corsOptions))
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -33,6 +42,14 @@ app.use(
     extended: true,
   })
 );
+
+//Middleware function to add header in response for CORS POLICY
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000'),
+  res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE'),
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
 
 app.get('/', (req : Request, res : Response) => {
     res.json({'message': 'Hello World!'})

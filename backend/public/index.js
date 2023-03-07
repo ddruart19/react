@@ -10,13 +10,20 @@ const helmet_1 = __importDefault(require("helmet"));
 const tasksRouter = require('./routes/tasks.route');
 const usersRouter = require('./routes/users.route');
 const passport_1 = __importDefault(require("passport"));
+const cors_1 = __importDefault(require("cors"));
 var session = require('express-session');
 const app = express();
 const port = process.env.PORT || 3000;
+const allowedOrigins = ['http://localhost:3000'];
+const corsOptions = {
+    origin: allowedOrigins,
+    methods: 'GET, POST, PUT, DELETE'
+};
 //import env var from .env file if not in production
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
+app.use(cors_1.default(corsOptions));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -31,6 +38,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
+//Middleware function to add header in response for CORS POLICY
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000'),
+        res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE'),
+        res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.get('/', (req, res) => {
     res.json({ 'message': 'Hello World!' });
 });
