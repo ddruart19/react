@@ -14,7 +14,7 @@ export const fetchTasks = async () => {
 
 // Fetch task by ID
 export const fetchTaskById = async (id: string) => {
-    return await (await fetch(END_POINT + TASKS_ROUTE + `/${id}`)).json();    
+    return await (await fetch(END_POINT + TASKS_ROUTE + `?id=${id}`)).json();    
 }
 
 // Fetch task by name
