@@ -1,4 +1,4 @@
-import { OutputTaskCreation, OutputTaskUpdate, OutputUserCreation, UserConnectionOutput } from "./Interfaces";
+import { OutputTaskCreation, OutputTaskUpdate, OutputUserCreation, OutputUserConnection } from "./Interfaces";
 
 
 const END_POINT: string = "https://backend-xi-six.vercel.app/api";
@@ -24,7 +24,7 @@ export const fetchTaskByName = async (name: string) => {
 
 // Create task
 export const createTask = (task: OutputTaskCreation) => {
-    return fetch(END_POINT + '/api/tasks', {
+    return fetch(END_POINT + TASKS_ROUTE , {
         method: 'POST',
         body: JSON.stringify(task),
         headers: {
@@ -35,7 +35,7 @@ export const createTask = (task: OutputTaskCreation) => {
 
 // Update task
 export const UpdateTask = async (task : OutputTaskUpdate) => {
-    return fetch(END_POINT + `/api/tasks/${task.id}`, {
+    return fetch(END_POINT + TASKS_ROUTE + `/${task.id}`, {
         method: 'PUT',
         body: JSON.stringify(task),
         headers: {
@@ -46,28 +46,15 @@ export const UpdateTask = async (task : OutputTaskUpdate) => {
 
 // Delete task
 export const deleteTask = async (id: string) => {
-    return fetch(END_POINT + `/api/tasks/${id}`, {
+    return fetch(END_POINT + TASKS_ROUTE + `/${id}`, {
         method: 'DELETE'
     });    
 }
 
-// Search tasks by name
-export const searchTaskByName = async (search: string) => {
-    const searchValue = {
-        search
-    }
-    return fetch(END_POINT + '/api/task', {
-        method: 'POST',
-        body: JSON.stringify(searchValue),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        }
-    });   
-}
 
 // Create User
 export const createUser = (user: OutputUserCreation) => {
-    return fetch(END_POINT + '/api/user', {
+    return fetch(END_POINT + USERS_ROUTE, {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
@@ -77,8 +64,8 @@ export const createUser = (user: OutputUserCreation) => {
 }
 
 // Authentication User
-export const authUser = (user: UserConnectionOutput) => {
-    return fetch(END_POINT + '/api/user/connection', {
+export const authUser = (user: OutputUserConnection) => {
+    return fetch(END_POINT + USERS_ROUTE + '/login', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
