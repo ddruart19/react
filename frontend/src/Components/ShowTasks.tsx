@@ -1,6 +1,6 @@
 import { Button, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { searchTaskByName } from "../APICall";
+import { fetchTaskByName, searchTaskByName } from "../APICall";
 import { useFetchAllTasks } from "../App";
 import { ITaskDB } from "../Interfaces";
 import TodoTask from "./TodoTask";
@@ -22,8 +22,7 @@ const ShowTasks = () =>{
 
 
     const handleSubmit = () => {
-        //Replace space between word by | operator and send request to API
-        searchTaskByName(searchValue.replace(/ /g, ' | ')).then(res => res.json()).then(data => setTodoListFilter(data))
+      fetchTaskByName(searchValue).then(res => setTodoListFilter(res))
     }
     
     const handleChange = (event : React.FormEvent<HTMLInputElement>) => {
