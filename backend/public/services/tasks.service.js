@@ -15,6 +15,10 @@ const getByName = async (name) => {
     const result = await db_service_1.pool.query('SELECT * FROM task where to_tsvector(name) @@ to_tsquery($1)', [name]);
     return result.rows;
 };
+const getById = async (id) => {
+    const result = await db_service_1.pool.query('SELECT * FROM task where id = $1', [id]);
+    return result.rows[0];
+};
 //Update
 const update = async (task_id, task) => {
     const result = await db_service_1.pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', [task.name, task.completed, task.date, task_id]);
@@ -29,6 +33,7 @@ module.exports = {
     create,
     getAll,
     getByName,
+    getById,
     update,
     remove
 };

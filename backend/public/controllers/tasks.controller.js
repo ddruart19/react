@@ -24,8 +24,14 @@ const create = async (req, res, next) => {
 //Read
 const get = async (req, res, next) => {
     try {
-        let result = req.query.name ? await tasks.getByName(req.query.name) : await tasks.getAll();
-        if (result.length > 0)
+        let result;
+        if (req.query.id)
+            result = await tasks.getById(req.query.id);
+        else if (req.query.name)
+            result = await tasks.getByName(req.query.name);
+        else
+            result = await tasks.getAll();
+        if (result)
             return res.status(200).json(result);
         else
             return res.status(404).json({ message: "No task found" });

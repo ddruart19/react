@@ -19,6 +19,11 @@ const getByName = async (name: string) => {
     [name])
     return result.rows
 }
+const getById = async (id: number) => {
+    const result = await pool.query('SELECT * FROM task where id = $1', 
+    [id])
+    return result.rows[0]
+}
 
 //Update
 const update = async (task_id: number, task: TaskInputUpdate) => {
@@ -39,6 +44,7 @@ module.exports = {
     create,
     getAll,
     getByName,
+    getById,
     update,
     remove
 }
