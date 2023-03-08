@@ -67,6 +67,7 @@ export const createUser = (user: OutputUserCreation) => {
 export const authUser = (user: OutputUserConnection) => {
     return fetch(END_POINT + USERS_ROUTE + '/login', {
         method: 'POST',
+        credentials: 'include',
         body: JSON.stringify(user),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
