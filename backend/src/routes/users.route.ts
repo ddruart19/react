@@ -65,8 +65,10 @@ router.post('/login',
     body('password').not().isEmpty().trim().escape(),
     errorManagement, 
     passport.authenticate("local"), 
-    (req: Request, res: Response) => {res.json(req.user)}
+    (req: Request, res: Response) => {res.status(200).json(req.user)}
 )
+
+
 
 
 
