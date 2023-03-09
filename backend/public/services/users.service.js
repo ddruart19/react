@@ -11,7 +11,12 @@ const getByEmail = async (email) => {
     const result = await db_service_1.pool.query('SELECT * FROM users where email like $1', [email]);
     return result.rows[0];
 };
+const getBySessionId = async (sessionId) => {
+    const result = await db_service_1.pool.query('SELECT * FROM session where sid like $1', [sessionId]);
+    return result.rows[0].sess.passport.user;
+};
 module.exports = {
     create,
-    getByEmail
+    getByEmail,
+    getBySessionId
 };

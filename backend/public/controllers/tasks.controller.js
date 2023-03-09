@@ -1,15 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tasks = require('../services/tasks.service');
+const users = require('../services/users.service');
+//Format sessionId string from cookie info
+const formatSessionId = (sessionId) => {
+    return sessionId.slice(2, 34);
+};
+//Get user from request
+const getUserFromRequest = async (req) => {
+    if (req.cookies['connect.sid']) {
+        //Get sessionId from request
+        let sessionId = formatSessionId(req.cookies['connect.sid']);
+        //Get user with sessionId
+        let user;
+        await users.getBySessionId(sessionId).then((res) => user = res);
+        return user;
+    }
+    return undefined;
+};
 //Create
 const create = async (req, res, next) => {
-    let task = {
-        name: req.body.name,
-        completed: req.body.completed,
-        date: new Date(req.body.date),
-        user_id: req.body.user_id
-    };
     try {
+        //Get user from cookie session
+        let user = await getUserFromRequest(req);
+        //Return status 400 if no session found
+        if (!user)
+            return res.status(400).json({ message: "Impossible to create task" });
+        let task = {
+            name: req.body.name,
+            completed: req.body.completed,
+            date: new Date(req.body.date),
+            user_id: user.id
+        };
         let result = await tasks.create(task);
         if (result > 0)
             return res.status(201).json({ message: "Task successfully created" });
@@ -24,6 +46,11 @@ const create = async (req, res, next) => {
 //Read
 const get = async (req, res, next) => {
     try {
+        //Get user from cookie session
+        let user = await getUserFromRequest(req);
+        //Return status 400 if no session found
+        if (!user)
+            return res.status(400).json({ message: "Cannot get tasks if not connected" });
         let result;
         if (req.query.id)
             result = await tasks.getById(req.query.id);
@@ -31,8 +58,10 @@ const get = async (req, res, next) => {
             result = await tasks.getByName(req.query.name);
         else
             result = await tasks.getAll();
-        if (result)
+        if (result) {
+            result = result.filter(task => task.user_id == user.id);
             return res.status(200).json(result);
+        }
         else
             return res.status(404).json({ message: "No task found" });
     }

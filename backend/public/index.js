@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser");
 const compression_1 = __importDefault(require("compression"));
 const helmet_1 = __importDefault(require("helmet"));
 const tasksRouter = require('./routes/tasks.route');
@@ -12,12 +13,17 @@ const usersRouter = require('./routes/users.route');
 const passport_1 = __importDefault(require("passport"));
 const cors_1 = __importDefault(require("cors"));
 var session = require('express-session');
+const db_service_1 = require("./services/db.service");
+const poolSession = new (require('connect-pg-simple')(session))({
+    pool: db_service_1.pool
+});
 const app = express();
-const port = process.env.PORT || 3000;
-const allowedOrigins = ['http://localhost:3000'];
+const port = process.env.PORT || 3001;
+const allowedOrigins = ['https://ddruart19.github.io', 'http://localhost:3000'];
 const corsOptions = {
     origin: allowedOrigins,
-    methods: 'GET, POST, PUT, DELETE'
+    methods: 'GET, POST, PUT, DELETE',
+    credentials: true
 };
 //import env var from .env file if not in production
 if (process.env.NODE_ENV !== 'production') {
@@ -25,9 +31,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 app.use(cors_1.default(corsOptions));
 app.use(session({
+    store: poolSession,
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60,
+    }
 }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
@@ -35,14 +45,16 @@ app.use(passport_1.default.authenticate('session'));
 app.use(helmet_1.default()); // set well-known security-related HTTP headers
 app.use(compression_1.default());
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
 //Middleware function to add header in response for CORS POLICY
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000'),
-        res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE'),
-        res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE');
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
     next();
 });
 app.get('/', (req, res) => {
