@@ -25,6 +25,7 @@ const getById = async (id: number) => {
     return result.rows[0]
 }
 
+
 //Update
 const update = async (task_id: number, task: TaskInputUpdate) => {
     const result = await pool.query('UPDATE task SET name = $1, completed = $2, date = $3 WHERE id = $4;', 
