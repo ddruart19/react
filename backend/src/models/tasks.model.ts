@@ -18,3 +18,11 @@ export interface TaskOutput{
     date: Date;
     user_id: number;
 }
+
+export interface TaskDB{
+    id: number;
+    name: string;
+    completed: boolean;
+    date: Date;
+    user_id: number;
+}
