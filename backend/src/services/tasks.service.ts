@@ -22,7 +22,7 @@ const getByName = async (name: string) => {
 const getById = async (id: number) => {
     const result = await pool.query('SELECT * FROM task where id = $1', 
     [id])
-    return result.rows[0]
+    return result.rows
 }
 
 
