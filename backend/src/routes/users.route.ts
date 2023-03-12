@@ -68,7 +68,11 @@ router.post('/login',
     (req: Request, res: Response) => {res.status(200).json(req.user)}
 )
 
-
+//Verification
+router.post('/isLoggedIn',
+  errorManagement,
+  usersController.isSignedIn  
+)
 
 
 
