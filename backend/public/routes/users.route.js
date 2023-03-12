@@ -52,4 +52,6 @@ const errorManagement = (req, res, next) => {
 router.post('/', express_validator_1.body('email').isEmail().normalizeEmail(), express_validator_1.body('name').not().isEmpty().trim().escape(), express_validator_1.body('surname').not().isEmpty().trim().escape(), express_validator_1.body('password').not().isEmpty().trim().escape(), errorManagement, usersController.create);
 //Authentication
 router.post('/login', express_validator_1.body('email').isEmail().normalizeEmail(), express_validator_1.body('password').not().isEmpty().trim().escape(), errorManagement, passport_1.default.authenticate("local"), (req, res) => { res.status(200).json(req.user); });
+//Verification
+router.post('/isLoggedIn', errorManagement, usersController.isSignedIn);
 module.exports = router;

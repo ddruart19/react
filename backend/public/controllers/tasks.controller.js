@@ -85,7 +85,7 @@ const update = async (req, res, next) => {
             return res.status(400).json({ message: "Impossible to update task" });
     }
     catch (err) {
-        console.error(`Error while getting tasks`, err.message);
+        console.error(`Error while updating tasks`, err.message);
         return res.status(500).send(err.message);
     }
 };

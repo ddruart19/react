@@ -17,7 +17,7 @@ const getByName = async (name) => {
 };
 const getById = async (id) => {
     const result = await db_service_1.pool.query('SELECT * FROM task where id = $1', [id]);
-    return result.rows[0];
+    return result.rows;
 };
 //Update
 const update = async (task_id, task) => {

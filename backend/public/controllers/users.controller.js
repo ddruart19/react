@@ -2,6 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt = require('bcrypt');
 const users = require('../services/users.service');
+//Format sessionId string from cookie info
+const formatSessionId = (sessionId) => {
+    return sessionId.slice(2, 34);
+};
+//Get user from request
+const getUserFromRequest = async (req) => {
+    if (req.cookies['connect.sid']) {
+        //Get sessionId from request
+        let sessionId = formatSessionId(req.cookies['connect.sid']);
+        //Get user with sessionId
+        let user;
+        await users.getBySessionId(sessionId).then((res) => user = res);
+        return user;
+    }
+    return undefined;
+};
 //Create
 const create = async (req, res, next) => {
     try {
@@ -30,10 +46,27 @@ const create = async (req, res, next) => {
     }
     catch (err) {
         console.error(`Error while creating user`, err.message);
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
     return;
 };
+//Sign In verification
+const isSignedIn = async (req, res, next) => {
+    try {
+        //Get user from cookie session
+        let user = await getUserFromRequest(req);
+        //Return status 400 if no session found
+        if (!user)
+            return res.status(400).json({ message: "Session not found" });
+        else
+            return res.status(200).json({ message: "Session found" });
+    }
+    catch (err) {
+        console.error(`Error while checking if signed in`, err.message);
+        return res.status(500).send(err.message);
+    }
+};
 module.exports = {
-    create
+    create,
+    isSignedIn
 };
