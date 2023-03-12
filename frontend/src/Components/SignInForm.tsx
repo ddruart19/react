@@ -1,8 +1,9 @@
 import { Button, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
-import { CSSProperties } from "react";
+import { CSSProperties, useContext } from "react";
 import * as Yup from "yup";
-import { authUser } from "../APICall";
+import { authUser, fetchTasks } from "../APICall";
+import authContext from "../Hooks/authContext";
 
 const divErrorStyles: CSSProperties = {
     color: 'red',
@@ -31,13 +32,19 @@ const Validators = Yup.object().shape({
       .required('Password is required')
   });
 
-const userAuthentication = (values: FormValues) => {
-    authUser(values).then(res => res.json()).then(data => {
-        if(data.id)alert("Connection successfull")
-    }).catch(error => alert("Connection failed"))
-}
+
 
 const SignInForm = () => {
+    const { authenticated, setAuthenticated } = useContext(authContext);
+
+    const userAuthentication = (values: FormValues) => {
+        authUser(values).then(res => res.json()).then(data => {
+            if(data.id){
+                alert("Connection successfull")
+                setAuthenticated(true)
+            }
+        }).catch(error => alert("Connection failed"))
+    }
 
     const initialValues : FormValues = {            
         email : "",

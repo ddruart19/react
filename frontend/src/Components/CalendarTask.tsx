@@ -1,8 +1,8 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"
-import { CSSProperties, useContext, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { ITask } from "../Interfaces";
-import { useFetchAllTasks } from "../App";
+import { useFetchAllTasks } from "../functions";
 
 interface TodoEvent {
     title: string;

@@ -1,6 +1,6 @@
 import 'flowbite';
 import { Timeline } from "flowbite-react";
-import { useFetchAllTasks } from '../App';
+import { useFetchAllTasks } from '../functions';
 import { ITask, ITaskDB } from '../Interfaces';
 import TimelineItem from './TimelineItem';
 

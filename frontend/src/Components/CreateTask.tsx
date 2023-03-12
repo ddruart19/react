@@ -56,9 +56,7 @@ const CreateTask = () => {
   const Validators = Yup.object().shape({
     taskName: Yup.string()
       .min(2, 'Too short !')
-      .required('Task name required'),
-    taskDate: Yup.date()
-      .min(Date(), 'Can only set date for today or further')
+      .required('Task name required')
   });
     // const todo = useContext(App.TodoListContext);
     const navigate = useNavigate();

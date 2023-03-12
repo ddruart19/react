@@ -43,9 +43,7 @@ return (
 const Validators = Yup.object().shape({
 taskName: Yup.string()
     .min(2, 'Too short !')
-    .required('Task name required'),
-taskDate: Yup.date()
-    .min(Date(), 'Can only set date for today or further')
+    .required('Task name required')
 });
   
 const EditTask = () => {
@@ -53,7 +51,7 @@ const EditTask = () => {
     const queryClient = useQueryClient()
     //URL ID
     const {id} = useParams<string>();
-    const fetchTaskByIdQuery = useQuery<ITaskDB, Error>(['fetchTaskById', id], () => fetchTaskById(id!))
+    const fetchTaskByIdQuery = useQuery<ITaskDB[], Error>(['fetchTaskById', id], () => fetchTaskById(id!))
     const editMutation = useMutation(UpdateTask, {
         onSuccess : () => {
             queryClient.invalidateQueries('todoList');
@@ -63,7 +61,7 @@ const EditTask = () => {
     const taskEdition = (values : FormValues) => {
         editMutation.mutate({
             name : values.taskName,
-            completed: fetchTaskByIdQuery.data!.completed,
+            completed: fetchTaskByIdQuery.data![0].completed,
             date: new Date(values.taskDate),
             id: Number(id)
           })
@@ -85,7 +83,7 @@ const EditTask = () => {
         return(
             <>
                 <Formik
-                initialValues={{taskName : fetchTaskByIdQuery.data.name, taskDate : formatDate(new Date(fetchTaskByIdQuery.data.date))}}
+                initialValues={{taskName : fetchTaskByIdQuery.data![0].name, taskDate : formatDate(new Date(fetchTaskByIdQuery.data![0].date))}}
                 validationSchema={Validators}
                 onSubmit={(values, actions) => {
                 taskEdition(values);

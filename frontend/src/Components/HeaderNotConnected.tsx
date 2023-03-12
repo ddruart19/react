@@ -6,7 +6,7 @@ import './Header.css';
 
 
 
-const Header = () => {
+const HeaderNotConnected = () => {
     const location = useLocation();
     const { authenticated, setAuthenticated } = useContext(authContext);
 
@@ -31,35 +31,20 @@ const Header = () => {
 
             {/* Create Task button */}
             <div className="flex md:order-2">
-                <Link to="/create">
-                    <Button color="success">
-                        Create task
+                <Link to="/signup">
+                    <Button>
+                        Sign Up
                     </Button>
                 </Link>
-                <Button onClick={ () => setAuthenticated(false)}>
-                    Log out
-                </Button>
+                <Link to="/signin">
+                    <Button>
+                        Sign In
+                    </Button>
+                </Link>
                 <Navbar.Toggle />
             </div>
-
-            {/* Collapsable menu */}
-
-            <Navbar.Collapse>
-                <Link to="/">
-                    Home
-                </Link>
-                <Link to="/list">
-                    Show tasks
-                </Link>
-                <Link to="/timeline">
-                    Show timeline
-                </Link>
-                <Link to="/calendar">
-                    Show Calendar
-                </Link>
-            </Navbar.Collapse>
         </Navbar>
     )
 }
 
-export default Header
+export default HeaderNotConnected

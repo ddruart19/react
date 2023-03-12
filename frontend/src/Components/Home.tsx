@@ -1,9 +1,11 @@
 import { Button, Card } from "flowbite-react";
 import CSS from 'csstype';
 import { useNavigate } from "react-router-dom";
-import { useFetchAllTasks } from "../App";
+import { useFetchAllTasks } from "../functions";
 import { ITask } from "../Interfaces";
 import { showFullDate } from "../functions";
+import { useContext, useEffect } from "react";
+import authContext from "../Hooks/authContext";
 
 const divMainHomeStyles: CSS.Properties = {
     height: '40vh'
@@ -23,17 +25,21 @@ const buttonStyles: CSS.Properties = {
 const Home: React.FC = () => {
     // const todo = useContext(TodoListContext);
     const navigate = useNavigate();
+    
     const fetchTodoList = useFetchAllTasks();
-
+    
     if (fetchTodoList.status === 'loading') return <span>Loading...</span>
     
     if (fetchTodoList.status === 'error') return <span>Error: {fetchTodoList.error.message}</span>
     
+  
     const nextTaskToDo: ITask = fetchTodoList.data!.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+    
 
 
 
     return (
+
         <div style={divMainHomeStyles}>
             <div style={divHomeStyles}>
                 <Card style={{height: '100%'}}>
