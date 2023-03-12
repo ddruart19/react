@@ -20,7 +20,7 @@ root.render(
           <meta charSet="utf-8" />
           <title>Todo App</title>
       </Helmet>
-      <App />
+        <App /> 
     </HashRouter>
   </React.StrictMode>
 );
