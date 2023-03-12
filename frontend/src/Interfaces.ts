@@ -43,3 +43,10 @@ export interface OutputUserConnection{
     email: string;
     password: string;
 }
+
+export interface userContext {
+    id: number;
+    email: string;
+    name: string;
+    surname: string;
+}
