@@ -4,6 +4,8 @@ import { UserDB } from "src/models/users.model"
 const tasks = require('../services/tasks.service')
 const users = require('../services/users.service')
 
+
+
 //Format sessionId string from cookie info
 const formatSessionId = (sessionId: string) => {
     return sessionId.slice(2, 34)
@@ -81,7 +83,7 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
         if(result > 0) return res.status(201).json({message : "Task successfully updated "})
         else return res.status(400).json({message : "Impossible to update task"})
     } catch (err: any) {
-        console.error(`Error while getting tasks`, err.message)
+        console.error(`Error while updating tasks`, err.message)
         return res.status(500).send(err.message)
     }
 }
