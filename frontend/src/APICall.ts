@@ -1,8 +1,8 @@
 import { OutputTaskCreation, OutputTaskUpdate, OutputUserCreation, OutputUserConnection } from "./Interfaces";
 
 
-// const END_POINT: string = "https://backend-xi-six.vercel.app/api";
-const END_POINT: string = "http://localhost:3001/api";
+const END_POINT: string = "https://backend-xi-six.vercel.app/api";
+// const END_POINT: string = "http://localhost:3001/api";
 const TASKS_ROUTE: string = "/tasks"
 const USERS_ROUTE: string = "/users"
 
@@ -72,6 +72,7 @@ export const authUser = (user: OutputUserConnection) => {
     return fetch(END_POINT + USERS_ROUTE + '/login', {
         method: 'POST',
         credentials: 'include',
+        mode:"cors",
         body: JSON.stringify(user),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
