@@ -1,6 +1,7 @@
 import { Button, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
-import { CSSProperties, useContext } from "react";
+import { CSSProperties, useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import { authUser, fetchTasks } from "../APICall";
 import authContext from "../Hooks/authContext";
@@ -36,14 +37,17 @@ const Validators = Yup.object().shape({
 
 const SignInForm = () => {
     const { authenticated, setAuthenticated } = useContext(authContext);
+    const [ errorMessage, setErrorMessage ] = useState("")
+    const navigate = useNavigate()
 
     const userAuthentication = (values: FormValues) => {
         authUser(values).then(res => res.json()).then(data => {
             if(data.id){
-                alert("Connection successfull")
+                setErrorMessage("")
                 setAuthenticated(true)
+                navigate('/')
             }
-        }).catch(error => alert("Connection failed"))
+        }).catch(error => setErrorMessage("Wrong email/password"))
     }
 
     const initialValues : FormValues = {            
@@ -75,6 +79,7 @@ const SignInForm = () => {
                             Password :
                             <Field name="password" placeholder="Your password" component={InputText} type="password"/>
                         </label>
+                        <span>{errorMessage}</span>
                         <ErrorMessage name="userPwd">
                             {msg =>{
                             // setColorOfInputName("failure");
