@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import { createTask } from "../APICall";
 import { useMutation, useQueryClient } from "react-query";
+import { formatDate } from "../functions";
 
 interface FormValues{
   taskName : string;
@@ -60,7 +61,7 @@ const CreateTask = () => {
   });
     // const todo = useContext(App.TodoListContext);
     const navigate = useNavigate();
-    const initialValues : FormValues = {taskName: "", taskDate: "2023-02-02"};
+    const initialValues : FormValues = {taskName: "", taskDate: formatDate(new Date())};
 
     const addTask = async (values : FormValues) => {
         createMutation.mutate({
