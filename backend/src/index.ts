@@ -16,7 +16,8 @@ const poolSession = new (require('connect-pg-simple')(session))({
 
 const app = express()
 const port = process.env.PORT || 3001;
-const allowedOrigins = ['https://ddruart19.github.io', 'http://localhost:3000']
+// const allowedOrigins = 'https://ddruart19.github.io'
+const allowedOrigins = 'http://localhost:3000'
 
 const corsOptions: cors.CorsOptions = {
   origin: allowedOrigins,
@@ -28,23 +29,24 @@ const corsOptions: cors.CorsOptions = {
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+app.set("trust proxy", 1);
 
 app.use(cors(corsOptions))
-
 app.use(session({
   store: poolSession, 
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60, // 1 heure
-    // secure: "true", 
-    // sameSite: 'none',
+    maxAge: 1000 * 60 * 60 * 24, // 1 jour
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true
   }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(passport.authenticate('session'))
+// app.use(passport.authenticate('session'))
 
 app.use(helmet()) // set well-known security-related HTTP headers
 app.use(compression())
@@ -60,8 +62,10 @@ app.use(
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
   res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE')
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie")
   res.setHeader("Access-Control-Allow-Credentials", "true")
+  res.setHeader('Access-Control-Request-Method', '*');
+  res.setHeader('Referrer-Policy', 'no-referrer');
 
   next()
 })
