@@ -2,13 +2,13 @@ import { Button, Navbar } from "flowbite-react";
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import authContext from "../Hooks/authContext";
-import './Header.css';
+// import './Header.css';
 
 
 
 const HeaderNotConnected = () => {
-    const location = useLocation();
-    const { authenticated, setAuthenticated } = useContext(authContext);
+    // const location = useLocation();
+    // const { authenticated, setAuthenticated } = useContext(authContext);
 
 
     return(   
