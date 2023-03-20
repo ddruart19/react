@@ -1,6 +1,6 @@
 import React, {  useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import '../globals.css'
+import './globals.css'
 import HeaderNotConnected from '../src/Components/HeaderNotConnected';
 import { MyAppProps } from "../src/Components/types";
 import authContext from '../src/Hooks/authContext';
