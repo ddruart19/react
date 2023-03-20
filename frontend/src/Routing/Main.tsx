@@ -32,7 +32,7 @@ const Main = () => {
                 <Route path='/' element={authorizationRedirection(<Home/>)} />
                 <Route path='/create' element={authorizationRedirection(<CreateTask/>)} />
                 <Route path='/list' element={authorizationRedirection(<ShowTasks/>)} />
-                <Route path='/edit/:id' element={authorizationRedirection(<EditTask/>)}/>
+                {/* <Route path='/edit/:id' element={authorizationRedirection(<EditTask/>)}/> */}
                 <Route path='/timeline' element={authorizationRedirection(<TimelineList/>)}/>
                 <Route path='/calendar' element={authorizationRedirection(<CalendarTask/>)}/>
                 <Route path='/signup' element={<SignUpForm/>}/>
