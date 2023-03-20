@@ -19,8 +19,8 @@ const poolSession = new (require('connect-pg-simple')(session))({
 });
 const app = express();
 const port = process.env.PORT || 3001;
-const allowedOrigins = 'https://ddruart19.github.io';
-// const allowedOrigins = 'http://localhost:3000'
+// const allowedOrigins = 'https://ddruart19.github.io'
+const allowedOrigins = ['http://localhost:3000', 'https://ddruart19.github.io'];
 const corsOptions = {
     origin: allowedOrigins,
     methods: 'GET, POST, PUT, DELETE',
@@ -56,7 +56,8 @@ app.use(bodyParser.urlencoded({
 }));
 //Middleware function to add header in response for CORS POLICY
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "https://ddruart19.github.io");
+    if (allowedOrigins.includes(req.headers.origin))
+        res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
     res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE');
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie");
     res.setHeader("Access-Control-Allow-Credentials", "true");
