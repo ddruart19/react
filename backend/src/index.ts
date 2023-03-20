@@ -16,8 +16,8 @@ const poolSession = new (require('connect-pg-simple')(session))({
 
 const app = express()
 const port = process.env.PORT || 3001;
-// const allowedOrigins = 'https://ddruart19.github.io'
-const allowedOrigins = 'http://localhost:3000'
+const allowedOrigins = 'https://ddruart19.github.io'
+// const allowedOrigins = 'http://localhost:3000'
 
 const corsOptions: cors.CorsOptions = {
   origin: allowedOrigins,
@@ -60,7 +60,7 @@ app.use(
 
 //Middleware function to add header in response for CORS POLICY
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
+  res.setHeader("Access-Control-Allow-Origin", "https://ddruart19.github.io")
   res.setHeader("Access-Control-Allow-Methods", 'POST, GET, PUT,DELETE')
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie")
   res.setHeader("Access-Control-Allow-Credentials", "true")
