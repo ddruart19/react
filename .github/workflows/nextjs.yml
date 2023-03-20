@@ -29,14 +29,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        name: Change directory
-        run : | 
-          cd .\frontend\
+        name: Change directory          
       - name: Checkout
         uses: actions/checkout@v3
       - name: Detect package manager
         id: detect-package-manager
         run: |
+          cd .\frontend\
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
