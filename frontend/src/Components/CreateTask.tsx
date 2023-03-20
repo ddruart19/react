@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { createTask } from "../APICall";
 import { useMutation, useQueryClient } from "react-query";
 import { formatDate } from "../functions";
+import { useRouter } from "next/router";
 
 interface FormValues{
   taskName : string;
@@ -20,7 +21,7 @@ const divErrorStyles: CSSProperties = {
 const CreateTask = () => {
   const [colorOfInputName, setColorOfInputName] = useState("gray");
   const [colorOfInputDate, setColorOfInputDate] = useState("gray");
-
+  const router = useRouter()
 
   const queryClient = useQueryClient()
   const createMutation = useMutation(createTask, {
@@ -60,7 +61,6 @@ const CreateTask = () => {
       .required('Task name required')
   });
     // const todo = useContext(App.TodoListContext);
-    const navigate = useNavigate();
     const initialValues : FormValues = {taskName: "", taskDate: formatDate(new Date())};
 
     const addTask = async (values : FormValues) => {
@@ -81,7 +81,7 @@ const CreateTask = () => {
         onSubmit={(values, actions) => {
           addTask(values);
           actions.setSubmitting(false);
-          navigate('/list');
+          router.push('/list');
         }}
         >
           <Form className="flex flex-col gap-4">

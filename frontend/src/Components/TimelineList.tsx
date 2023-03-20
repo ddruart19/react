@@ -1,10 +1,15 @@
 import 'flowbite';
 import { Timeline } from "flowbite-react";
+import { CSSProperties } from 'react';
 import { useFetchAllTasks } from '../functions';
 import { ITask, ITaskDB } from '../Interfaces';
 import TimelineItem from './TimelineItem';
 
-
+const styles: CSSProperties = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+}
 const sortTask = (list: ITaskDB[]) =>{
     return list.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
@@ -19,13 +24,13 @@ const TimelineList: React.FC = () =>{
     
     if(fetchTodoList.data)
         return (
-            <>
-            <Timeline>
-                {sortTask(fetchTodoList.data).map((task:ITask, key: number) => {
-                    return <TimelineItem task={task} key={key}/>
-                })}
-            </Timeline>
-            </>
+            <div style={styles}>
+                <Timeline>
+                    {sortTask(fetchTodoList.data).map((task:ITask, key: number) => {
+                        return <TimelineItem task={task} key={key}/>
+                    })}
+                </Timeline>
+            </div>
         );
     return (<></>)
 }

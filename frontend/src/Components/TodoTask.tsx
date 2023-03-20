@@ -1,7 +1,7 @@
 import { Checkbox, Table } from "flowbite-react";
+import Link from "next/link";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Link } from "react-router-dom";
 import { deleteTask } from "../APICall";
 import { showFullDate } from "../functions";
 import { ITask } from "../Interfaces";
@@ -46,13 +46,13 @@ const TodoTask: React.FC<Props> = ({task, completeTask}: Props) =>{
                 {showFullDate(task.date)}
             </Table.Cell>
             <Table.Cell>
-                <Link to={"/edit/" + task.id}
+                <Link href={"/edit/" + task.id}
                     className="font-medium text-blue-600 hover:underline dark:text-blue-500">
                     Edit
                 </Link>
             </Table.Cell>
             <Table.Cell>
-                <Link to="" style={{color:'red'}}
+                <Link href="" style={{color:'red'}}
                     className="font-medium text-blue-600 hover:underline dark:text-blue-500" onClick={() => confirmDelete(task)}>
                     Delete
                 </Link>

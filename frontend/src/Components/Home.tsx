@@ -6,6 +6,7 @@ import { ITask } from "../Interfaces";
 import { showFullDate } from "../functions";
 import { useContext, useEffect } from "react";
 import authContext from "../Hooks/authContext";
+import { useRouter } from "next/dist/client/router";
 
 const divMainHomeStyles: CSS.Properties = {
     height: '40vh'
@@ -24,7 +25,8 @@ const buttonStyles: CSS.Properties = {
 
 const Home: React.FC = () => {
     // const todo = useContext(TodoListContext);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    const router = useRouter()
     
     const fetchTodoList = useFetchAllTasks();
     
@@ -43,22 +45,22 @@ const Home: React.FC = () => {
         <div style={divMainHomeStyles}>
             <div style={divHomeStyles}>
                 <Card style={{height: '100%'}}>
-                    <Button style={buttonStyles} color="gray" onClick={() => navigate('/list')}>
+                    <Button style={buttonStyles} color="gray" onClick={() => router.push('/list')}>
                         Show tasks
                     </Button>
-                    <Button style={buttonStyles} color="gray" onClick={() => navigate('/timeline')}>
+                    <Button style={buttonStyles} color="gray" onClick={() => router.push('/timeline')}>
                         Show timeline
                     </Button>
-                    <Button style={buttonStyles} color="gray" onClick={() => navigate('/calendar')}>
+                    <Button style={buttonStyles} color="gray" onClick={() => router.push('/calendar')}>
                         Show calendar
                     </Button>
-                    <Button style={buttonStyles} onClick={() => navigate('/create')}>
+                    <Button style={buttonStyles} onClick={() => router.push('/create')}>
                         Create task
                     </Button>
                 </Card>
             </div>
             <div style={divHomeStyles}>
-                <Card style={{height: '100%'}}>
+                <Card style={{height: '100%', textAlign:'center'}}>
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Next task to do 
                     </h5>

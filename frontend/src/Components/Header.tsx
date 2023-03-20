@@ -1,64 +1,67 @@
 import { Button, Navbar } from "flowbite-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import authContext from "../Hooks/authContext";
-import './Header.css';
+// import './Header.css';
 
 
 
 const Header = () => {
-    const location = useLocation();
+    // const location = useLocation();
     const { authenticated, setAuthenticated } = useContext(authContext);
-
+    const router = useRouter()
 
     return(   
         <Navbar fluid={true} rounded={true}>
-            {/* Logo */}
-            <Navbar.Brand
-                to="/navbars"
-             >
-                <img
-                src="https://w7.pngwing.com/pngs/268/27/png-transparent-action-item-computer-icons-task-others-miscellaneous-angle-text-thumbnail.png"
-                className="mr-3 h-6 sm:h-9"
-                alt="Flowbite Logo"
-                />
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                    ToDo
-                </span>
-            </Navbar.Brand>
+        {/* Logo */}
+        <Navbar.Brand
+            to="/navbars"
+         >
+            <img
+            src="https://w7.pngwing.com/pngs/268/27/png-transparent-action-item-computer-icons-task-others-miscellaneous-angle-text-thumbnail.png"
+            className="mr-3 h-6 sm:h-9"
+            alt="Flowbite Logo"
+            />
+            <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                ToDo
+            </span>
+        </Navbar.Brand>
 
 
 
-            {/* Create Task button */}
-            <div className="flex md:order-2">
-                <Link to="/create">
-                    <Button color="success">
-                        Create task
-                    </Button>
-                </Link>
-                <Button onClick={ () => setAuthenticated(false)}>
-                    Log out
+        {/* Create Task button */}
+        <div className="flex md:order-2">
+            <Link href="/create">
+                <Button color="success">
+                    Create task
                 </Button>
-                <Navbar.Toggle />
-            </div>
+            </Link>
+            <Button onClick={ () => {setAuthenticated(false); router.push('/')}}>
+                Log out
+            </Button>
+            <Navbar.Toggle />
+        </div>
 
-            {/* Collapsable menu */}
+        {/* Collapsable menu */}
 
-            <Navbar.Collapse>
-                <Link to="/">
-                    Home
-                </Link>
-                <Link to="/list">
-                    Show tasks
-                </Link>
-                <Link to="/timeline">
-                    Show timeline
-                </Link>
-                <Link to="/calendar">
-                    Show Calendar
-                </Link>
-            </Navbar.Collapse>
-        </Navbar>
+        <Navbar.Collapse>
+
+            <Link href="/">
+                Home
+            </Link>
+            <Link href="/list">
+                Show tasks
+            </Link>
+            <Link href="/timeline">
+                Show timeline
+            </Link>
+            <Link href="/calendar">
+                Show Calendar
+            </Link>
+        </Navbar.Collapse>
+    </Navbar>
     )
 }
 
