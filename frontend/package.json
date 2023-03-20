@@ -1,7 +1,7 @@
 {
   "name": "todo-list-ts",
   "version": "0.1.0",
-  "homepage": "https://ddruart19.github.io/react",
+  "homepage": "https://ddruart19.github.io",
   "private": true,
   "dependencies": {
     "@fullcalendar/core": "^6.1.1",
