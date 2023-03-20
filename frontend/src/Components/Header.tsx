@@ -1,5 +1,6 @@
 import { Button, Navbar } from "flowbite-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import authContext from "../Hooks/authContext";
@@ -10,7 +11,7 @@ import authContext from "../Hooks/authContext";
 const Header = () => {
     // const location = useLocation();
     const { authenticated, setAuthenticated } = useContext(authContext);
-
+    const router = useRouter()
 
     return(   
         <Navbar fluid={true} rounded={true}>
@@ -37,7 +38,7 @@ const Header = () => {
                     Create task
                 </Button>
             </Link>
-            <Button onClick={ () => setAuthenticated(false)}>
+            <Button onClick={ () => {setAuthenticated(false); router.push('/')}}>
                 Log out
             </Button>
             <Navbar.Toggle />

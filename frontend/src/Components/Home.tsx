@@ -60,7 +60,7 @@ const Home: React.FC = () => {
                 </Card>
             </div>
             <div style={divHomeStyles}>
-                <Card style={{height: '100%'}}>
+                <Card style={{height: '100%', textAlign:'center'}}>
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Next task to do 
                     </h5>

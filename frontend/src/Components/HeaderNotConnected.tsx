@@ -1,6 +1,7 @@
 import { Button, Navbar } from "flowbite-react";
+import Link from "next/link";
 import { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import authContext from "../Hooks/authContext";
 // import './Header.css';
 
@@ -31,12 +32,12 @@ const HeaderNotConnected = () => {
 
             {/* Create Task button */}
             <div className="flex md:order-2">
-                <Link to="/signup">
+                <Link href="/signup">
                     <Button>
                         Sign Up
                     </Button>
                 </Link>
-                <Link to="/signin">
+                <Link href="/signin">
                     <Button>
                         Sign In
                     </Button>

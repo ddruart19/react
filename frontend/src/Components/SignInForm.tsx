@@ -1,5 +1,6 @@
 import { Button, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import { CSSProperties, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
@@ -38,14 +39,16 @@ const Validators = Yup.object().shape({
 const SignInForm = () => {
     const { authenticated, setAuthenticated } = useContext(authContext);
     const [ errorMessage, setErrorMessage ] = useState("")
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
+    const router = useRouter()
+
 
     const userAuthentication = (values: FormValues) => {
         authUser(values).then(res => res.json()).then(data => {
             if(data.id){
                 setErrorMessage("")
                 setAuthenticated(true)
-                navigate('/')
+                router.push('/')
             }
         }).catch(error => setErrorMessage("Wrong email/password"))
     }

@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { QueryClient, useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchTaskById, UpdateTask } from "../APICall";
 import { formatDate } from "../functions";
+import { useRouter } from "next/router";
 
 interface FormValues{
     taskName : string;
@@ -46,12 +47,18 @@ taskName: Yup.string()
     .required('Task name required')
 });
   
-const EditTask = () => {
-    const navigate = useNavigate();
+
+interface ComponentProps {
+    taskId: string;
+}
+
+const EditTask: React.FC<ComponentProps> = ({taskId}) => {
+    // const navigate = useNavigate();
+    const router = useRouter()
     const queryClient = useQueryClient()
     //URL ID
-    const {id} = useParams<string>();
-    const fetchTaskByIdQuery = useQuery<ITaskDB[], Error>(['fetchTaskById', id], () => fetchTaskById(id!))
+    // const {id} = useParams<string>();
+    const fetchTaskByIdQuery = useQuery<ITaskDB[], Error>(['fetchTaskById', taskId], () => fetchTaskById(taskId!))
     const editMutation = useMutation(UpdateTask, {
         onSuccess : () => {
             queryClient.invalidateQueries('todoList');
@@ -63,7 +70,7 @@ const EditTask = () => {
             name : values.taskName,
             completed: fetchTaskByIdQuery.data![0].completed,
             date: new Date(values.taskDate),
-            id: Number(id)
+            id: Number(taskId)
           })
     }
 
@@ -76,7 +83,7 @@ const EditTask = () => {
       }
   
 
-    if(id && fetchTaskByIdQuery.data){
+    if(taskId && fetchTaskByIdQuery.data){
         // console.log(fetchTaskByIdQuery.data.date.getTime().toString().slice());
         // console.log(new Date(fetchTaskByIdQuery.data!.date))
         // const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: "2022-02-01"};
@@ -88,7 +95,7 @@ const EditTask = () => {
                 onSubmit={(values, actions) => {
                 taskEdition(values);
                 actions.setSubmitting(false);
-                navigate('/list');
+                router.push('/list');
                 }}
                 >
                 <Form className="flex flex-col gap-4">
