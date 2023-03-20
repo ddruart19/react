@@ -30,7 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         name: Change directory
-        run : cd .\frontend\
+        run : | 
+          cd .\frontend\
       - name: Checkout
         uses: actions/checkout@v3
       - name: Detect package manager
