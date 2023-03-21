@@ -30,16 +30,16 @@ const TodoTask: React.FC<Props> = ({task, completeTask}: Props) =>{
     // const todo = useContext(TodoListContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        // setIsChecked(e.target.checked);
+        setIsChecked(e.target.checked);
         // completeTask(task.id, e.target.checked);
-        validateTask()
+        validateTask(e.target.checked)
     }
 
-    const validateTask = () => {
+    const validateTask = (isChecked: boolean) => {
         let checkedTask: ITask = {
             id: task.id,
             name: task.name,
-            completed: !task.completed,
+            completed: isChecked,
             date: task.date
         }
         checkMutation.mutate(checkedTask)
@@ -57,7 +57,7 @@ const TodoTask: React.FC<Props> = ({task, completeTask}: Props) =>{
                 {/* <Checkbox checked={isChecked} onChange={handleChange}/> */}
                 <input
                     type="checkbox"
-                    checked={task.completed}
+                    checked={isChecked}
                     onChange={handleChange}
                 />
             </Table.Cell>
