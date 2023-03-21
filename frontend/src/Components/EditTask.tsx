@@ -1,4 +1,4 @@
-import { Button, Textarea, TextInput } from "flowbite-react";
+import { Button, Card, Textarea, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
 import { CSSProperties } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -65,6 +65,10 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
         }
     })
 
+    const styleCard: CSSProperties = {
+        margin: '0 auto'
+    }
+
     const taskEdition = (values : FormValues) => {
         editMutation.mutate({
             name : values.taskName,
@@ -89,6 +93,10 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
         // const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: "2022-02-01"};
         return(
             <>
+            <Card style={styleCard}  className="w-full md:w-4/5">
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    Task edition
+                </h5>
                 <Formik
                 initialValues={{taskName : fetchTaskByIdQuery.data![0].name, taskDate : formatDate(new Date(fetchTaskByIdQuery.data![0].date))}}
                 validationSchema={Validators}
@@ -121,6 +129,7 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
                     <Button type="submit">Edit</Button>
                 </Form>
                 </Formik>
+            </Card>
             </>
         );
     }
