@@ -13,6 +13,10 @@ const Header = () => {
     const { authenticated, setAuthenticated } = useContext(authContext);
     const router = useRouter()
 
+    const activeLink = (link:string) => {
+        return router.pathname == link ? "text-blue-700" : "hover:text-blue-700"
+    }
+
     return(   
         <Navbar fluid={true} rounded={true}>
         {/* Logo */}
@@ -48,16 +52,16 @@ const Header = () => {
 
         <Navbar.Collapse>
 
-            <Link href="/">
+            <Link href="/" className={activeLink("/")}>
                 Home
             </Link>
-            <Link href="/list">
+            <Link href="/list" className={activeLink("/list")}>
                 Show tasks
             </Link>
-            <Link href="/timeline">
+            <Link href="/timeline" className={activeLink("/timeline")}>
                 Show timeline
             </Link>
-            <Link href="/calendar">
+            <Link href="/calendar" className={activeLink("/calendar")}>
                 Show Calendar
             </Link>
         </Navbar.Collapse>
