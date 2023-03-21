@@ -62,6 +62,7 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
     const editMutation = useMutation(updateTask, {
         onSuccess : () => {
             queryClient.invalidateQueries('todoList');
+            // queryClient.invalidateQueries('fetchTaskById');
         }
     })
 
@@ -93,6 +94,7 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
         // const initialValues : FormValues = {taskName: todoEdit.taskName, taskDate: "2022-02-01"};
         return(
             <>
+            {console.log("render", fetchTaskByIdQuery.data!)}
             <Card style={styleCard}  className="w-full md:w-4/5">
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     Task edition
@@ -105,6 +107,7 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
                 actions.setSubmitting(false);
                 router.push('/list');
                 }}
+                enableReinitialize={true}
                 >
                 <Form className="flex flex-col gap-4">
                     <div>
