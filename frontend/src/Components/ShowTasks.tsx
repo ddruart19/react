@@ -1,4 +1,4 @@
-import { Button, Table, TextInput } from "flowbite-react";
+import { Button, Card, Table, TextInput } from "flowbite-react";
 import { useEffect, useMemo, useState } from "react";
 import { fetchTaskByName } from "../APICall";
 import { useFetchAllTasks } from "../functions";
@@ -46,22 +46,27 @@ const ShowTasks = () =>{
 
     return(
         <div className="todoList">
-          <form onSubmit={(event) => {event.preventDefault(); handleSubmit()}}>
-              <TextInput
-                  id="searchBar"
-                  value={searchValue}
-                  type="text"
-                  placeholder="Search for a task"
-                  onChange={handleChange}
-                  required={true}
-              />
-              <Button type="submit">
-                  Search
-              </Button>
-              <Button onClick={resetFilter}>
-                  Reset filter
-              </Button>
-          </form>
+          <Card>
+            <form onSubmit={(event) => {event.preventDefault(); handleSubmit()}}>
+                <TextInput
+                    id="searchBar"
+                    value={searchValue}
+                    type="text"
+                    placeholder="Search for a task"
+                    onChange={handleChange}
+                    required={true}
+                />
+                <div className="flex">
+                  <Button type="submit" className="grow">
+                      Search
+                  </Button>
+                  <Button onClick={resetFilter} className="grow">
+                      Reset filter
+                  </Button>
+                </div>
+            </form>
+          </Card>
+
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>
