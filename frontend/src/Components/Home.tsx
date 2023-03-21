@@ -42,9 +42,9 @@ const Home: React.FC = () => {
 
     return (
 
-        <div style={divMainHomeStyles}>
-            <div style={divHomeStyles}>
-                <Card style={{height: '100%'}}>
+        <div className="flex flex-col w-full md:flex-row">
+            <div className="grow w-full">
+                <Card style={{height: '100%'}} >
                     <Button style={buttonStyles} color="gray" onClick={() => router.push('/list')}>
                         Show tasks
                     </Button>
@@ -59,7 +59,7 @@ const Home: React.FC = () => {
                     </Button>
                 </Card>
             </div>
-            <div style={divHomeStyles}>
+            <div className="grow w-full">
                 <Card style={{height: '100%', textAlign:'center'}}>
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Next task to do 
