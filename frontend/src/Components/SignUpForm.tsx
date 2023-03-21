@@ -1,4 +1,4 @@
-import { Button, TextInput } from "flowbite-react";
+import { Button, Card, TextInput } from "flowbite-react";
 import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik"
 import { CSSProperties } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -7,6 +7,10 @@ import { createUser } from "../APICall";
 
 const divErrorStyles: CSSProperties = {
     color: 'red',
+}
+
+const styleCard: CSSProperties = {
+    margin: '0 auto'
 }
 
 interface FormValues{
@@ -73,6 +77,10 @@ const SignUpForm = () => {
     
     return (
         <>
+        <Card className="w-full md:w-4/5 lg:w-2/5" style={styleCard}>
+        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Sign up
+        </h5>
             <Formik
             initialValues={initialValues}
             validationSchema={Validators}
@@ -150,6 +158,7 @@ const SignUpForm = () => {
                     <Button type="submit">Sign up</Button>
                 </Form>
             </Formik>
+        </Card>
         </>
     )
 }
