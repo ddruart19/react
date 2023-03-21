@@ -47,7 +47,7 @@ const ShowTasks = () =>{
     return(
         <div className="todoList">
           <Card>
-            <form onSubmit={(event) => {event.preventDefault(); handleSubmit()}}>
+            <form onSubmit={(event) => {event.preventDefault(); handleSubmit()}} className="w-full lg:w-4/5 mx-auto">
                 <TextInput
                     id="searchBar"
                     value={searchValue}
@@ -56,7 +56,7 @@ const ShowTasks = () =>{
                     onChange={handleChange}
                     required={true}
                 />
-                <div className="flex">
+                <div className="flex flex-col md:flex-row">
                   <Button type="submit" className="grow">
                       Search
                   </Button>
