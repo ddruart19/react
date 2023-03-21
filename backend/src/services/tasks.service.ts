@@ -11,7 +11,7 @@ const create = async (task: TaskInputCreate) => {
 
 //Read
 const getAll = async () => {
-    const result = await pool.query('SELECT * FROM task')
+    const result = await pool.query('SELECT * FROM task ORDER BY id')
     return result.rows
 }
 const getByName = async (name: string) => {

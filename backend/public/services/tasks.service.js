@@ -8,7 +8,7 @@ const create = async (task) => {
 };
 //Read
 const getAll = async () => {
-    const result = await db_service_1.pool.query('SELECT * FROM task');
+    const result = await db_service_1.pool.query('SELECT * FROM task ORDER BY id');
     return result.rows;
 };
 const getByName = async (name) => {
