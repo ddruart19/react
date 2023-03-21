@@ -97,13 +97,13 @@ const ShowTasks = () =>{
               {(() => {
                 if (todoListFilter) {
                   return (
-                    todoListFilter.map((task:ITaskDB, key: number)=>{
+                    todoListFilter.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map((task:ITaskDB, key: number)=>{
                       return <TodoTask key={key} task={task} completeTask={completeTask}/>
                     })
                   )
                 } else if(fetchTodoList.data){
                   return (
-                    fetchTodoList.data.map((task:ITaskDB, key: number)=>{
+                    fetchTodoList.data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map((task:ITaskDB, key: number)=>{
                       return <TodoTask key={key} task={task} completeTask={completeTask}/>
                     })
                   )
