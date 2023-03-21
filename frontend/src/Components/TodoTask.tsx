@@ -2,7 +2,7 @@ import { Checkbox, Table } from "flowbite-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { deleteTask } from "../APICall";
+import { deleteTask, updateTask } from "../APICall";
 import { showFullDate } from "../functions";
 import { ITask } from "../Interfaces";
 
@@ -21,11 +21,28 @@ const TodoTask: React.FC<Props> = ({task, completeTask}: Props) =>{
         },
       })
 
+    const checkMutation = useMutation(updateTask, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('todoList')
+        }
+    })
+
     // const todo = useContext(TodoListContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        setIsChecked(e.target.checked);
-        completeTask(task.id, e.target.checked);
+        // setIsChecked(e.target.checked);
+        // completeTask(task.id, e.target.checked);
+        validateTask()
+    }
+
+    const validateTask = () => {
+        let checkedTask: ITask = {
+            id: task.id,
+            name: task.name,
+            completed: !task.completed,
+            date: task.date
+        }
+        checkMutation.mutate(checkedTask)
     }
 
     const confirmDelete = (task:ITask) => {
@@ -37,7 +54,12 @@ const TodoTask: React.FC<Props> = ({task, completeTask}: Props) =>{
 
         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800"> 
             <Table.Cell className="!p-4">
-                <Checkbox checked={isChecked} onChange={handleChange}/>
+                {/* <Checkbox checked={isChecked} onChange={handleChange}/> */}
+                <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={handleChange}
+                />
             </Table.Cell>
             <Table.Cell>
                 {task.name}

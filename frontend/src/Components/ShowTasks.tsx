@@ -1,5 +1,5 @@
 import { Button, Table, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchTaskByName } from "../APICall";
 import { useFetchAllTasks } from "../functions";
 import { ITaskDB } from "../Interfaces";
@@ -18,11 +18,13 @@ const ShowTasks = () =>{
 
     const [searchValue, setSearchValue] = useState("");
     const [todoListFilter, setTodoListFilter] = useState<ITaskDB[] | undefined>(undefined)
+    const fetchTodoList = useFetchAllTasks()
+
 
 
 
     const handleSubmit = () => {
-      fetchTaskByName(searchValue).then(res => setTodoListFilter(res))
+      fetchTaskByName(searchValue).then(res => {setTodoListFilter(res)})
     }
     
     const handleChange = (event : React.FormEvent<HTMLInputElement>) => {
@@ -32,7 +34,6 @@ const ShowTasks = () =>{
     const resetFilter = () => {
       setTodoListFilter(undefined)
     }
-    const fetchTodoList = useFetchAllTasks();
 
     if (fetchTodoList.status === 'loading') {
       return <span>Loading...</span>
@@ -45,7 +46,7 @@ const ShowTasks = () =>{
 
     return(
         <div className="todoList">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(event) => {event.preventDefault(); handleSubmit()}}>
               <TextInput
                   id="searchBar"
                   value={searchValue}

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ITaskDB } from "../Interfaces";
 import * as Yup from "yup";
 import { QueryClient, useMutation, useQuery, useQueryClient } from "react-query";
-import { fetchTaskById, UpdateTask } from "../APICall";
+import { fetchTaskById, updateTask } from "../APICall";
 import { formatDate } from "../functions";
 import { useRouter } from "next/router";
 
@@ -59,7 +59,7 @@ const EditTask: React.FC<ComponentProps> = ({taskId}) => {
     //URL ID
     // const {id} = useParams<string>();
     const fetchTaskByIdQuery = useQuery<ITaskDB[], Error>(['fetchTaskById', taskId], () => fetchTaskById(taskId!))
-    const editMutation = useMutation(UpdateTask, {
+    const editMutation = useMutation(updateTask, {
         onSuccess : () => {
             queryClient.invalidateQueries('todoList');
         }

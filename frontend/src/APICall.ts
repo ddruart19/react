@@ -36,7 +36,7 @@ export const createTask = (task: OutputTaskCreation) => {
 }
 
 // Update task
-export const UpdateTask = async (task : OutputTaskUpdate) => {
+export const updateTask = async (task : OutputTaskUpdate) => {
     return fetch(END_POINT + TASKS_ROUTE + `/${task.id}`, {
         method: 'PUT',
         credentials: 'include',

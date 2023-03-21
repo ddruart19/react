@@ -11,6 +11,7 @@ const TimelineItem: React.FC<{task: ITask}> = ({task}: Props) => {
     return (
         <>
             <Timeline.Item>
+                <Timeline.Point/>
                 <Timeline.Content>
                     <Timeline.Time>
                         {showFullDate(task.date)}
