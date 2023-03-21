@@ -1,7 +1,7 @@
 import { CSSProperties, useContext, useState } from "react";
 import 'flowbite';
 import { Formik, Form, Field, FieldProps, ErrorMessage} from 'formik';
-import { Button, Textarea, TextInput } from "flowbite-react";
+import { Button, Card, Textarea, TextInput } from "flowbite-react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import { createTask } from "../APICall";
@@ -29,6 +29,11 @@ const CreateTask = () => {
       queryClient.invalidateQueries('todoList');
     }
   })
+
+  const styleCard: CSSProperties = {
+    margin: '0 auto',
+    
+  }
 
   const InputText: React.FC<Text & FieldProps> = ({ field, form, ...props }) => {
     return (
@@ -75,6 +80,10 @@ const CreateTask = () => {
 
     return (
       <>
+      <Card className="w-full md:w-4/5" style={styleCard}>
+        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Task creation
+        </h5>
         <Formik
         initialValues={initialValues}
         validationSchema={Validators}
@@ -88,7 +97,7 @@ const CreateTask = () => {
             <div>
               <label>
                 Task :
-                <Field name="taskName" placeholder="Your task" component={InputText}/>
+                <Field name="taskName" placeholder="Mow the lawn.." component={InputText}/>
               </label>
               <ErrorMessage name="taskName">
                 {msg =>{
@@ -113,6 +122,7 @@ const CreateTask = () => {
             <Button type="submit">Add</Button>
           </Form>
         </Formik>
+        </Card>
        </>
         )
 }
