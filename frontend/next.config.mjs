@@ -8,7 +8,8 @@ const nextConfig = {
   },
   assetPrefix: './',
   basePath: '/react',
-  assetPrefix: '/react'
+  assetPrefix: '/react',
+  css: true
 };
 
 export default nextConfig;
