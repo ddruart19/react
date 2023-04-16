@@ -1,8 +1,8 @@
 import { OutputTaskCreation, OutputTaskUpdate, OutputUserCreation, OutputUserConnection } from "./Interfaces";
 
 
-const END_POINT: string = "https://backend-xi-six.vercel.app/api";
-// const END_POINT: string = "http://localhost:3001/api";
+// const END_POINT: string = "https://backend-xi-six.vercel.app/api";
+const END_POINT: string = "http://localhost:3001/api";
 const TASKS_ROUTE: string = "/tasks"
 const USERS_ROUTE: string = "/users"
 
@@ -91,5 +91,30 @@ export const isLoggedIn = () => {
     }).then(res =>{
         if(res.status === 200)return true
         return false
+    })
+}
+
+// Generate reset password
+export const forgottenPassword = (email: string) => {
+    return fetch(END_POINT + USERS_ROUTE + '/forgotten-password' + `?email=${email}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+    })
+}
+
+// Check if reset token is valid
+export const isResetTokenValid = (token: string) => {
+    return fetch(END_POINT + USERS_ROUTE + '/is-reset-token-valid' + `?token=${token}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+    }).then(res => {
+        if(res.status === 200) return true
+        else return false
     })
 }

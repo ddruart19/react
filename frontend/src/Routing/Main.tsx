@@ -12,6 +12,7 @@ import SignUpForm from '../Components/SignUpForm';
 import TimelineList from '../Components/TimelineList';
 import { isConnected } from '../functions';
 import authContext from '../Hooks/authContext';
+import ForgottenPasswordForm from '../Components/ForgottenPasswordForm';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,8 @@ const Main = () => {
                 <Route path='/calendar' element={authorizationRedirection(<CalendarTask/>)}/>
                 <Route path='/signup' element={<SignUpForm/>}/>
                 <Route path='/signin' element={<SignInForm/>}/>
+                <Route path='/forgotten-password' element={<ForgottenPasswordForm/>}/>
+
             </Routes>
             <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>

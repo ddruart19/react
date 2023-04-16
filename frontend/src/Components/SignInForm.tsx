@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { CSSProperties, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
-import { authUser, fetchTasks } from "../APICall";
+import { authUser, fetchTasks, forgottenPassword } from "../APICall";
 import authContext from "../Hooks/authContext";
+import Link from "next/link";
 
 const divErrorStyles: CSSProperties = {
     color: 'red',
@@ -98,7 +99,7 @@ const SignInForm = () => {
                             } }
                         </ErrorMessage>
                     </div>
-
+                    <Link href="/forgotten-password" className="text-blue-600 hover:underline dark:text-blue-500">Forgotten password ?</Link>
                     <Button type="submit">Sign in</Button>
                 </Form>
             </Formik>
