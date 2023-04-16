@@ -4,7 +4,7 @@ const router = express.Router()
 import { NextFunction, Request, Response } from "express"
 // import { validationResult } from "express-validator";
 
-const tasksController = require('../controllers/tasks.controller')
+const tasksController = require('../application/tasks.service')
 
 // Check authentication middleware
 const checkAuthenticated = (req: Request, res: Response, next: NextFunction) => {

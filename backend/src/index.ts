@@ -4,12 +4,12 @@ const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser")
 import compression from "compression"
 import helmet from "helmet"
-const tasksRouter = require('./routes/tasks.route')
-const usersRouter = require('./routes/users.route')
+const tasksRouter = require('./API/tasks.controller')
+const usersRouter = require('./API/users.controller')
 import passport from "passport"
 import cors from 'cors'
 var session = require('express-session')
-import {pool} from "./services/db.service"
+import {pool} from "./infrastructure/db.service"
 const poolSession = new (require('connect-pg-simple')(session))({
   pool : pool    
 })

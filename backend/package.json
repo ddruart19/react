@@ -36,6 +36,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.3",
+    "generate-key": "^0.0.6",
     "helmet": "^4.2.0",
     "mkcert": "^1.5.1",
     "passport": "^0.6.0",

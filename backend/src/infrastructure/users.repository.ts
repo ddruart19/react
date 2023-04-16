@@ -1,5 +1,6 @@
 import { UserInputCreate } from "src/models/users.model"
 import {pool} from "./db.service"
+var keyGen = require("generate-key");
 
 //Create
 const create = async (user: UserInputCreate) => {
@@ -22,9 +23,25 @@ const getBySessionId = async (sessionId: string) => {
     return result.rows[0].sess.passport.user
 }
 
+//Update
+const updatePwd = async (user_id: number, password: string) => {
+    const result = await pool.query('UPDATE users SET password = $1 WHERE id = $2;', 
+    [password, user_id])
+    return result.rowCount
+}
+
+//Create token for forgotten password
+const setTokenForgottenPwd = async (userId: string) => {
+    const result = await pool.query(
+        'INSERT INTO pwd_reset_token(token, user_id) VALUES($1, $2)',
+        [keyGen.generateKey(15), userId])
+    return result.rowCount
+}
 
 module.exports = {
     create,
     getByEmail,
-    getBySessionId
+    getBySessionId,
+    updatePwd,
+    setTokenForgottenPwd
 }

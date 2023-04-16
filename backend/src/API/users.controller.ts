@@ -6,8 +6,10 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import { UserDB, UserOutputConnection } from "src/models/users.model"
 import { body, validationResult } from "express-validator"
 const bcrypt = require('bcrypt')
-const users = require('../services/users.service')
-const usersController = require('../controllers/users.controller')
+const usersRepository = require('../infrastructure/users.repository')
+const usersService = require('../application/users.service')
+const resetPwdService = require('../application/resetPwd.service')
+
 
 //Passport user serialization
 passport.serializeUser<any, any>((req, user, done) => {
@@ -16,7 +18,7 @@ passport.serializeUser<any, any>((req, user, done) => {
 
 //Passport user deserialization
 passport.deserializeUser((user: UserOutputConnection, done) => {
-    users.getByEmail(user.email).then((userSession: boolean | Express.User | null | undefined) => done(null, userSession))
+    usersRepository.getByEmail(user.email).then((userSession: boolean | Express.User | null | undefined) => done(null, userSession))
 });
 
 //Passport strategy definition
@@ -26,7 +28,7 @@ passport.use(new LocalStrategy({
   },
   async function(email: string, password: string, done: Function): Promise<any>{
     try {
-        let userDB: UserDB = await users.getByEmail(email)
+        let userDB: UserDB = await usersRepository.getByEmail(email)
         if(!userDB) return done(undefined, false, {message: "Invalid email or password"})
 
         //Password verification
@@ -56,7 +58,7 @@ router.post('/',
     body('surname').not().isEmpty().trim().escape(),
     body('password').not().isEmpty().trim().escape(),
     errorManagement,
-    usersController.create
+    usersService.create
 )
 
 //Authentication
@@ -71,9 +73,27 @@ router.post('/login',
 //Verification
 router.post('/isLoggedIn',
   errorManagement,
-  usersController.isSignedIn  
+  usersService.isSignedIn  
 )
 
+//Forgotten password send email
+router.get('/forgotten-password',
+  errorManagement,
+  usersService.sendEmailPwdReset
+)
+
+//Forgotten password reset pwd
+router.post('/reset-password',
+  errorManagement,
+  usersService.update
+)
+
+
+//Check if token is valid
+router.get('/is-reset-token-valid', 
+  errorManagement,
+  resetPwdService.isTokenValid
+)
 
 
 module.exports = router;

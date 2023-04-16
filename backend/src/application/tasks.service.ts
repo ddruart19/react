@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express"
 import { TaskDB, TaskInputCreate, TaskInputUpdate } from "src/models/tasks.model"
 import { UserDB } from "src/models/users.model"
-const tasks = require('../services/tasks.service')
-const users = require('../services/users.service')
+const tasks = require('../infrastructure/tasks.repository')
+const users = require('../infrastructure/users.repository')
 
 
 
